@@ -6,22 +6,41 @@ using UnityEngine;
 
 public class Player : MonoBehaviourPunCallbacks
 {
-    private enum PlayerState
-    {
-        CHOOSE,
-        DISPLAY_MODEL,
-        WAIT
-    }
-    private PlayerState currentPlayerState;
-
-    public Player opponent;
     public PhotonView photonView;
-    public bool IsMyTurn { get => isMyTurn; set => isMyTurn = value; }
-    [SerializeField] private bool isMyTurn = false;
+
+    [Header("Ingame GUI")]
+    public GameObject cardPrefab;
+    public GameObject playMenuObj;
+    public GameObject startGameBtn;
+    public GameObject endTurnBtn;
+    public GameObject attackBtn;
+    public Transform[] cardMenuSlots;
+
+    public CardConfig[] cardConfigs;
+
+
+
+
+    private MyStateMachine m_currentState;
+    private PlayerChooseCardState m_chooseCardState;
+    private PlayerDisplayModelState m_displayModelState;
+    private PlayerWaitState m_waitState;
+    private PlayerInitState m_initState;
+
+
+    public Player Opponent { get => m_opponent; set => m_opponent = value; }
+    private Player m_opponent;
+
+    public bool IsMyTurn { get => m_isMyTurn; set => m_isMyTurn = value; }
+    [SerializeField] private bool m_isMyTurn = false;
     
 
-    public Card CardChose { get => cardChose; set => cardChose = value; }
-    private Card cardChose = null;
+    public Card CardChose { get => m_cardChose; set => m_cardChose = value; }
+    private Card m_cardChose = null;
+
+
+    public bool PlayerReady { get => playerReady; set => playerReady = value; }
+    private bool playerReady = false;
 
 
     void Start()
@@ -30,164 +49,83 @@ public class Player : MonoBehaviourPunCallbacks
         {
             Destroy(gameObject);
         }
-        photonView = GetComponent<PhotonView>();
+        else
+        {
+            photonView = GetComponent<PhotonView>();
+
+            m_chooseCardState = new PlayerChooseCardState(this);
+            m_displayModelState = new PlayerDisplayModelState(this);
+            m_waitState = new PlayerWaitState(this);
+            m_initState = new PlayerInitState(this);
+
+            m_currentState = m_initState;
+        }
     }
 
     void Update()
     {
-        if (GameManager.Instance.TrackedWithVuforia && GameManager.Instance.PlayerReady)
+        if (GameManager.Instance.TrackedWithVuforia)
         {
-            FindOpponent();
             UpdatePlayer();
         }
     }
 
-    private void FindOpponent()
-    {
-        if(opponent == null)
-        {
-            gameObject.tag = "Temp";
-            GameObject obj = GameObject.FindGameObjectWithTag("Player");
-            if (obj)
-            {
-                opponent = obj.GetComponent<Player>();
-            }
-            gameObject.tag = "Player";
-            Debug.Log("Found opponent");
 
-        }
-        if (opponent == null)
-        {
-            GameObject obj = PhotonNetwork.Instantiate("Prefabs/" + GameManager.Instance.playerAvatarPrefab.name, new Vector3(0,5,0), Quaternion.identity);
-            opponent = obj.GetComponent<Player>();
-            Debug.Log("Cannot find opponent: create one");
-
-        }
-    }
-
-    private float chooseModelPositionDuration = 2f;
-    private Vector3 modelPrevPos = Vector3.zero;
     private void UpdatePlayer()
     {
-        switch (currentPlayerState)
-        {
-            case PlayerState.CHOOSE:
-                {
-                    Debug.Log("CHOOSE CARD");
-                    if (CardChose != null)
-                    {
-                        currentPlayerState = PlayerState.DISPLAY_MODEL;
-                    }
-                    break;
-                }
-            case PlayerState.DISPLAY_MODEL:
-                {
-                    Debug.Log("DISPLAY_MODEL");
-                    var raycastHit = GetRayCastHit();
-                    if (raycastHit != null && raycastHit.Details.Object.tag == "PlayField")
-                    {
-                        ShowModel(raycastHit.Details.Object.transform.position, Quaternion.identity);
-                    }
-                    if (modelPrevPos != Vector3.zero && Vector3.Distance(CardChose.Model.transform.position, modelPrevPos) <= 0.3f)
-                    {
-                        if (chooseModelPositionDuration <= 0f)
-                        {
-                            chooseModelPositionDuration = 2f;
-                            modelPrevPos = Vector3.zero;
-                            CardChose = null;
-
-                            // End my turn
-
-                            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "NoticeOpponentTurn");
-                            photonView.RPC("NoticeOpponentTurn", RpcTarget.AllBuffered);
-                            PhotonNetwork.SendAllOutgoingCommands();
-
-                            currentPlayerState = PlayerState.WAIT;
-                            
-                            break;
-                        }
-                        else
-                        {
-                            chooseModelPositionDuration -= Time.deltaTime;
-                        }
-                    }
-                    else
-                    {
-                        chooseModelPositionDuration = 2f;
-                    }
-                    modelPrevPos = CardChose.Model.transform.position;
-
-                    break;
-
-                };
-            case PlayerState.WAIT:
-                {
-                    Debug.Log("WAIT");
-                    if (IsMyTurn)
-                    {
-                        currentPlayerState = PlayerState.CHOOSE;
-                    }
-                    else
-                    {
-                        CardChose = null;
-                    }
-                    break;
-                }
-        }
+        Debug.Log("UpdatePlayer");
+        m_currentState.UpdateState();
     }
 
-    private IPointerResult GetRayCastHit()
+    public void EndMyTurn()
     {
-        foreach (var source in MixedRealityToolkit.InputSystem.DetectedInputSources)
-        {
-            // Ignore anything that is not a hand because we want articulated hands
-            if (source.SourceType == InputSourceType.Hand)
-            {
-                foreach (var p in source.Pointers)
-                {
-                    if (p is IMixedRealityNearPointer)
-                    {
-                        // Ignore near pointers, we only want the rays
-                        continue;
-                    }
-                    if (p.Result != null)
-                    {
-                        var startPoint = p.Position;
-                        var endPoint = p.Result.Details.Point;
-                        var hitObject = p.Result.Details.Object;
-                        if (hitObject)
-                        {
-                            return p.Result;
-                        }
-                    }
-
-                }
-            }
-        }
-        return null;
+        PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "NoticeOpponentTurn");
+        photonView.RPC("NoticeOpponentTurn", RpcTarget.AllBuffered);
+        PhotonNetwork.SendAllOutgoingCommands();
     }
-
-    
-
-    public void ShowModel(Vector3 position, Quaternion rotation)
-    {
-        if (!cardChose.Model.activeSelf)
-        {
-            cardChose.Model.SetActive(true);
-        }
-        cardChose.Model.transform.position = position;
-        cardChose.Model.transform.rotation = Quaternion.identity;
-
-    }
-
 
     [PunRPC]
     private void NoticeOpponentTurn()
     {
         IsMyTurn = false;
-        if(opponent != null)
+        if(Opponent != null)
         {
-            opponent.IsMyTurn = true;
+            Opponent.IsMyTurn = true;
         }
     }
+
+
+    public void SwitchState(PlayerStateEnum nextState)
+    {
+        switch (nextState)
+        {
+            case PlayerStateEnum.CHOOSE_CARD:
+                {
+                    Debug.Log("switch to CHOOSE_CARD");
+                    m_currentState = m_chooseCardState; 
+                    break;
+                }
+            case PlayerStateEnum.DISPLAY_MODEL:
+                {
+                    Debug.Log("switch to DISPLAY_MODEL");
+                    m_currentState = m_displayModelState;
+                    break;
+                }
+            case PlayerStateEnum.WAIT:
+                {
+                    Debug.Log("switch to WAIT");
+                    m_currentState = m_waitState;
+                    break;
+                }
+        }
+    }
+}
+
+
+public enum PlayerStateEnum
+{
+    WAIT,
+    CHOOSE_CARD,
+    DISPLAY_MODEL,
+    ATTACK
 }

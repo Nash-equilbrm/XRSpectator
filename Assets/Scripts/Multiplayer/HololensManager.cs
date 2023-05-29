@@ -21,15 +21,15 @@ public partial class GameManager
     {
         m_ARPlaySpace = ARCamera.transform.parent;
         ARCamera.transform.localPosition = Vector3.zero;
-        GameObject playerModel = PhotonNetwork.Instantiate("Prefabs/" + playerAvatarPrefab.name, ARCamera.transform.position, ARCamera.transform.rotation);
-
         ARCamera.GetComponent<Camera>().clearFlags = CameraClearFlags.SolidColor;
 
+        GameObject playerModel = PhotonNetwork.Instantiate("Prefabs/" + playerAvatarPrefab.name, ARCamera.transform.position, ARCamera.transform.rotation);
 
         if (playerModel.GetComponent<PhotonView>().IsMine)
         {
             playerModel.GetComponent<MoveARCamera>().ARCamera = ARCamera.transform;
-            this.playerManager = playerModel.GetComponent<Player>();
+            playerManager = playerModel.GetComponent<Player>();
+            playerManager.playMenuObj.transform.SetParent(null);
         }
 
 

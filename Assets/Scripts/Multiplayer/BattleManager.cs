@@ -7,27 +7,15 @@ public partial class GameManager
 {
     [Header("Gameplay")]
     public GameObject turnDecideCoinPrefab;
-    public Transform[] cardMenuSlots;
-    public GameObject cardPrefab;
-    public GameObject startGameBtn;
+    public GameObject invalidSignPrefab;
 
-    public CardConfig[] cardConfigs;
-
-   
-    public bool PlayerReady { get => playerUIInitialized; set => playerUIInitialized = value; }
-    private bool playerUIInitialized = false;
-
-
-
-    public bool StartGame { get => startGame; set => startGame = value; }
-    private bool startGame = false;
 
 
     public GameResultEnum GameResult { get => gameResult; set => gameResult = value; }
     private GameResultEnum gameResult = GameResultEnum.NONE;
 
     // game states
-    private GameState currentState = null;
+    private MyStateMachine currentState = null;
     private GameTurnDecideState turnDecideState = new GameTurnDecideState();
     private GamePlayState playState = new GamePlayState();
 
@@ -47,23 +35,6 @@ public partial class GameManager
         }
     }
 
-    public void InitCardUIs()
-    {
-        if (TrackedWithVuforia && !PlayerReady)
-        {
-            Debug.Log("InitUI");
-            for (int i = 0; i < cardConfigs.Length; ++i)
-            {
-                GameObject cardObj = Instantiate(cardPrefab);
-                cardObj.transform.SetParent(cardMenuSlots[i]);
-                cardObj.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
-                Card card = cardObj.GetComponent<Card>();
-                card.Config = cardConfigs[i];
-                card.InitCardUI();
-            }
-            PlayerReady = true;
-        }
-    }
 
     public void SwitchState(GameStateEnum nextGameState)
     {

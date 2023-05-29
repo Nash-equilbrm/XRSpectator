@@ -2,13 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GamePlayState : GameState
+public class GamePlayState : MyStateMachine
 {
-    
     protected override void Initialize()
     {
         Debug.Log("Game play state Init");
-        GameManager.Instance.InitCardUIs();
         StateInitialized = true;
     }
 

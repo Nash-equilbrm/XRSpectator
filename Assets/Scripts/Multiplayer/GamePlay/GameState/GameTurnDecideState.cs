@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameTurnDecideState : GameState
+public class GameTurnDecideState : MyStateMachine
 {
 
     protected override void Initialize()
@@ -11,15 +11,15 @@ public class GameTurnDecideState : GameState
         Debug.Log("Game turn decide state Init");
         if (PhotonNetwork.IsMasterClient)
         {
-            if (!GameManager.Instance.startGameBtn.activeSelf)
+            if (!GameManager.Instance.playerManager.startGameBtn.activeSelf)
             {
-                GameManager.Instance.startGameBtn.SetActive(true);
+                GameManager.Instance.playerManager.startGameBtn.SetActive(true);
             }
 
             // if player press start button
-            if (GameManager.Instance.StartGame)
+            if (GameManager.Instance.playerManager.PlayerReady)
             {
-                GameManager.Instance.startGameBtn.SetActive(false);
+                //GameManager.Instance.startGameBtn.SetActive(false);
                 StateInitialized = true;
             }
         }
