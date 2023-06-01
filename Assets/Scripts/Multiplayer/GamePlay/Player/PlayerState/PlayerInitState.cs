@@ -13,7 +13,7 @@ public class PlayerInitState : MyStateMachine
     protected override void DoBehavior()
     {
         Debug.Log("INIT");
-        if (m_player.PlayerReady)
+        if (GameManager.Instance.PlayerReady)
         {
             m_player.GetPlayFields();
             InitPlayUIs();
@@ -38,15 +38,16 @@ public class PlayerInitState : MyStateMachine
 
     private void InitPlayUIs()
     {
-        m_player.startGameBtn.SetActive(false);
-        for (int i = 0; i < m_player.cardConfigs.Length; ++i)
+        for (int i = 0; i < GameManager.Instance.cardMenuSlots.Length; ++i)
         {
-            GameObject cardObj = GameObject.Instantiate(m_player.cardPrefab);
-            cardObj.transform.SetParent(m_player.cardMenuSlots[i]);
+            GameObject cardObj = GameObject.Instantiate(GameManager.Instance.cardPrefab);
+            cardObj.transform.SetParent(GameManager.Instance.cardMenuSlots[i]);
             cardObj.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
-            Card card = cardObj.GetComponent<Card>();
-            card.Config = m_player.cardConfigs[i];
-            card.InitCardUI();
+            CardDisplay card = cardObj.GetComponent<CardDisplay>();
+            card.Config = GameManager.Instance.cardConfigs[m_player.cardCollectionIDs[i]];
+            card.InitCardUI(i);
+
+            m_player.ActiveCards.Add(i, card);
         }
     }
 

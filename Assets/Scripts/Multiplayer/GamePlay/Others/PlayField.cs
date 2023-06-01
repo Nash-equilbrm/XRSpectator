@@ -8,8 +8,8 @@ public class PlayField : MonoBehaviour
     public GameObject monsterField;
     public GameObject attackPhaseField;
 
-    public Card PlayFieldCard { get => playFieldCard; set => playFieldCard = value; }
-    private Card playFieldCard = null;
+    public CardDisplay PlayFieldCard { get => playFieldCard; set => playFieldCard = value; }
+    private CardDisplay playFieldCard = null;
 
   
     private void Update()

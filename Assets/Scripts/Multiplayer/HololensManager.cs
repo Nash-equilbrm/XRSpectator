@@ -30,13 +30,15 @@ public partial class GameManager
         {
             playerModel.GetComponent<MoveARCamera>().ARCamera = ARCamera.transform;
             playerManager = playerModel.GetComponent<Player>();
-            playerManager.playMenuObj.transform.SetParent(null);
+            if (PhotonNetwork.IsMasterClient)
+            {
+                playerManager.playerID = 1;
+            }
+            else
+            {
+                playerManager.playerID = 2;
+            }
         }
-        else
-        {
-            Destroy(playerManager.playMenuObj);
-        }
-
 
         m_userRoleInitialized = true;
     }

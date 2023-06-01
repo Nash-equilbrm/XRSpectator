@@ -2,26 +2,14 @@ using Microsoft.MixedReality.Toolkit;
 using Microsoft.MixedReality.Toolkit.Input;
 using Photon.Pun;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviourPunCallbacks
 {
     public PhotonView photonView;
-
-    [Header("Ingame GUI")]
-    public GameObject cardPrefab;
-    public GameObject playMenuObj;
-    public GameObject startGameBtn;
-    public GameObject endTurnBtn;
-    public GameObject attackBtn;
-    public Transform[] cardMenuSlots;
-
-    public CardConfig[] cardConfigs;
-
-
-
-
+    public int playerID; 
     private MyStateMachine m_currentState;
     private PlayerChooseCardState m_chooseCardState;
     private PlayerDisplayModelState m_displayModelState;
@@ -29,27 +17,28 @@ public class Player : MonoBehaviourPunCallbacks
     private PlayerAttackState m_attackState;
     private PlayerInitState m_initState;
 
+    public int[] cardCollectionIDs;
+    public Dictionary<int, CardDisplay> ActiveCards { get => m_activeCards; }
+    [SerializeField] private Dictionary<int, CardDisplay> m_activeCards = new Dictionary<int, CardDisplay>();
+
 
     public Player Opponent { get => m_opponent; set => m_opponent = value; }
     [SerializeField] private Player m_opponent;
 
-    public bool IsMyTurn { get => m_isMyTurn; set => m_isMyTurn = value; }
-    [SerializeField] private bool m_isMyTurn = false;
-
-    public bool OnAttackPhase { get => m_onAttackPhase; set => m_onAttackPhase = value; }
-    private bool m_onAttackPhase = false;
+    public bool OpponentEndTurn { get => m_opponentEndTurn; set => m_opponentEndTurn = value; }
+    [SerializeField] private bool m_opponentEndTurn = false;
     
-    public Card CardChose { get => m_cardChose; set => m_cardChose = value; }
-    private Card m_cardChose = null;
 
-    public bool PlayerReady { get => playerReady; set => playerReady = value; }
-    private bool playerReady = false;
+    public CardDisplay CardChose { get => m_cardChose; }
+    [SerializeField] private CardDisplay m_cardChose = null;
 
-    public List<GameObject> MyPlayFields { get => m_myPlayFields; set => m_myPlayFields = value; }
+
+
+    public List<GameObject> MyPlayFields { get => m_myPlayFields; }
     [SerializeField] private List<GameObject> m_myPlayFields;
 
-    public List<GameObject> MyMonsters { get => m_myMonsters; set => m_myMonsters = value; }
-    [SerializeField] private List<GameObject> m_myMonsters;
+    public List<int> MyMonsters { get => m_myMonsters; }
+    [SerializeField] private List<int> m_myMonsters;
 
     void Start()
     {
@@ -61,7 +50,7 @@ public class Player : MonoBehaviourPunCallbacks
         {
             photonView = GetComponent<PhotonView>();
             m_myPlayFields = new List<GameObject>();
-            m_myMonsters = new List<GameObject>();
+            m_myMonsters = new List<int>();
 
             m_chooseCardState = new PlayerChooseCardState(this);
             m_displayModelState = new PlayerDisplayModelState(this);
@@ -85,10 +74,11 @@ public class Player : MonoBehaviourPunCallbacks
     private void UpdatePlayer()
     {
         Debug.Log("UpdatePlayer");
+
         m_currentState.UpdateState();
     }
 
-   
+    
 
 
     public GameObject GetRayCastHit()
@@ -157,12 +147,15 @@ public class Player : MonoBehaviourPunCallbacks
     // ==================== PUNRPC ====================
     public void ShowModel(Vector3 position, Quaternion rotation)
     {
-        photonView.RPC("ShowModel_RPC", RpcTarget.All, position, rotation);
+        PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "ShowModel_RPC");
+        photonView.RPC("ShowModel_RPC", RpcTarget.AllBuffered, position, rotation);
+        PhotonNetwork.SendAllOutgoingCommands();
     }
 
     [PunRPC]
     private void ShowModel_RPC(Vector3 position, Quaternion rotation)
     {
+        Debug.Log("ShowModel_RPC");
         if (!CardChose.Monster.gameObject.activeSelf)
         {
             CardChose.Monster.gameObject.SetActive(true);
@@ -174,7 +167,9 @@ public class Player : MonoBehaviourPunCallbacks
 
     public void ShowInvalidSign(Vector3 position, Quaternion rotation)
     {
-        photonView.RPC("ShowInvalidSign_RPC", RpcTarget.All, position, rotation);
+        PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "ShowInvalidSign_RPC");
+        photonView.RPC("ShowInvalidSign_RPC", RpcTarget.AllBuffered, position, rotation);
+        PhotonNetwork.SendAllOutgoingCommands();
     }
 
     [PunRPC]
@@ -192,24 +187,32 @@ public class Player : MonoBehaviourPunCallbacks
 
     public void EndMyTurn()
     {
-        //PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "EndMyTurn_RPC");
-        //photonView.RPC("EndMyTurn_RPC", RpcTarget.AllBuffered);
-        //PhotonNetwork.SendAllOutgoingCommands();
-        photonView.RPC("EndMyTurn_RPC", RpcTarget.All);
+        PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "EndMyTurn_RPC");
+        photonView.RPC("EndMyTurn_RPC", RpcTarget.AllBuffered);
+        PhotonNetwork.SendAllOutgoingCommands();
     }
 
     [PunRPC]
     private void EndMyTurn_RPC()
     {
-        IsMyTurn = false;
+        GameManager.Instance.IsMyTurn = false;
+        OpponentEndTurn = false;
         if (Opponent != null)
         {
-            Opponent.IsMyTurn = true;
+            Opponent.OpponentEndTurn = true;
         }
     }
 
 
     public void FindOpponent()
+    {
+        PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "FindOpponent_RPC");
+        photonView.RPC("FindOpponent_RPC", RpcTarget.AllBuffered);
+        PhotonNetwork.SendAllOutgoingCommands();
+    }
+
+    [PunRPC]
+    private void FindOpponent_RPC()
     {
         if (Opponent == null)
         {
@@ -221,44 +224,70 @@ public class Player : MonoBehaviourPunCallbacks
             }
             gameObject.tag = "Player";
         }
-
     }
 
     public void GetPlayFields()
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            //PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "GetFirstHalfFields_RPC");
-            //photonView.RPC("GetFirstHalfFields_RPC", RpcTarget.AllBuffered);
-            //PhotonNetwork.SendAllOutgoingCommands();
-            photonView.RPC("GetFirstHalfFields_RPC", RpcTarget.All);
+            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "GetFirstHalfFields_RPC");
+            photonView.RPC("GetFirstHalfFields_RPC", RpcTarget.AllBuffered);
+            PhotonNetwork.SendAllOutgoingCommands();
 
         }
         else
         {
-            //PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "GetSecondHalfFields_RPC");
-            //photonView.RPC("GetSecondHalfFields_RPC", RpcTarget.AllBuffered);
-            //PhotonNetwork.SendAllOutgoingCommands();
-            photonView.RPC("GetSecondHalfFields_RPC", RpcTarget.All);
+            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "GetSecondHalfFields_RPC");
+            photonView.RPC("GetSecondHalfFields_RPC", RpcTarget.AllBuffered);
+            PhotonNetwork.SendAllOutgoingCommands();
         }
     }
+
     [PunRPC]
     private void GetFirstHalfFields_RPC()
     {
         for (int i = 0; i < 5; ++i)
         {
-            MyPlayFields.Add(GameManager.Instance.playFields[i]);
+            m_myPlayFields.Add(GameManager.Instance.playFields[i]);
         }
     }
+
     [PunRPC]
     private void GetSecondHalfFields_RPC()
     {
         for (int i = 0; i < 5; ++i)
         {
-            MyPlayFields.Add(GameManager.Instance.playFields[i + 5]);
+            m_myPlayFields.Add(GameManager.Instance.playFields[i + 5]);
         }
     }
 
+
+    public void ChooseNewCardInDeck(int key)
+    {
+        PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "ChooseNewCardInDeck_RPC");
+        photonView.RPC("ChooseNewCardInDeck_RPC", RpcTarget.AllBuffered, key);
+        PhotonNetwork.SendAllOutgoingCommands();
+    }
+
+    [PunRPC]
+    private void ChooseNewCardInDeck_RPC(int key)
+    {
+        m_cardChose = (key != -1) ? ActiveCards[key] : null;
+    }
+
+
+    public void AddNewMonster(int monsterViewID)
+    {
+        PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "AddNewMonster_RPC");
+        photonView.RPC("AddNewMonster_RPC", RpcTarget.AllBuffered, monsterViewID);
+        PhotonNetwork.SendAllOutgoingCommands();
+    }
+
+    [PunRPC]
+    private void AddNewMonster_RPC(int monsterViewID)
+    {
+        m_myMonsters.Add(monsterViewID);
+    }
 
 }
 
@@ -268,6 +297,7 @@ public class Player : MonoBehaviourPunCallbacks
 
 public enum PlayerStateEnum
 {
+    NONE,
     WAIT,
     CHOOSE_CARD,
     DISPLAY_MODEL,

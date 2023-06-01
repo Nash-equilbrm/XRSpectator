@@ -10,9 +10,12 @@ public partial class GameManager
     public GameObject invalidSignPrefab;
     [HideInInspector] public GameObject invalidSign;
     public GameObject[] playFields;
-
+    public GameObject cardPrefab;
+    public Transform[] cardMenuSlots;
+    public CardConfig[] cardConfigs;
 
     public GameResultEnum GameResult { get => gameResult; set => gameResult = value; }
+
     private GameResultEnum gameResult = GameResultEnum.NONE;
 
     // game states
@@ -20,6 +23,14 @@ public partial class GameManager
     private GameTurnDecideState turnDecideState = new GameTurnDecideState();
     private GamePlayState playState = new GamePlayState();
 
+    public bool PlayerReady { get => playerReady; set => playerReady = value; }
+    private bool playerReady = false;
+
+    public bool IsMyTurn { get => isMyTurn; set => isMyTurn = value; }
+    private bool isMyTurn = false;
+
+    public bool OnAttack { get => onAttack; set => onAttack = value; }
+    private bool onAttack = false;
 
 
     private void UpdateGameplay()

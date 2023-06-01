@@ -49,6 +49,10 @@ MonoBehaviour:
   - GetFirstHalfFields_RPC
   - GetSecondHalfFields_RPC
   - ShowModel_RPC
+  - ShowInvalidSign_RPC
+  - FindOpponent_RPC
+  - AddNewMonster_RPC
+  - ChooseNewCard_RPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

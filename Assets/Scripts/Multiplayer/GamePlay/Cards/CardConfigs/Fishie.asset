@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e92a43d84e93e7942b09e9ec6cd7b807, type: 3}
   m_Name: Fishie
   m_EditorClassIdentifier: 
+  configID: 1
   model: {fileID: 7328862912876552449, guid: 05707e4c59209bd44b0b9a2469308141, type: 3}
   avatarImg: {fileID: 21300000, guid: 9f1f9a795c1412f4f82d3dd35729bce0, type: 3}
   HP: 0
-  attackDuration: 2
+  attackDuration: 2.5

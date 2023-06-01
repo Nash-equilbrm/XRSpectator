@@ -1,9 +1,11 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public partial class Monster : MonoBehaviour
 {
+    public PhotonView photonView;
     private Animator m_animator;
     private Collider m_collider;
     public PlayField PlayField { get => m_playField; set => m_playField = value; }
@@ -24,6 +26,7 @@ public partial class Monster : MonoBehaviour
     {
         m_animator = GetComponent<Animator>();
         m_collider = GetComponent<Collider>();
+        photonView = GetComponent<PhotonView>();
 
         m_animator.enabled = false;
         m_collider.enabled = false;
@@ -89,4 +92,20 @@ public partial class Monster : MonoBehaviour
         m_collider.enabled = true;
     }
 
+
+
+    // ==================== PUNRPC ====================
+    public void SetMonsterTag(string tag)
+    {
+        PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "SetMonsterTag_RPC");
+        photonView.RPC("SetMonsterTag_RPC", RpcTarget.AllBuffered, tag);
+        PhotonNetwork.SendAllOutgoingCommands();
+    }
+
+
+    [PunRPC]
+    private void SetMonsterTag_RPC(string tag)
+    {
+        gameObject.tag = tag;
+    }
 }

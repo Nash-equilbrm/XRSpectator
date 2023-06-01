@@ -20,7 +20,7 @@ public class PlayerDisplayModelState : MyStateMachine
     {
         Debug.Log("DISPLAY_MODEL");
 
-        if (!m_player.IsMyTurn || m_player.OnAttackPhase)
+        if (!GameManager.Instance.IsMyTurn || GameManager.Instance.OnAttack)
         {
             ExitState = true;
             return;
@@ -83,12 +83,12 @@ public class PlayerDisplayModelState : MyStateMachine
    
     protected override void Exit()
     {
-        if (!m_player.IsMyTurn)
+        if (!GameManager.Instance.IsMyTurn)
         {
             m_player.EndMyTurn();
             m_player.SwitchState(PlayerStateEnum.WAIT);
         }
-        else if (m_player.OnAttackPhase)
+        else if (GameManager.Instance.OnAttack)
         {
             m_player.SwitchState(PlayerStateEnum.ATTACK);
         }
@@ -105,16 +105,19 @@ public class PlayerDisplayModelState : MyStateMachine
             
 
             m_player.CardChose.Monster.gameObject.transform.SetParent(m_selectedPlayField.transform.Find("Content"));
-            if (!m_player.MyMonsters.Contains(m_player.CardChose.Monster.gameObject))
+
+            int monsterViewID = m_player.CardChose.Monster.photonView.ViewID;
+
+            if (!m_player.MyMonsters.Contains(monsterViewID))
             {
-                m_player.MyMonsters.Add(m_player.CardChose.Monster.gameObject);
+                m_player.AddNewMonster(monsterViewID);
             }
 
             m_player.SwitchState(PlayerStateEnum.CHOOSE_CARD);
         }
 
         // reset
-        m_player.CardChose = null;
+        m_player.ChooseNewCardInDeck(-1);
         m_timer = 2f;
         m_selectedPlayField = null;
         m_prevHit = null;

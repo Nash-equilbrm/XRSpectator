@@ -2,8 +2,10 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Card : MonoBehaviour
+public class CardDisplay : MonoBehaviour
 {
+    private int m_index = -1;
+
     public CardConfig Config { get => m_config; set => m_config = value; }
     private CardConfig m_config;
 
@@ -13,22 +15,24 @@ public class Card : MonoBehaviour
     public Image avatarGUIImg;
 
 
-    public void InitCardUI()
+    public void InitCardUI(int index)
     {
         if(Config != null)
         {
+            m_index = index;
             if(Config.avatarImg != null)
                 avatarGUIImg.sprite = Config.avatarImg;
             if(Config.model != null)
             {
-                GameObject model = PhotonNetwork.Instantiate("Prefabs/Monsters/" + Config.model.name, new Vector3(100,100,100), Quaternion.identity);
-                Monster = model.GetComponent<Monster>();
+                GameObject monster = PhotonNetwork.Instantiate("Prefabs/Monsters/" + Config.model.name, new Vector3(100,100,100), Quaternion.identity);
+                Monster = monster.GetComponent<Monster>();
                 if (Monster != null)
                 {
                     Monster.SetUpStats(Config);
+                    Monster.SetMonsterTag("Creature" + GameManager.Instance.playerManager.playerID.ToString());
                 }
-                model.SetActive(false);
             }
+
         } 
     }
 
@@ -36,7 +40,7 @@ public class Card : MonoBehaviour
     public void OnCardPressed()
     {
         Debug.Log("OnCardPressed");
-        GameManager.Instance.playerManager.CardChose = this;
+        GameManager.Instance.playerManager.ChooseNewCardInDeck(m_index);
     }
    
 }

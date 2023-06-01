@@ -12,18 +12,22 @@ public class PlayerWaitState : MyStateMachine
     protected override void DoBehavior()
     {
         Debug.Log("WAIT");
-        if (m_player.IsMyTurn)
+        if (GameManager.Instance.playerManager.OpponentEndTurn || GameManager.Instance.IsMyTurn)
         {
             ExitState = true;
         }
         else
         {
-            m_player.CardChose = null;
+            m_player.ChooseNewCardInDeck(-1);
         }
     }
 
     protected override void Exit()
     {
+        if (GameManager.Instance.playerManager.OpponentEndTurn)
+        {
+            GameManager.Instance.IsMyTurn = true;
+        }
         m_player.SwitchState(PlayerStateEnum.CHOOSE_CARD);
     }
 

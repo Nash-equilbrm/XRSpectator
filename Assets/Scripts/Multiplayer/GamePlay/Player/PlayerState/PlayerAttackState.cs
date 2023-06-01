@@ -20,7 +20,7 @@ public class PlayerAttackState : MyStateMachine
     {
         Debug.Log("ATTACK");
 
-        if (!m_player.IsMyTurn || m_player.MyMonsters.Count == 0)
+        if (!GameManager.Instance.IsMyTurn || m_player.MyMonsters.Count == 0)
         {
             ExitState = true;
             return;
@@ -51,7 +51,7 @@ public class PlayerAttackState : MyStateMachine
 
     protected override void Exit()
     {
-        if (!m_player.IsMyTurn)
+        if (!GameManager.Instance.IsMyTurn)
         {
             m_player.EndMyTurn();
             m_player.SwitchState(PlayerStateEnum.WAIT);
@@ -61,7 +61,7 @@ public class PlayerAttackState : MyStateMachine
         }
         m_attacker = null;
         m_target = null;
-        m_player.OnAttackPhase = false;
+        GameManager.Instance.OnAttack = false;
     }
 
     protected override void Initialize()
@@ -79,15 +79,15 @@ public class PlayerAttackState : MyStateMachine
 
         bool hitCreature = false;
 
-        if (hit)
+        if (hit && hit.tag == "Creature")
         {
-            if (hit.tag == "Creature" && !m_player.MyMonsters.Contains(hit))
+            if (m_player.playerID != int.Parse(hit.tag.Substring(8)))
             {
                 m_selectedObj = hit;
                 hitCreature = true;
             }
 
-            else if (hit.tag == "Creature" && m_player.MyMonsters.Contains(hit))
+            else
             {
                 Vector3 position = hit.transform.position;
                 Vector3 rotation = new Vector3(0, hit.transform.eulerAngles.y, 0);
@@ -130,15 +130,15 @@ public class PlayerAttackState : MyStateMachine
 
         bool hitCreature = false;
 
-        if (hit)
+        if (hit && hit.tag.Substring(0, 8) == "Creature")
         {
-            if (hit.tag == "Creature" && m_player.MyMonsters.Contains(hit))
+            if (m_player.playerID == int.Parse(hit.tag.Substring(8)))
             {
                 m_selectedObj = hit;
                 hitCreature = true;
             }
            
-            else if (hit.tag == "Creature" && !m_player.MyMonsters.Contains(hit))
+            else
             {
                 Vector3 position = hit.transform.position;
                 Vector3 rotation = new Vector3(0, hit.transform.eulerAngles.y, 0);

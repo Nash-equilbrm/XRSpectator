@@ -774,7 +774,7 @@ GameObject:
   - component: {fileID: 370264067969679509}
   m_Layer: 0
   m_Name: BarrelMonster
-  m_TagString: Creature
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -905,6 +905,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1e79252e4c5cbb40af94bb0f5b8403f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  photonView: {fileID: 1452474216769852958}
   m_isMonsterReady: 0
 --- !u!65 &370264067969679509
 BoxCollider:

@@ -8,14 +8,9 @@ public class GameTurnDecideState : MyStateMachine
     protected override void Initialize()
     {
         Debug.Log("Game turn decide state Init");
-        if (!GameManager.Instance.playerManager.startGameBtn.activeSelf)
-        {
-            GameManager.Instance.playerManager.startGameBtn.SetActive(true);
-        }
         // if player press start button
-        if (GameManager.Instance.playerManager.PlayerReady)
+        if (GameManager.Instance.PlayerReady)
         {
-            Debug.Log("Player pressed start");
             StateInitialized = true;
         }
 
@@ -25,11 +20,11 @@ public class GameTurnDecideState : MyStateMachine
         Debug.Log("Game turn decide state DoBehavior");
         if (PhotonNetwork.IsMasterClient)
         {
-            GameManager.Instance.playerManager.IsMyTurn = true;
+            GameManager.Instance.IsMyTurn = true;
         }
         else
         {
-            GameManager.Instance.playerManager.IsMyTurn = false;
+            GameManager.Instance.IsMyTurn = false;
         }
         ExitState = true;
     }
