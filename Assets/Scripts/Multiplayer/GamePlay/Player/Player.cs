@@ -167,6 +167,7 @@ public class Player : MonoBehaviourPunCallbacks
 
     public void ShowInvalidSign(Vector3 position, Quaternion rotation)
     {
+        Debug.Log("ShowInvalidSign");
         PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "ShowInvalidSign_RPC");
         photonView.RPC("ShowInvalidSign_RPC", RpcTarget.AllBuffered, position, rotation);
         PhotonNetwork.SendAllOutgoingCommands();

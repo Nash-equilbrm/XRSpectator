@@ -79,7 +79,7 @@ public class PlayerAttackState : MyStateMachine
 
         bool hitCreature = false;
 
-        if (hit && hit.tag == "Creature")
+        if (hit && hit.tag.Length >= "Creature".Length && hit.tag.Substring(0, 8) == "Creature")
         {
             if (m_player.playerID != int.Parse(hit.tag.Substring(8)))
             {
@@ -106,7 +106,7 @@ public class PlayerAttackState : MyStateMachine
                     m_timer = 2f;
                     m_selectedObj = null;
                     m_prevHitObj = null;
-                    Debug.Log("Choose Target: " + m_target.name);
+                    Debug.Log("Choose Attacker: " + m_attacker.name);
                     return;
                 }
                 else
@@ -130,7 +130,7 @@ public class PlayerAttackState : MyStateMachine
 
         bool hitCreature = false;
 
-        if (hit && hit.tag.Substring(0, 8) == "Creature")
+        if (hit && hit.tag.Length >= "Creature".Length && hit.tag.Substring(0, 8) == "Creature")
         {
             if (m_player.playerID == int.Parse(hit.tag.Substring(8)))
             {

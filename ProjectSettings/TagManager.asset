@@ -7,8 +7,9 @@ TagManager:
   - HelpObject
   - GUI
   - PlayField
-  - Creature
   - Temp
+  - Creature1
+  - Creature2
   layers:
   - Default
   - TransparentFX

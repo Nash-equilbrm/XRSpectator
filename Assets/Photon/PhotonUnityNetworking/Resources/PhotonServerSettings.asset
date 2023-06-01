@@ -52,7 +52,8 @@ MonoBehaviour:
   - ShowInvalidSign_RPC
   - FindOpponent_RPC
   - AddNewMonster_RPC
-  - ChooseNewCard_RPC
+  - ChooseNewCardInDeck_RPC
+  - SetMonsterTag_RPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

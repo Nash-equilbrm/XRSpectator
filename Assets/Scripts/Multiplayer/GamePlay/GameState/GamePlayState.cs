@@ -9,7 +9,6 @@ public class GamePlayState : MyStateMachine
     {
         Debug.Log("Game play state Init");
         GameManager.Instance.invalidSign = PhotonNetwork.Instantiate("Prefabs/Menus/" + GameManager.Instance.invalidSignPrefab.name, new Vector3(100, 100, 100), Quaternion.identity);
-        GameManager.Instance.invalidSign.SetActive(false);
         StateInitialized = true;
     }
 
