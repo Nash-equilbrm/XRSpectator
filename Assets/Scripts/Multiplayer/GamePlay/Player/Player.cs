@@ -2,6 +2,7 @@ using Microsoft.MixedReality.Toolkit;
 using Microsoft.MixedReality.Toolkit.Input;
 using Photon.Pun;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviourPunCallbacks
@@ -25,23 +26,30 @@ public class Player : MonoBehaviourPunCallbacks
     private PlayerChooseCardState m_chooseCardState;
     private PlayerDisplayModelState m_displayModelState;
     private PlayerWaitState m_waitState;
+    private PlayerAttackState m_attackState;
     private PlayerInitState m_initState;
 
 
     public Player Opponent { get => m_opponent; set => m_opponent = value; }
-    private Player m_opponent;
+    [SerializeField] private Player m_opponent;
 
     public bool IsMyTurn { get => m_isMyTurn; set => m_isMyTurn = value; }
     [SerializeField] private bool m_isMyTurn = false;
-    
 
+    public bool OnAttackPhase { get => m_onAttackPhase; set => m_onAttackPhase = value; }
+    private bool m_onAttackPhase = false;
+    
     public Card CardChose { get => m_cardChose; set => m_cardChose = value; }
     private Card m_cardChose = null;
-
 
     public bool PlayerReady { get => playerReady; set => playerReady = value; }
     private bool playerReady = false;
 
+    public List<GameObject> MyPlayFields { get => m_myPlayFields; set => m_myPlayFields = value; }
+    [SerializeField] private List<GameObject> m_myPlayFields;
+
+    public List<GameObject> MyMonsters { get => m_myMonsters; set => m_myMonsters = value; }
+    [SerializeField] private List<GameObject> m_myMonsters;
 
     void Start()
     {
@@ -52,10 +60,13 @@ public class Player : MonoBehaviourPunCallbacks
         else
         {
             photonView = GetComponent<PhotonView>();
+            m_myPlayFields = new List<GameObject>();
+            m_myMonsters = new List<GameObject>();
 
             m_chooseCardState = new PlayerChooseCardState(this);
             m_displayModelState = new PlayerDisplayModelState(this);
             m_waitState = new PlayerWaitState(this);
+            m_attackState = new PlayerAttackState(this);
             m_initState = new PlayerInitState(this);
 
             m_currentState = m_initState;
@@ -77,23 +88,52 @@ public class Player : MonoBehaviourPunCallbacks
         m_currentState.UpdateState();
     }
 
-    public void EndMyTurn()
-    {
-        PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "NoticeOpponentTurn");
-        photonView.RPC("NoticeOpponentTurn", RpcTarget.AllBuffered);
-        PhotonNetwork.SendAllOutgoingCommands();
-    }
+   
 
-    [PunRPC]
-    private void NoticeOpponentTurn()
+
+    public GameObject GetRayCastHit()
     {
-        IsMyTurn = false;
-        if(Opponent != null)
+        foreach (var source in MixedRealityToolkit.InputSystem.DetectedInputSources)
         {
-            Opponent.IsMyTurn = true;
+            // Ignore anything that is not a hand because we want articulated hands
+            if (source.SourceType == Microsoft.MixedReality.Toolkit.Input.InputSourceType.Hand)
+            {
+                foreach (var p in source.Pointers)
+                {
+                    if (p is IMixedRealityNearPointer)
+                    {
+                        // Ignore near pointers, we only want the rays
+                        continue;
+                    }
+                    if (p.Result != null)
+                    {
+                        var startPoint = p.Position;
+                        var endPoint = p.Result.Details.Point;
+                        var hitObject = p.Result.Details.Object;
+                        if (hitObject)
+                        {
+                            Debug.Log("HitObject: " + hitObject.name + " type: " + hitObject.tag);
+                            return hitObject;
+                        }
+                    }
+
+                }
+            }
         }
+        return null;
     }
 
+
+    public void ShowModel(GameObject model, Vector3 position, Quaternion rotation)
+    {
+        if (!model.activeSelf)
+        {
+            model.SetActive(true);
+        }
+        model.transform.position = position;
+        model.transform.rotation = rotation;
+
+    }
 
     public void SwitchState(PlayerStateEnum nextState)
     {
@@ -101,24 +141,73 @@ public class Player : MonoBehaviourPunCallbacks
         {
             case PlayerStateEnum.CHOOSE_CARD:
                 {
-                    Debug.Log("switch to CHOOSE_CARD");
-                    m_currentState = m_chooseCardState; 
+                    m_currentState = m_chooseCardState;
                     break;
                 }
             case PlayerStateEnum.DISPLAY_MODEL:
                 {
-                    Debug.Log("switch to DISPLAY_MODEL");
                     m_currentState = m_displayModelState;
+                    break;
+                }
+            case PlayerStateEnum.ATTACK:
+                {
+                    m_currentState = m_attackState;
                     break;
                 }
             case PlayerStateEnum.WAIT:
                 {
-                    Debug.Log("switch to WAIT");
                     m_currentState = m_waitState;
                     break;
                 }
         }
     }
+
+
+    // ==================== PUNRPC ====================
+    public void EndMyTurn()
+    {
+        PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "EndMyTurn_RPC");
+        photonView.RPC("EndMyTurn_RPC", RpcTarget.AllBuffered);
+        PhotonNetwork.SendAllOutgoingCommands();
+    }
+
+    [PunRPC]
+    private void EndMyTurn_RPC()
+    {
+        IsMyTurn = false;
+        if (Opponent != null)
+        {
+            Opponent.IsMyTurn = true;
+        }
+    }
+
+
+    public void FindOpponent()
+    {
+        PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "FindOpponent_RPC");
+        photonView.RPC("FindOpponent_RPC", RpcTarget.AllBuffered);
+        PhotonNetwork.SendAllOutgoingCommands();
+    }
+
+    [PunRPC]
+    private void FindOpponent_RPC()
+    {
+        if (Opponent == null)
+        {
+            gameObject.tag = "Temp";
+            GameObject obj = GameObject.FindGameObjectWithTag("Player");
+            if (obj)
+            {
+                Opponent = obj.GetComponent<Player>();
+            }
+            gameObject.tag = "Player";
+        }
+    }
+
+
+
+
+    
 }
 
 

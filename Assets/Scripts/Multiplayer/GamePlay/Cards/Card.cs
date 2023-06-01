@@ -1,15 +1,14 @@
 using Photon.Pun;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Card : MonoBehaviour
 {
-    public CardConfig Config { get => config; set => config = value; }
-    private CardConfig config;
-    public GameObject Model { get => model; set => model = value; }
-    private GameObject model;
+    public CardConfig Config { get => m_config; set => m_config = value; }
+    private CardConfig m_config;
+
+    public Monster Monster { get => m_monster; set => m_monster = value; }
+    private Monster m_monster = null;
 
     public Image avatarGUIImg;
 
@@ -22,7 +21,12 @@ public class Card : MonoBehaviour
                 avatarGUIImg.sprite = Config.avatarImg;
             if(Config.model != null)
             {
-                model = PhotonNetwork.Instantiate("Prefabs/Creatures/" + Config.model.name, new Vector3(100,100,100), Quaternion.identity);
+                GameObject model = PhotonNetwork.Instantiate("Prefabs/Monsters/" + Config.model.name, new Vector3(100,100,100), Quaternion.identity);
+                Monster = model.GetComponent<Monster>();
+                if (Monster != null)
+                {
+                    Monster.SetUpStats(Config);
+                }
                 model.SetActive(false);
             }
         } 

@@ -25,11 +25,16 @@ public partial class GameManager
 
         GameObject playerModel = PhotonNetwork.Instantiate("Prefabs/" + playerAvatarPrefab.name, ARCamera.transform.position, ARCamera.transform.rotation);
 
+
         if (playerModel.GetComponent<PhotonView>().IsMine)
         {
             playerModel.GetComponent<MoveARCamera>().ARCamera = ARCamera.transform;
             playerManager = playerModel.GetComponent<Player>();
             playerManager.playMenuObj.transform.SetParent(null);
+        }
+        else
+        {
+            Destroy(playerManager.playMenuObj);
         }
 
 

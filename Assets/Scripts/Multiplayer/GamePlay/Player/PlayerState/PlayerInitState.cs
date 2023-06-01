@@ -1,3 +1,5 @@
+using Photon.Pun;
+using System;
 using UnityEngine;
 
 public class PlayerInitState : MyStateMachine
@@ -14,10 +16,11 @@ public class PlayerInitState : MyStateMachine
         if (m_player.PlayerReady)
         {
             InitPlayUIs();
-            FindOpponent();
+            m_player.FindOpponent();
             ExitState = true;
         }
     }
+
 
     protected override void Exit()
     {
@@ -30,31 +33,11 @@ public class PlayerInitState : MyStateMachine
     }
 
 
-    private void FindOpponent()
-    {
-        if (m_player.Opponent == null)
-        {
-            m_player.gameObject.tag = "Temp";
-            GameObject obj = GameObject.FindGameObjectWithTag("Player");
-            if (obj)
-            {
-                m_player.Opponent = obj.GetComponent<Player>();
-            }
-            m_player.gameObject.tag = "Player";
-            Debug.Log("Found opponent");
+   
 
-        }
-        //if (m_player.Opponent == null)
-        //{
-        //    GameObject obj = PhotonNetwork.Instantiate("Prefabs/" + GameManager.Instance.playerAvatarPrefab.name, new Vector3(0, 5, 0), Quaternion.identity);
-        //    m_player.Opponent = obj.GetComponent<Player>();
-        //    Debug.Log("Cannot find opponent: create one");
-        //}
-    }
-
-    private void InitCardUIs()
+    private void InitPlayUIs()
     {
-        Debug.Log("InitCardUIs");
+        m_player.startGameBtn.SetActive(false);
         for (int i = 0; i < m_player.cardConfigs.Length; ++i)
         {
             GameObject cardObj = GameObject.Instantiate(m_player.cardPrefab);
@@ -64,13 +47,6 @@ public class PlayerInitState : MyStateMachine
             card.Config = m_player.cardConfigs[i];
             card.InitCardUI();
         }
-    }
-
-    private void InitPlayUIs()
-    {
-        m_player.startGameBtn.SetActive(false);
-        InitCardUIs();
-
     }
 
 }

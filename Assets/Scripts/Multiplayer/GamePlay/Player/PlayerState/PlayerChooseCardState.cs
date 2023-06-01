@@ -11,7 +11,7 @@ public class PlayerChooseCardState : MyStateMachine
     {
         Debug.Log("CHOOSE CARD");
 
-        if (!m_player.IsMyTurn || m_player.CardChose != null)
+        if (!m_player.IsMyTurn || m_player.OnAttackPhase || m_player.CardChose != null)
         {
             ExitState = true;
         }
@@ -24,7 +24,11 @@ public class PlayerChooseCardState : MyStateMachine
             m_player.EndMyTurn();
             m_player.SwitchState(PlayerStateEnum.WAIT);
         }
-        else
+        else if (m_player.OnAttackPhase)
+        {
+            m_player.SwitchState(PlayerStateEnum.ATTACK);
+        }
+        else if(m_player.CardChose != null)
         {
             m_player.SwitchState(PlayerStateEnum.DISPLAY_MODEL);
         }
@@ -32,6 +36,7 @@ public class PlayerChooseCardState : MyStateMachine
 
     protected override void Initialize()
     {
+        m_player.CardChose = null;
         StateInitialized = true;
     }
 }

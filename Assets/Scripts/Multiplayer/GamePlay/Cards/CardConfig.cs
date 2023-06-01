@@ -7,4 +7,7 @@ public class CardConfig : ScriptableObject
 {
     public GameObject model;
     public Sprite avatarImg;
+
+    public int HP;
+    public float attackDuration;
 }
