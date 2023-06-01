@@ -51,12 +51,12 @@ public class PlayerDisplayModelState : MyStateMachine
                 // show creatures in card
                 if (m_player.MyPlayFields.Contains(m_selectedPlayField))
                 {
-                    m_player.ShowModel(m_player.CardChose.Monster.gameObject, position, Quaternion.Euler(rotation));
+                    m_player.ShowModel(position, Quaternion.Euler(rotation));
                 }
                 // invalid action -> show invalid sign
                 else
                 {
-                    m_player.ShowModel(GameManager.Instance.invalidSign, position, Quaternion.Euler(rotation));
+                    m_player.ShowInvalidSign(position, Quaternion.Euler(rotation));
                 }
                 
             }

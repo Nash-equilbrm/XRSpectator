@@ -155,20 +155,37 @@ public class Player : MonoBehaviourPunCallbacks
 
 
     // ==================== PUNRPC ====================
-    public void ShowModel(GameObject model, Vector3 position, Quaternion rotation)
+    public void ShowModel(Vector3 position, Quaternion rotation)
     {
-        photonView.RPC("ShowModel_RPC", RpcTarget.All, model, position, rotation);
+        photonView.RPC("ShowModel_RPC", RpcTarget.All, position, rotation);
     }
 
     [PunRPC]
-    private void ShowModel_RPC(GameObject model, Vector3 position, Quaternion rotation)
+    private void ShowModel_RPC(Vector3 position, Quaternion rotation)
     {
-        if (!model.activeSelf)
+        if (!CardChose.Monster.gameObject.activeSelf)
         {
-            model.SetActive(true);
+            CardChose.Monster.gameObject.SetActive(true);
         }
-        model.transform.position = position;
-        model.transform.rotation = rotation;
+        CardChose.Monster.gameObject.transform.position = position;
+        CardChose.Monster.gameObject.transform.rotation = rotation;
+    }
+
+
+    public void ShowInvalidSign(Vector3 position, Quaternion rotation)
+    {
+        photonView.RPC("ShowInvalidSign_RPC", RpcTarget.All, position, rotation);
+    }
+
+    [PunRPC]
+    private void ShowInvalidSign_RPC(Vector3 position, Quaternion rotation)
+    {
+        if (!GameManager.Instance.invalidSign.activeSelf)
+        {
+            GameManager.Instance.invalidSign.SetActive(true);
+        }
+        GameManager.Instance.invalidSign.transform.position = position;
+        GameManager.Instance.invalidSign.transform.rotation = rotation;
     }
 
 

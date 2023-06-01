@@ -91,7 +91,7 @@ public class PlayerAttackState : MyStateMachine
             {
                 Vector3 position = hit.transform.position;
                 Vector3 rotation = new Vector3(0, hit.transform.eulerAngles.y, 0);
-                m_player.ShowModel(GameManager.Instance.invalidSign, position, Quaternion.Euler(rotation));
+                m_player.ShowInvalidSign(position, Quaternion.Euler(rotation));
             }
         }
 
@@ -142,7 +142,7 @@ public class PlayerAttackState : MyStateMachine
             {
                 Vector3 position = hit.transform.position;
                 Vector3 rotation = new Vector3(0, hit.transform.eulerAngles.y, 0);
-                m_player.ShowModel(GameManager.Instance.invalidSign, position, Quaternion.Euler(rotation));
+                m_player.ShowInvalidSign(position, Quaternion.Euler(rotation));
             }
         }
 
