@@ -15,6 +15,7 @@ public class PlayerInitState : MyStateMachine
         Debug.Log("INIT");
         if (m_player.PlayerReady)
         {
+            m_player.GetPlayFields();
             InitPlayUIs();
             m_player.FindOpponent();
             ExitState = true;

@@ -26,18 +26,10 @@ public class GameTurnDecideState : MyStateMachine
         if (PhotonNetwork.IsMasterClient)
         {
             GameManager.Instance.playerManager.IsMyTurn = true;
-            for (int i = 0; i < 5; ++i)
-            {
-                GameManager.Instance.playerManager.MyPlayFields.Add(GameManager.Instance.playFields[i]);
-            }
         }
         else
         {
             GameManager.Instance.playerManager.IsMyTurn = false;
-            for (int i = 0; i < 5; ++i)
-            {
-                GameManager.Instance.playerManager.MyPlayFields.Add(GameManager.Instance.playFields[i+5]);
-            }
         }
         ExitState = true;
     }

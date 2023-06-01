@@ -205,7 +205,37 @@ public class Player : MonoBehaviourPunCallbacks
     }
 
 
+    public void GetPlayFields()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "GetFirstHalfFields_RPC");
+            photonView.RPC("GetFirstHalfFields_RPC", RpcTarget.AllBuffered);
+            PhotonNetwork.SendAllOutgoingCommands();
+        }
+        else
+        {
+            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "GetSecondHalfFields_RPC");
+            photonView.RPC("GetSecondHalfFields_RPC", RpcTarget.AllBuffered);
+            PhotonNetwork.SendAllOutgoingCommands();
+        }
+    }
 
+    private void GetFirstHalfFields_RPC()
+    {
+        for (int i = 0; i < 5; ++i)
+        {
+            MyPlayFields.Add(GameManager.Instance.playFields[i]);
+        }
+    }
+
+    private void GetSecondHalfFields_RPC()
+    {
+        for (int i = 0; i < 5; ++i)
+        {
+            MyPlayFields.Add(GameManager.Instance.playFields[i + 5]);
+        }
+    }
 
     
 }
