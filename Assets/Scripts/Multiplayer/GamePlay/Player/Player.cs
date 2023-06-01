@@ -124,16 +124,7 @@ public class Player : MonoBehaviourPunCallbacks
     }
 
 
-    public void ShowModel(GameObject model, Vector3 position, Quaternion rotation)
-    {
-        if (!model.activeSelf)
-        {
-            model.SetActive(true);
-        }
-        model.transform.position = position;
-        model.transform.rotation = rotation;
-
-    }
+    
 
     public void SwitchState(PlayerStateEnum nextState)
     {
@@ -164,6 +155,24 @@ public class Player : MonoBehaviourPunCallbacks
 
 
     // ==================== PUNRPC ====================
+    public void ShowModel(GameObject model, Vector3 position, Quaternion rotation)
+    {
+        photonView.RPC("ShowModel_RPC", RpcTarget.All, model, position, rotation);
+    }
+
+    [PunRPC]
+    private void ShowModel_RPC(GameObject model, Vector3 position, Quaternion rotation)
+    {
+        if (!model.activeSelf)
+        {
+            model.SetActive(true);
+        }
+        model.transform.position = position;
+        model.transform.rotation = rotation;
+    }
+
+
+
     public void EndMyTurn()
     {
         //PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "EndMyTurn_RPC");
@@ -185,16 +194,6 @@ public class Player : MonoBehaviourPunCallbacks
 
     public void FindOpponent()
     {
-        //PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "FindOpponent_RPC");
-        //photonView.RPC("FindOpponent_RPC", RpcTarget.AllBuffered);
-        //PhotonNetwork.SendAllOutgoingCommands();
-        photonView.RPC("FindOpponent_RPC", RpcTarget.All);
-
-    }
-
-    [PunRPC]
-    private void FindOpponent_RPC()
-    {
         if (Opponent == null)
         {
             gameObject.tag = "Temp";
@@ -205,8 +204,8 @@ public class Player : MonoBehaviourPunCallbacks
             }
             gameObject.tag = "Player";
         }
-    }
 
+    }
 
     public void GetPlayFields()
     {
