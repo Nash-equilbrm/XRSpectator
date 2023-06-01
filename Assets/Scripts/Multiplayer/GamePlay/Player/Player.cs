@@ -166,9 +166,10 @@ public class Player : MonoBehaviourPunCallbacks
     // ==================== PUNRPC ====================
     public void EndMyTurn()
     {
-        PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "EndMyTurn_RPC");
-        photonView.RPC("EndMyTurn_RPC", RpcTarget.AllBuffered);
-        PhotonNetwork.SendAllOutgoingCommands();
+        //PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "EndMyTurn_RPC");
+        //photonView.RPC("EndMyTurn_RPC", RpcTarget.AllBuffered);
+        //PhotonNetwork.SendAllOutgoingCommands();
+        photonView.RPC("EndMyTurn_RPC", RpcTarget.All);
     }
 
     [PunRPC]
@@ -184,9 +185,11 @@ public class Player : MonoBehaviourPunCallbacks
 
     public void FindOpponent()
     {
-        PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "FindOpponent_RPC");
-        photonView.RPC("FindOpponent_RPC", RpcTarget.AllBuffered);
-        PhotonNetwork.SendAllOutgoingCommands();
+        //PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "FindOpponent_RPC");
+        //photonView.RPC("FindOpponent_RPC", RpcTarget.AllBuffered);
+        //PhotonNetwork.SendAllOutgoingCommands();
+        photonView.RPC("FindOpponent_RPC", RpcTarget.All);
+
     }
 
     [PunRPC]
@@ -209,18 +212,21 @@ public class Player : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "GetFirstHalfFields_RPC");
-            photonView.RPC("GetFirstHalfFields_RPC", RpcTarget.AllBuffered);
-            PhotonNetwork.SendAllOutgoingCommands();
+            //PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "GetFirstHalfFields_RPC");
+            //photonView.RPC("GetFirstHalfFields_RPC", RpcTarget.AllBuffered);
+            //PhotonNetwork.SendAllOutgoingCommands();
+            photonView.RPC("GetFirstHalfFields_RPC", RpcTarget.All);
+
         }
         else
         {
-            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "GetSecondHalfFields_RPC");
-            photonView.RPC("GetSecondHalfFields_RPC", RpcTarget.AllBuffered);
-            PhotonNetwork.SendAllOutgoingCommands();
+            //PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "GetSecondHalfFields_RPC");
+            //photonView.RPC("GetSecondHalfFields_RPC", RpcTarget.AllBuffered);
+            //PhotonNetwork.SendAllOutgoingCommands();
+            photonView.RPC("GetSecondHalfFields_RPC", RpcTarget.All);
         }
     }
-
+    [PunRPC]
     private void GetFirstHalfFields_RPC()
     {
         for (int i = 0; i < 5; ++i)
@@ -228,7 +234,7 @@ public class Player : MonoBehaviourPunCallbacks
             MyPlayFields.Add(GameManager.Instance.playFields[i]);
         }
     }
-
+    [PunRPC]
     private void GetSecondHalfFields_RPC()
     {
         for (int i = 0; i < 5; ++i)
@@ -237,8 +243,11 @@ public class Player : MonoBehaviourPunCallbacks
         }
     }
 
-    
+
 }
+
+    
+
 
 
 public enum PlayerStateEnum
