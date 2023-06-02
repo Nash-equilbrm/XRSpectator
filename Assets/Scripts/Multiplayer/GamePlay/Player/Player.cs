@@ -8,8 +8,10 @@ using UnityEngine;
 
 public class Player : MonoBehaviourPunCallbacks
 {
+    public int PlayerID { get => m_playerID; }
+    private int m_playerID;
+
     public PhotonView photonView;
-    public int playerID; 
     private MyStateMachine m_currentState;
     private PlayerChooseCardState m_chooseCardState;
     private PlayerDisplayModelState m_displayModelState;
@@ -35,6 +37,7 @@ public class Player : MonoBehaviourPunCallbacks
     [SerializeField] private List<GameObject> m_myPlayFields;
 
     public Dictionary<int, GameObject> MyMonsters { get => m_myMonsters; }
+
     [SerializeField] Dictionary<int, GameObject> m_myMonsters;
     public int MyMonsterCounts;
 
@@ -245,7 +248,7 @@ public class Player : MonoBehaviourPunCallbacks
 
     public void GetPlayFields()
     {
-        if (GameManager.Instance.playerManager.playerID == 1)
+        if (GameManager.Instance.playerManager.PlayerID == 1)
         {
             PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "GetFirstHalfFields_RPC");
             photonView.RPC("GetFirstHalfFields_RPC", RpcTarget.AllBuffered);
@@ -307,6 +310,18 @@ public class Player : MonoBehaviourPunCallbacks
         m_myMonsters.Add(monsterViewID, monsterObj);
     }
 
+
+    public void SetPlayerID(int ID)
+    {
+        PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "SetPlayerID_RPC");
+        photonView.RPC("SetPlayerID_RPC", RpcTarget.AllBuffered, ID);
+        PhotonNetwork.SendAllOutgoingCommands();
+    }
+    [PunRPC]
+    private void SetPlayerID_RPC(int ID)
+    {
+        m_playerID = ID;
+    }
 }
 
     

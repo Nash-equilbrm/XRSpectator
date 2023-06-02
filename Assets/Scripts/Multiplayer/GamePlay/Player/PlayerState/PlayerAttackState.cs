@@ -81,7 +81,7 @@ public class PlayerAttackState : MyStateMachine
 
         if (hit && hit.tag.Length >= "Creature".Length && hit.tag.Substring(0, 8) == "Creature")
         {
-            if (m_player.playerID != int.Parse(hit.tag.Substring(8)))
+            if (m_player.PlayerID != int.Parse(hit.tag.Substring(8)))
             {
                 m_selectedObj = hit;
                 hitCreature = true;
@@ -132,7 +132,7 @@ public class PlayerAttackState : MyStateMachine
 
         if (hit && hit.tag.Length >= "Creature".Length && hit.tag.Substring(0, 8) == "Creature")
         {
-            if (m_player.playerID == int.Parse(hit.tag.Substring(8)))
+            if (m_player.PlayerID == int.Parse(hit.tag.Substring(8)))
             {
                 m_selectedObj = hit;
                 hitCreature = true;

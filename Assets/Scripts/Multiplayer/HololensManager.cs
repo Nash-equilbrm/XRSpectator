@@ -32,11 +32,11 @@ public partial class GameManager
             playerManager = playerModel.GetComponent<Player>();
             if (PhotonNetwork.IsMasterClient)
             {
-                playerManager.playerID = 1;
+                playerManager.SetPlayerID(1);
             }
             else
             {
-                playerManager.playerID = 2;
+                playerManager.SetPlayerID(2);
             }
         }
 

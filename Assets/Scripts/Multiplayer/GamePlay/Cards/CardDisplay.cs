@@ -29,7 +29,7 @@ public class CardDisplay : MonoBehaviour
                 if (Monster != null)
                 {
                     Monster.SetUpStats(Config);
-                    Monster.SetMonsterTag("Creature" + GameManager.Instance.playerManager.playerID.ToString());
+                    Monster.SetMonsterTag("Creature" + GameManager.Instance.playerManager.PlayerID.ToString());
                 }
             }
 
