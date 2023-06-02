@@ -65,8 +65,8 @@ public class Player : MonoBehaviourPunCallbacks
 
             if (photonView.IsMine)
             {
-                PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "SetPlayerID_RPC");
-                photonView.RPC("SetPlayerID_RPC", RpcTarget.AllBuffered, ID);
+                PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "GetInvalidSign_RPC");
+                photonView.RPC("GetInvalidSign_RPC", RpcTarget.AllBuffered);
                 PhotonNetwork.SendAllOutgoingCommands();
             }
 
@@ -346,6 +346,12 @@ public class Player : MonoBehaviourPunCallbacks
             PhotonNetwork.SendAllOutgoingCommands();
         }
     }
+
+    private void SetPlayerID_RPC(int ID)
+    {
+        m_playerID = ID;
+    }
+
     [PunRPC]
     private void GetInvalidSign_RPC()
     {
