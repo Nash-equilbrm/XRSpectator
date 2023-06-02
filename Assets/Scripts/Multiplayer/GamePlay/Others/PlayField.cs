@@ -10,7 +10,7 @@ public class PlayField : MonoBehaviour
     public GameObject monsterField;
     public GameObject attackPhaseField;
     public Monster CurrentMonster { get => m_currentMonster; set => m_currentMonster = value; }
-    private Monster m_currentMonster = null;
+    [SerializeField] private Monster m_currentMonster = null;
 
 
     private void Start()

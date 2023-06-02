@@ -229,6 +229,7 @@ public class Player : MonoBehaviourPunCallbacks
             photonView.RPC("EndMyTurn_RPC", RpcTarget.AllBuffered);
             PhotonNetwork.SendAllOutgoingCommands();
         }
+        
     }
 
     [PunRPC]
