@@ -112,7 +112,7 @@ public partial class Monster : MonoBehaviour
         if (photonView.IsMine)
         {
             PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "SetMonsterReady_RPC");
-            photonView.RPC("SetMonsterReady_RPC", RpcTarget.AllBuffered, tag);
+            photonView.RPC("SetMonsterReady_RPC", RpcTarget.AllBuffered);
             PhotonNetwork.SendAllOutgoingCommands();
         }
     }

@@ -11,7 +11,7 @@ public class Player : MonoBehaviourPunCallbacks
     public int PlayerID { get => m_playerID; }
     [SerializeField] private int m_playerID;
     public GameObject InvalidSign { get => m_invalidSign; set => m_invalidSign = value; }
-    private GameObject m_invalidSign = null;
+    [SerializeField] private GameObject m_invalidSign = null;
 
     public PhotonView photonView;
     private MyStateMachine m_currentState;
@@ -65,7 +65,9 @@ public class Player : MonoBehaviourPunCallbacks
 
             if (photonView.IsMine)
             {
-                InvalidSign = PhotonNetwork.Instantiate("Prefabs/Menus/" + GameManager.Instance.invalidSignPrefab.name, new Vector3(100, 100, 100), Quaternion.identity);
+                PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "SetPlayerID_RPC");
+                photonView.RPC("SetPlayerID_RPC", RpcTarget.AllBuffered, ID);
+                PhotonNetwork.SendAllOutgoingCommands();
             }
 
         }
@@ -345,10 +347,12 @@ public class Player : MonoBehaviourPunCallbacks
         }
     }
     [PunRPC]
-    private void SetPlayerID_RPC(int ID)
+    private void GetInvalidSign_RPC()
     {
-        m_playerID = ID;
+        InvalidSign = PhotonNetwork.Instantiate("Prefabs/Menus/" + GameManager.Instance.invalidSignPrefab.name, new Vector3(100, 100, 100), Quaternion.identity);
     }
+
+
 }
 
     
