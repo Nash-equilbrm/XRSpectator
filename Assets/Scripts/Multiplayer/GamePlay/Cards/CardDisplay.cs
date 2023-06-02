@@ -30,7 +30,10 @@ public class CardDisplay : MonoBehaviour
                 }
             }
 
-            GameManager.Instance.playerManager.AddNewMonster(Monster.photonView.ViewID);
+            if (Monster.photonView.IsMine)
+            {
+                GameManager.Instance.playerManager.AddNewMonster(Monster.photonView.ViewID);
+            }
 
         } 
     }

@@ -39,9 +39,9 @@ public class Player : MonoBehaviourPunCallbacks
     [SerializeField] private List<GameObject> m_myPlayFields;
 
     public Dictionary<int, GameObject> MyMonsters { get => m_myMonsters; }
-
     [SerializeField] Dictionary<int, GameObject> m_myMonsters;
     public int MyMonsterCounts;
+    public List<int> DebugMonsterList = new List<int>();
 
     void Start()
     {
@@ -65,8 +65,10 @@ public class Player : MonoBehaviourPunCallbacks
 
             if (photonView.IsMine)
             {
+                GameObject sign = PhotonNetwork.Instantiate("Prefabs/Menus/" + GameManager.Instance.invalidSignPrefab.name, new Vector3(100, 100, 100), Quaternion.identity);
+
                 PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "GetInvalidSign_RPC");
-                photonView.RPC("GetInvalidSign_RPC", RpcTarget.AllBuffered);
+                photonView.RPC("GetInvalidSign_RPC", RpcTarget.AllBuffered, sign.GetComponent<PhotonView>().ViewID);
                 PhotonNetwork.SendAllOutgoingCommands();
             }
 
@@ -334,6 +336,7 @@ public class Player : MonoBehaviourPunCallbacks
     {
         GameObject monsterObj = PhotonView.Find(monsterViewID)?.gameObject;
         m_myMonsters.Add(monsterViewID, monsterObj);
+        DebugMonsterList.Add(monsterViewID);
     }
 
 
@@ -346,16 +349,16 @@ public class Player : MonoBehaviourPunCallbacks
             PhotonNetwork.SendAllOutgoingCommands();
         }
     }
-
+    [PunRPC]
     private void SetPlayerID_RPC(int ID)
     {
         m_playerID = ID;
     }
 
     [PunRPC]
-    private void GetInvalidSign_RPC()
+    private void GetInvalidSign_RPC(int viewID)
     {
-        InvalidSign = PhotonNetwork.Instantiate("Prefabs/Menus/" + GameManager.Instance.invalidSignPrefab.name, new Vector3(100, 100, 100), Quaternion.identity);
+        InvalidSign = PhotonView.Find(viewID).gameObject;
     }
 
 

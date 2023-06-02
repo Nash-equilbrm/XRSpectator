@@ -267,6 +267,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_playerID: 0
+  m_invalidSign: {fileID: 0}
   photonView: {fileID: 2971360194156331780}
   cardCollectionIds: 01000000000000000100000000000000
   m_opponent: {fileID: 0}
@@ -274,3 +275,4 @@ MonoBehaviour:
   m_monsterChosenID: -1
   m_myPlayFields: []
   MyMonsterCounts: 0
+  DebugMonsterList: 

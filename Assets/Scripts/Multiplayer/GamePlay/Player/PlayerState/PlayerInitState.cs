@@ -31,8 +31,11 @@ public class PlayerInitState : MyStateMachine
     {
         if (GameManager.Instance.PlayerReady)
         {
-            m_player.GetPlayFields();
-            InitPlayUIs();
+            if (m_player.photonView.IsMine)
+            {
+                m_player.GetPlayFields();
+                InitPlayUIs();
+            }
             StateInitialized = true;
         }
     }

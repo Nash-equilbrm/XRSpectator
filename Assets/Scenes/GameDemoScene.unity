@@ -422,7 +422,6 @@ MonoBehaviour:
     type: 3}
   invalidSignPrefab: {fileID: 786864677051450278, guid: 6821f3a7afba45b49961c9b111fdd708,
     type: 3}
-  invalidSign: {fileID: 0}
   playFields:
   - {fileID: 1113851142}
   - {fileID: 2131422609}
@@ -1826,31 +1825,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 955112794}
     m_Modifications:
-    - target: {fileID: 553945272243321153, guid: e6fcfaaf012412042bf7f626b9ddd473,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 553945272243321153, guid: e6fcfaaf012412042bf7f626b9ddd473,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 553945272243321153, guid: e6fcfaaf012412042bf7f626b9ddd473,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 553945272243321153, guid: e6fcfaaf012412042bf7f626b9ddd473,
-        type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 763451598477572560, guid: e6fcfaaf012412042bf7f626b9ddd473,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4272411477355015819, guid: e6fcfaaf012412042bf7f626b9ddd473,
         type: 3}
       propertyPath: m_RootOrder
@@ -1911,16 +1885,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: LargePlayGround
       objectReference: {fileID: 0}
-    - target: {fileID: 5863089936244661525, guid: e6fcfaaf012412042bf7f626b9ddd473,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7546925626053875196, guid: e6fcfaaf012412042bf7f626b9ddd473,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8254680104988252350, guid: e6fcfaaf012412042bf7f626b9ddd473,
         type: 3}
       propertyPath: sceneViewId
@@ -1970,11 +1934,6 @@ PrefabInstance:
         type: 3}
       propertyPath: sceneViewId
       value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 8265216625037265986, guid: e6fcfaaf012412042bf7f626b9ddd473,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e6fcfaaf012412042bf7f626b9ddd473, type: 3}

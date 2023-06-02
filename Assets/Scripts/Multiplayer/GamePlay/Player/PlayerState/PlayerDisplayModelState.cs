@@ -105,10 +105,6 @@ public class PlayerDisplayModelState : MyStateMachine
             
             int monsterViewID = m_player.GetChosenMonster().GetComponent<Monster>().photonView.ViewID;
 
-            if (!m_player.MyMonsters.ContainsKey(monsterViewID))
-            {
-                m_player.AddNewMonster(monsterViewID);
-            }
 
             m_player.SwitchState(PlayerStateEnum.CHOOSE_CARD);
         }
