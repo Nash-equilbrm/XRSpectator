@@ -100,13 +100,9 @@ public class PlayerDisplayModelState : MyStateMachine
             {
                 Monster monster = m_player.GetChosenMonster().GetComponent<Monster>();
                 playField.SetNewMonster(m_player.MonsterChosenID);
-                monster.PlayField = playField;
                 monster.SetMonsterReady();
             }
             
-
-            m_player.GetChosenMonster().transform.SetParent(m_selectedPlayField.transform.Find("Content"));
-
             int monsterViewID = m_player.GetChosenMonster().GetComponent<Monster>().photonView.ViewID;
 
             if (!m_player.MyMonsters.ContainsKey(monsterViewID))

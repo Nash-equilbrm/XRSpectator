@@ -53,7 +53,10 @@ public class PlayField : MonoBehaviour
     [PunRPC]
     public void SetNewMonster_RPC(int viewID)
     {
+
         GameObject monster = PhotonView.Find(viewID).gameObject;
+        monster.transform.SetParent(transform.Find("Content"));
+        monster.GetComponent<Monster>().PlayField = this;
         if (monster)
         {
             CurrentMonster = monster.GetComponent<Monster>();
