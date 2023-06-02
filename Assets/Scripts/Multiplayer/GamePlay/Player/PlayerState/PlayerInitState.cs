@@ -34,7 +34,6 @@ public class PlayerInitState : MyStateMachine
             m_player.GetPlayFields();
             InitPlayUIs();
             StateInitialized = true;
-
         }
     }
 

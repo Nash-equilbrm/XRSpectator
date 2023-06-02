@@ -84,21 +84,19 @@ public partial class Monster : MonoBehaviour
         m_isStatInit = true;
     }
 
-    public void SetMonsterReady()
-    {
-        m_isMonsterReady = true;
-        m_animator.enabled = true;
-        m_collider.enabled = true;
-    }
+   
 
 
 
     // ==================== PUNRPC ====================
     public void SetMonsterTag(string tag)
     {
-        PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "SetMonsterTag_RPC");
-        photonView.RPC("SetMonsterTag_RPC", RpcTarget.AllBuffered, tag);
-        PhotonNetwork.SendAllOutgoingCommands();
+        if (photonView.IsMine)
+        {
+            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "SetMonsterTag_RPC");
+            photonView.RPC("SetMonsterTag_RPC", RpcTarget.AllBuffered, tag);
+            PhotonNetwork.SendAllOutgoingCommands();
+        }
     }
 
 
@@ -106,5 +104,24 @@ public partial class Monster : MonoBehaviour
     private void SetMonsterTag_RPC(string tag)
     {
         gameObject.tag = tag;
+    }
+
+
+    public void SetMonsterReady()
+    {
+        if (photonView.IsMine)
+        {
+            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "SetMonsterReady_RPC");
+            photonView.RPC("SetMonsterReady_RPC", RpcTarget.AllBuffered, tag);
+            PhotonNetwork.SendAllOutgoingCommands();
+        }
+    }
+
+    [PunRPC]
+    public void SetMonsterReady_RPC()
+    {
+        m_isMonsterReady = true;
+        m_animator.enabled = true;
+        m_collider.enabled = true;
     }
 }

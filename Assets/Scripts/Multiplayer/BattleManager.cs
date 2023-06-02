@@ -8,7 +8,6 @@ public partial class GameManager
     [Header("Gameplay")]
     public GameObject turnDecideCoinPrefab;
     public GameObject invalidSignPrefab;
-    [HideInInspector] public GameObject invalidSign;
     public GameObject[] playFields;
     public GameObject cardPrefab;
     public Transform[] cardMenuSlots;

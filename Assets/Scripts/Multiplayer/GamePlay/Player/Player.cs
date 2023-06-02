@@ -63,7 +63,10 @@ public class Player : MonoBehaviourPunCallbacks
 
             m_currentState = m_initState;
 
-            InvalidSign = PhotonNetwork.Instantiate("Prefabs/Menus/" + GameManager.Instance.invalidSignPrefab.name, new Vector3(100, 100, 100), Quaternion.identity);
+            if (photonView.IsMine)
+            {
+                InvalidSign = PhotonNetwork.Instantiate("Prefabs/Menus/" + GameManager.Instance.invalidSignPrefab.name, new Vector3(100, 100, 100), Quaternion.identity);
+            }
 
         }
     }
