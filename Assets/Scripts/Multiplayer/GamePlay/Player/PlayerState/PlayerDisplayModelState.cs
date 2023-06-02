@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class PlayerDisplayModelState : MyStateMachine
 {
-    private float m_timer = 2f;
+    private float m_timer = 1f;
+    private float m_chooseSlotDuration = 1f;
     private GameObject m_selectedPlayField = null;
     private GameObject m_prevHit = null;
 
@@ -35,7 +36,7 @@ public class PlayerDisplayModelState : MyStateMachine
             if(m_selectedPlayField != m_prevHit || m_prevHit == null)
             {
                 // reset timer
-                m_timer = 2f;
+                m_timer = m_chooseSlotDuration;
 
                 // delete invalid sign or model if remove pointer from previous pointed playfield
                 if (m_prevHit != null)
@@ -118,7 +119,7 @@ public class PlayerDisplayModelState : MyStateMachine
 
         // reset
         m_player.ChoseNewMonster(-1);
-        m_timer = 2f;
+        m_timer = m_chooseSlotDuration;
         m_selectedPlayField = null;
         m_prevHit = null;
     }

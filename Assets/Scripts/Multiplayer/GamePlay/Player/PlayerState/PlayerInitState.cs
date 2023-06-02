@@ -45,7 +45,7 @@ public class PlayerInitState : MyStateMachine
             cardObj.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
             CardDisplay card = cardObj.GetComponent<CardDisplay>();
             card.Config = GameManager.Instance.cardConfigs[m_player.cardCollectionIds[i]];
-            card.InitCardUI(i);
+            card.InitCardUI();
 
         }
     }

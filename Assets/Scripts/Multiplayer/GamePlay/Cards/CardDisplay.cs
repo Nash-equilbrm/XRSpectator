@@ -4,8 +4,6 @@ using UnityEngine.UI;
 
 public class CardDisplay : MonoBehaviour
 {
-    private int m_index = -1;
-
     public CardConfig Config { get => m_config; set => m_config = value; }
     private CardConfig m_config;
 
@@ -15,11 +13,10 @@ public class CardDisplay : MonoBehaviour
     public Image avatarGUIImg;
 
 
-    public void InitCardUI(int index)
+    public void InitCardUI()
     {
         if(Config != null)
         {
-            m_index = index;
             if(Config.avatarImg != null)
                 avatarGUIImg.sprite = Config.avatarImg;
             if(Config.model != null)

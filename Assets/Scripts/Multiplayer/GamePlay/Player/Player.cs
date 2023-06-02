@@ -165,9 +165,12 @@ public class Player : MonoBehaviourPunCallbacks
     // ==================== PUNRPC ====================
     public void ShowModel(Vector3 position, Quaternion rotation)
     {
-        PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "ShowModel_RPC");
-        photonView.RPC("ShowModel_RPC", RpcTarget.AllBuffered, position, rotation);
-        PhotonNetwork.SendAllOutgoingCommands();
+        if (photonView.IsMine)
+        {
+            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "ShowModel_RPC");
+            photonView.RPC("ShowModel_RPC", RpcTarget.AllBuffered, position, rotation);
+            PhotonNetwork.SendAllOutgoingCommands();
+        }
     }
 
     [PunRPC]
@@ -186,10 +189,12 @@ public class Player : MonoBehaviourPunCallbacks
 
     public void ShowInvalidSign(Vector3 position, Quaternion rotation)
     {
-        Debug.Log("ShowInvalidSign");
-        PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "ShowInvalidSign_RPC");
-        photonView.RPC("ShowInvalidSign_RPC", RpcTarget.AllBuffered, position, rotation);
-        PhotonNetwork.SendAllOutgoingCommands();
+        if (photonView.IsMine)
+        {
+            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "ShowInvalidSign_RPC");
+            photonView.RPC("ShowInvalidSign_RPC", RpcTarget.AllBuffered, position, rotation);
+            PhotonNetwork.SendAllOutgoingCommands();
+        }
     }
 
     [PunRPC]
@@ -215,11 +220,14 @@ public class Player : MonoBehaviourPunCallbacks
     [PunRPC]
     private void EndMyTurn_RPC()
     {
-        GameManager.Instance.IsMyTurn = false;
-        OpponentEndTurn = false;
-        if (Opponent != null)
+        if (photonView.IsMine)
         {
-            Opponent.OpponentEndTurn = true;
+            GameManager.Instance.IsMyTurn = false;
+            OpponentEndTurn = false;
+            if (Opponent != null)
+            {
+                Opponent.OpponentEndTurn = true;
+            }
         }
     }
 
@@ -287,9 +295,12 @@ public class Player : MonoBehaviourPunCallbacks
 
     public void ChoseNewMonster(int key)
     {
-        PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "ChoseNewMonster_RPC");
-        photonView.RPC("ChoseNewMonster_RPC", RpcTarget.AllBuffered, key);
-        PhotonNetwork.SendAllOutgoingCommands();
+        if (photonView.IsMine)
+        {
+            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "ChoseNewMonster_RPC");
+            photonView.RPC("ChoseNewMonster_RPC", RpcTarget.AllBuffered, key);
+            PhotonNetwork.SendAllOutgoingCommands();
+        }
     }
 
     [PunRPC]
@@ -301,9 +312,12 @@ public class Player : MonoBehaviourPunCallbacks
 
     public void AddNewMonster(int monsterViewID)
     {
-        PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "AddNewMonster_RPC");
-        photonView.RPC("AddNewMonster_RPC", RpcTarget.AllBuffered, monsterViewID);
-        PhotonNetwork.SendAllOutgoingCommands();
+        if (photonView.IsMine)
+        {
+            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "AddNewMonster_RPC");
+            photonView.RPC("AddNewMonster_RPC", RpcTarget.AllBuffered, monsterViewID);
+            PhotonNetwork.SendAllOutgoingCommands();
+        }
     }
 
     [PunRPC]
@@ -316,9 +330,12 @@ public class Player : MonoBehaviourPunCallbacks
 
     public void SetPlayerID(int ID)
     {
-        PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "SetPlayerID_RPC");
-        photonView.RPC("SetPlayerID_RPC", RpcTarget.AllBuffered, ID);
-        PhotonNetwork.SendAllOutgoingCommands();
+        if (photonView.IsMine)
+        {
+            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "SetPlayerID_RPC");
+            photonView.RPC("SetPlayerID_RPC", RpcTarget.AllBuffered, ID);
+            PhotonNetwork.SendAllOutgoingCommands();
+        }
     }
     [PunRPC]
     private void SetPlayerID_RPC(int ID)
