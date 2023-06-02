@@ -266,8 +266,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5504a5edb9d149c40adade8998dd93c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_playerID: 0
   photonView: {fileID: 2971360194156331780}
-  playerID: 0
   cardCollectionIds: 01000000000000000100000000000000
   m_opponent: {fileID: 0}
   m_opponentEndTurn: 0

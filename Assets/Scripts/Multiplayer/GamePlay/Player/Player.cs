@@ -10,6 +10,8 @@ public class Player : MonoBehaviourPunCallbacks
 {
     public int PlayerID { get => m_playerID; }
     [SerializeField] private int m_playerID;
+    public GameObject InvalidSign { get => m_invalidSign; set => m_invalidSign = value; }
+    private GameObject m_invalidSign = null;
 
     public PhotonView photonView;
     private MyStateMachine m_currentState;
@@ -60,6 +62,9 @@ public class Player : MonoBehaviourPunCallbacks
             m_initState = new PlayerInitState(this);
 
             m_currentState = m_initState;
+
+            InvalidSign = PhotonNetwork.Instantiate("Prefabs/Menus/" + GameManager.Instance.invalidSignPrefab.name, new Vector3(100, 100, 100), Quaternion.identity);
+
         }
     }
 
@@ -145,67 +150,66 @@ public class Player : MonoBehaviourPunCallbacks
         }
     }
 
-    private GameObject currentMonsterChosen;
+    private GameObject currentMonsterChosen = null;
     public GameObject GetChosenMonster()
     {
-        if (MonsterChosenID <= 0) return null;
         if (MyMonsters.ContainsKey(MonsterChosenID))
         {
             return MyMonsters[MonsterChosenID];
         }
-        else if(currentMonsterChosen == null)
-        {
-            currentMonsterChosen = PhotonView.Find(MonsterChosenID).gameObject;
-        }
-        return currentMonsterChosen;
 
+        return null;
     }
 
 
     // ==================== PUNRPC ====================
-    public void ShowModel(Vector3 position, Quaternion rotation)
+    public void ShowModel(Vector3 position, Quaternion rotation, bool active)
     {
         if (photonView.IsMine)
         {
             PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "ShowModel_RPC");
-            photonView.RPC("ShowModel_RPC", RpcTarget.AllBuffered, position, rotation);
+            photonView.RPC("ShowModel_RPC", RpcTarget.AllBuffered, position, rotation, active);
             PhotonNetwork.SendAllOutgoingCommands();
         }
     }
 
     [PunRPC]
-    private void ShowModel_RPC(Vector3 position, Quaternion rotation)
+    private void ShowModel_RPC(Vector3 position, Quaternion rotation, bool active)
     {
         Debug.Log("ShowModel_RPC");
         GameObject model = GetChosenMonster();
-        if (!model.activeSelf)
+        if (!active)
         {
-            model.SetActive(true);
+            model.SetActive(false);
+            return;
         }
+        model.SetActive(true);
         model.transform.position = position;
         model.transform.rotation = rotation;
     }
 
 
-    public void ShowInvalidSign(Vector3 position, Quaternion rotation)
+    public void ShowInvalidSign(Vector3 position, Quaternion rotation, bool active = true)
     {
         if (photonView.IsMine)
         {
             PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "ShowInvalidSign_RPC");
-            photonView.RPC("ShowInvalidSign_RPC", RpcTarget.AllBuffered, position, rotation);
+            photonView.RPC("ShowInvalidSign_RPC", RpcTarget.AllBuffered, position, rotation, active);
             PhotonNetwork.SendAllOutgoingCommands();
         }
     }
 
     [PunRPC]
-    private void ShowInvalidSign_RPC(Vector3 position, Quaternion rotation)
+    private void ShowInvalidSign_RPC(Vector3 position, Quaternion rotation, bool active = true)
     {
-        if (!GameManager.Instance.invalidSign.activeSelf)
+        if (!active)
         {
-            GameManager.Instance.invalidSign.SetActive(true);
+            m_invalidSign.SetActive(false);
+            return;
         }
-        GameManager.Instance.invalidSign.transform.position = position;
-        GameManager.Instance.invalidSign.transform.rotation = rotation;
+        m_invalidSign.SetActive(true);
+        m_invalidSign.transform.position = position;
+        m_invalidSign.transform.rotation = rotation;
     }
 
 

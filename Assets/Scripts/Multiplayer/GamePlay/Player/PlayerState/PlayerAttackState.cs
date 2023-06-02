@@ -117,7 +117,7 @@ public class PlayerAttackState : MyStateMachine
             else
             {
                 m_timer = 2f;
-                GameManager.Instance.invalidSign.SetActive(false);
+                m_player.ShowInvalidSign(Vector3.zero, Quaternion.identity, false);
             }
         }
     }
@@ -168,7 +168,7 @@ public class PlayerAttackState : MyStateMachine
             else
             {
                 m_timer = 2f;
-                GameManager.Instance.invalidSign.SetActive(false);
+                m_player.ShowInvalidSign(Vector3.zero, Quaternion.identity, false);
             }
         }
     }

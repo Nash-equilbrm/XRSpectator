@@ -42,7 +42,7 @@ public class PlayerDisplayModelState : MyStateMachine
                 if (m_prevHit != null)
                 {
                     m_player.GetChosenMonster().SetActive(false);
-                    GameManager.Instance.invalidSign.SetActive(false);
+                    m_player.ShowInvalidSign(Vector3.zero, Quaternion.identity ,false);
                 }
 
 
@@ -52,12 +52,12 @@ public class PlayerDisplayModelState : MyStateMachine
                 // show creatures in card
                 if (m_player.MyPlayFields.Contains(m_selectedPlayField))
                 {
-                    m_player.ShowModel(position, Quaternion.Euler(rotation));
+                    m_player.ShowModel(position, Quaternion.Euler(rotation), true);
                 }
                 // invalid action -> show invalid sign
                 else
                 {
-                    m_player.ShowInvalidSign(position, Quaternion.Euler(rotation));
+                    m_player.ShowInvalidSign(position, Quaternion.Euler(rotation), true);
                 }
                 
             }

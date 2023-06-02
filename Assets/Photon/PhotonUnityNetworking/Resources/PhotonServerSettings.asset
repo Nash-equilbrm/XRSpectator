@@ -55,6 +55,7 @@ MonoBehaviour:
   - SetMonsterTag_RPC
   - ChoseNewMonster_RPC
   - SetNewMonster_RPC
+  - SetPlayerID_RPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

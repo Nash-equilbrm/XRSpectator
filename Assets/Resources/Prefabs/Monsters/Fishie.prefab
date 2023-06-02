@@ -1379,6 +1379,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   photonView: {fileID: 7328862912876552454}
+  m_playField: {fileID: 0}
   m_isMonsterReady: 0
 --- !u!65 &1958720509299801605
 BoxCollider:

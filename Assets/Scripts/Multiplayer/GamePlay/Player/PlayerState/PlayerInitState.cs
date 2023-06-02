@@ -46,7 +46,6 @@ public class PlayerInitState : MyStateMachine
             CardDisplay card = cardObj.GetComponent<CardDisplay>();
             card.Config = GameManager.Instance.cardConfigs[m_player.cardCollectionIds[i]];
             card.InitCardUI();
-
         }
     }
 
