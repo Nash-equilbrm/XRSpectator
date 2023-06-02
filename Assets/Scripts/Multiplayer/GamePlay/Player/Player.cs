@@ -216,22 +216,22 @@ public class Player : MonoBehaviourPunCallbacks
 
     public void EndMyTurn()
     {
-        PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "EndMyTurn_RPC");
-        photonView.RPC("EndMyTurn_RPC", RpcTarget.AllBuffered);
-        PhotonNetwork.SendAllOutgoingCommands();
+        if (photonView.IsMine)
+        {
+            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "EndMyTurn_RPC");
+            photonView.RPC("EndMyTurn_RPC", RpcTarget.AllBuffered);
+            PhotonNetwork.SendAllOutgoingCommands();
+        }
     }
 
     [PunRPC]
     private void EndMyTurn_RPC()
     {
-        if (photonView.IsMine)
+        GameManager.Instance.IsMyTurn = false;
+        OpponentEndTurn = false;
+        if (Opponent != null)
         {
-            GameManager.Instance.IsMyTurn = false;
-            OpponentEndTurn = false;
-            if (Opponent != null)
-            {
-                Opponent.OpponentEndTurn = true;
-            }
+            Opponent.OpponentEndTurn = true;
         }
     }
 

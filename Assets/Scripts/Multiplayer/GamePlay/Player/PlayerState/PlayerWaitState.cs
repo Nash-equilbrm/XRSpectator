@@ -12,7 +12,7 @@ public class PlayerWaitState : MyStateMachine
     protected override void DoBehavior()
     {
         Debug.Log("WAIT");
-        if (GameManager.Instance.playerManager.OpponentEndTurn || GameManager.Instance.IsMyTurn)
+        if (m_player.OpponentEndTurn || GameManager.Instance.IsMyTurn)
         {
             ExitState = true;
         }
@@ -24,7 +24,7 @@ public class PlayerWaitState : MyStateMachine
 
     protected override void Exit()
     {
-        if (GameManager.Instance.playerManager.OpponentEndTurn)
+        if (m_player.OpponentEndTurn)
         {
             GameManager.Instance.IsMyTurn = true;
         }

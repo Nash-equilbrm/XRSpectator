@@ -13,11 +13,10 @@ public class PlayerInitState : MyStateMachine
     protected override void DoBehavior()
     {
         Debug.Log("INIT");
-        if (GameManager.Instance.PlayerReady)
+        m_player.FindOpponent();
+
+        if (m_player.Opponent != null)
         {
-            m_player.GetPlayFields();
-            InitPlayUIs();
-            m_player.FindOpponent();
             ExitState = true;
         }
     }
@@ -30,7 +29,13 @@ public class PlayerInitState : MyStateMachine
 
     protected override void Initialize()
     {
-        StateInitialized = true;
+        if (GameManager.Instance.PlayerReady)
+        {
+            m_player.GetPlayFields();
+            InitPlayUIs();
+            StateInitialized = true;
+
+        }
     }
 
 
