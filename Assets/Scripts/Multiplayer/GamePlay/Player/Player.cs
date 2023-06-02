@@ -9,7 +9,7 @@ using UnityEngine;
 public class Player : MonoBehaviourPunCallbacks
 {
     public int PlayerID { get => m_playerID; }
-    private int m_playerID;
+    [SerializeField] private int m_playerID;
 
     public PhotonView photonView;
     private MyStateMachine m_currentState;
@@ -248,18 +248,21 @@ public class Player : MonoBehaviourPunCallbacks
 
     public void GetPlayFields()
     {
-        if (GameManager.Instance.playerManager.PlayerID == 1)
+        if (photonView.IsMine)
         {
-            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "GetFirstHalfFields_RPC");
-            photonView.RPC("GetFirstHalfFields_RPC", RpcTarget.AllBuffered);
-            PhotonNetwork.SendAllOutgoingCommands();
+            if (PlayerID == 1)
+            {
+                PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "GetFirstHalfFields_RPC");
+                photonView.RPC("GetFirstHalfFields_RPC", RpcTarget.AllBuffered);
+                PhotonNetwork.SendAllOutgoingCommands();
 
-        }
-        else
-        {
-            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "GetSecondHalfFields_RPC");
-            photonView.RPC("GetSecondHalfFields_RPC", RpcTarget.AllBuffered);
-            PhotonNetwork.SendAllOutgoingCommands();
+            }
+            else if (PlayerID == 2)
+            {
+                PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "GetSecondHalfFields_RPC");
+                photonView.RPC("GetSecondHalfFields_RPC", RpcTarget.AllBuffered);
+                PhotonNetwork.SendAllOutgoingCommands();
+            }
         }
     }
 
