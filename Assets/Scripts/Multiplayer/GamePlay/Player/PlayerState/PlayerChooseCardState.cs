@@ -11,7 +11,7 @@ public class PlayerChooseCardState : MyStateMachine
     {
         Debug.Log("CHOOSE CARD");
 
-        if (!GameManager.Instance.IsMyTurn || GameManager.Instance.OnAttack || m_player.CardChose != null)
+        if (!GameManager.Instance.IsMyTurn || GameManager.Instance.OnAttack || m_player.MonsterChosenID != -1)
         {
             ExitState = true;
         }
@@ -28,7 +28,7 @@ public class PlayerChooseCardState : MyStateMachine
         {
             m_player.SwitchState(PlayerStateEnum.ATTACK);
         }
-        else if(m_player.CardChose != null)
+        else if(m_player.MonsterChosenID != -1)
         {
             m_player.SwitchState(PlayerStateEnum.DISPLAY_MODEL);
         }
@@ -36,7 +36,7 @@ public class PlayerChooseCardState : MyStateMachine
 
     protected override void Initialize()
     {
-        m_player.ChooseNewCardInDeck(-1);
+        m_player.ChoseNewMonster(-1);
         StateInitialized = true;
     }
 }

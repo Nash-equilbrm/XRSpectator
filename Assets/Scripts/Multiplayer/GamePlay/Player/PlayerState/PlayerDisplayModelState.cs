@@ -40,7 +40,7 @@ public class PlayerDisplayModelState : MyStateMachine
                 // delete invalid sign or model if remove pointer from previous pointed playfield
                 if (m_prevHit != null)
                 {
-                    m_player.CardChose.Monster.gameObject.SetActive(false);
+                    m_player.GetChosenMonster().SetActive(false);
                     GameManager.Instance.invalidSign.SetActive(false);
                 }
 
@@ -97,18 +97,18 @@ public class PlayerDisplayModelState : MyStateMachine
             PlayField playField = m_selectedPlayField.GetComponent<PlayField>();
             if (playField)
             {
-                playField.PlayFieldCard = m_player.CardChose;
-                Monster monster = m_player.CardChose.Monster;
+                Monster monster = m_player.GetChosenMonster().GetComponent<Monster>();
+                playField.SetNewMonster(m_player.MonsterChosenID);
                 monster.PlayField = playField;
                 monster.SetMonsterReady();
             }
             
 
-            m_player.CardChose.Monster.gameObject.transform.SetParent(m_selectedPlayField.transform.Find("Content"));
+            m_player.GetChosenMonster().transform.SetParent(m_selectedPlayField.transform.Find("Content"));
 
-            int monsterViewID = m_player.CardChose.Monster.photonView.ViewID;
+            int monsterViewID = m_player.GetChosenMonster().GetComponent<Monster>().photonView.ViewID;
 
-            if (!m_player.MyMonsters.Contains(monsterViewID))
+            if (!m_player.MyMonsters.ContainsKey(monsterViewID))
             {
                 m_player.AddNewMonster(monsterViewID);
             }
@@ -117,7 +117,7 @@ public class PlayerDisplayModelState : MyStateMachine
         }
 
         // reset
-        m_player.ChooseNewCardInDeck(-1);
+        m_player.ChoseNewMonster(-1);
         m_timer = 2f;
         m_selectedPlayField = null;
         m_prevHit = null;

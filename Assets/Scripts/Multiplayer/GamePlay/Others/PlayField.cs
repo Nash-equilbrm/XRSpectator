@@ -1,26 +1,32 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayField : MonoBehaviour
 {
+    public PhotonView photonView;
     public GameObject normalField;
     public GameObject monsterField;
     public GameObject attackPhaseField;
+    public Monster CurrentMonster { get => m_currentMonster; set => m_currentMonster = value; }
+    private Monster m_currentMonster = null;
 
-    public CardDisplay PlayFieldCard { get => playFieldCard; set => playFieldCard = value; }
-    private CardDisplay playFieldCard = null;
 
-  
+    private void Start()
+    {
+        photonView = GetComponent<PhotonView>();
+    }
+
     private void Update()
     {
-        if(PlayFieldCard == null)
+        if(CurrentMonster == null)
         {
             normalField.SetActive(true);
             monsterField.SetActive(false);
             attackPhaseField.SetActive(false);
         }
-        else if(playFieldCard.Monster.OnAttack)
+        else if(CurrentMonster.OnAttack)
         {
             normalField.SetActive(false);
             monsterField.SetActive(false);
@@ -36,5 +42,22 @@ public class PlayField : MonoBehaviour
 
     }
 
+
+    public void SetNewMonster(int viewID)
+    {
+        PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "SetNewMonster_RPC");
+        photonView.RPC("SetNewMonster_RPC", RpcTarget.AllBuffered, viewID);
+        PhotonNetwork.SendAllOutgoingCommands();
+    }
+
+    [PunRPC]
+    public void SetNewMonster_RPC(int viewID)
+    {
+        GameObject monster = PhotonView.Find(viewID).gameObject;
+        if (monster)
+        {
+            CurrentMonster = monster.GetComponent<Monster>();
+        }
+    }
 }
  

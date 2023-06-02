@@ -40,7 +40,7 @@ public class CardDisplay : MonoBehaviour
     public void OnCardPressed()
     {
         Debug.Log("OnCardPressed");
-        GameManager.Instance.playerManager.ChooseNewCardInDeck(m_index);
+        GameManager.Instance.playerManager.ChoseNewMonster(Monster.photonView.ViewID);
     }
    
 }

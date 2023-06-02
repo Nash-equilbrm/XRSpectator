@@ -9,7 +9,6 @@ public partial class Monster : MonoBehaviour
     private Animator m_animator;
     private Collider m_collider;
     public PlayField PlayField { get => m_playField; set => m_playField = value; }
-
     private PlayField m_playField;
 
     [SerializeField]private bool m_isMonsterReady = false;

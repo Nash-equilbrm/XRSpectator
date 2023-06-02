@@ -18,7 +18,7 @@ public class PlayerWaitState : MyStateMachine
         }
         else
         {
-            m_player.ChooseNewCardInDeck(-1);
+            m_player.ChoseNewMonster(-1);
         }
     }
 

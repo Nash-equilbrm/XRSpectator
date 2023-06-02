@@ -17,9 +17,7 @@ public class Player : MonoBehaviourPunCallbacks
     private PlayerAttackState m_attackState;
     private PlayerInitState m_initState;
 
-    public int[] cardCollectionIDs;
-    public Dictionary<int, CardDisplay> ActiveCards { get => m_activeCards; }
-    [SerializeField] private Dictionary<int, CardDisplay> m_activeCards = new Dictionary<int, CardDisplay>();
+    public int[] cardCollectionIds;
 
 
     public Player Opponent { get => m_opponent; set => m_opponent = value; }
@@ -29,16 +27,16 @@ public class Player : MonoBehaviourPunCallbacks
     [SerializeField] private bool m_opponentEndTurn = false;
     
 
-    public CardDisplay CardChose { get => m_cardChose; }
-    [SerializeField] private CardDisplay m_cardChose = null;
 
-
+    public int MonsterChosenID { get => m_monsterChosenID; }
+    [SerializeField] private int m_monsterChosenID = -1;
 
     public List<GameObject> MyPlayFields { get => m_myPlayFields; }
     [SerializeField] private List<GameObject> m_myPlayFields;
 
-    public List<int> MyMonsters { get => m_myMonsters; }
-    [SerializeField] private List<int> m_myMonsters;
+    public Dictionary<int, GameObject> MyMonsters { get => m_myMonsters; }
+    [SerializeField] Dictionary<int, GameObject> m_myMonsters;
+    public int MyMonsterCounts;
 
     void Start()
     {
@@ -50,7 +48,7 @@ public class Player : MonoBehaviourPunCallbacks
         {
             photonView = GetComponent<PhotonView>();
             m_myPlayFields = new List<GameObject>();
-            m_myMonsters = new List<int>();
+            m_myMonsters = new Dictionary<int, GameObject>();
 
             m_chooseCardState = new PlayerChooseCardState(this);
             m_displayModelState = new PlayerDisplayModelState(this);
@@ -68,6 +66,7 @@ public class Player : MonoBehaviourPunCallbacks
         {
             UpdatePlayer();
         }
+        MyMonsterCounts = m_myMonsters.Count;
     }
 
 
@@ -143,6 +142,22 @@ public class Player : MonoBehaviourPunCallbacks
         }
     }
 
+    private GameObject currentMonsterChosen;
+    public GameObject GetChosenMonster()
+    {
+        if (MonsterChosenID <= 0) return null;
+        if (MyMonsters.ContainsKey(MonsterChosenID))
+        {
+            return MyMonsters[MonsterChosenID];
+        }
+        else if(currentMonsterChosen == null)
+        {
+            currentMonsterChosen = PhotonView.Find(MonsterChosenID).gameObject;
+        }
+        return currentMonsterChosen;
+
+    }
+
 
     // ==================== PUNRPC ====================
     public void ShowModel(Vector3 position, Quaternion rotation)
@@ -156,12 +171,13 @@ public class Player : MonoBehaviourPunCallbacks
     private void ShowModel_RPC(Vector3 position, Quaternion rotation)
     {
         Debug.Log("ShowModel_RPC");
-        if (!CardChose.Monster.gameObject.activeSelf)
+        GameObject model = GetChosenMonster();
+        if (!model.activeSelf)
         {
-            CardChose.Monster.gameObject.SetActive(true);
+            model.SetActive(true);
         }
-        CardChose.Monster.gameObject.transform.position = position;
-        CardChose.Monster.gameObject.transform.rotation = rotation;
+        model.transform.position = position;
+        model.transform.rotation = rotation;
     }
 
 
@@ -229,7 +245,7 @@ public class Player : MonoBehaviourPunCallbacks
 
     public void GetPlayFields()
     {
-        if (PhotonNetwork.IsMasterClient)
+        if (GameManager.Instance.playerManager.playerID == 1)
         {
             PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "GetFirstHalfFields_RPC");
             photonView.RPC("GetFirstHalfFields_RPC", RpcTarget.AllBuffered);
@@ -263,17 +279,17 @@ public class Player : MonoBehaviourPunCallbacks
     }
 
 
-    public void ChooseNewCardInDeck(int key)
+    public void ChoseNewMonster(int key)
     {
-        PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "ChooseNewCardInDeck_RPC");
-        photonView.RPC("ChooseNewCardInDeck_RPC", RpcTarget.AllBuffered, key);
+        PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "ChoseNewMonster_RPC");
+        photonView.RPC("ChoseNewMonster_RPC", RpcTarget.AllBuffered, key);
         PhotonNetwork.SendAllOutgoingCommands();
     }
 
     [PunRPC]
-    private void ChooseNewCardInDeck_RPC(int key)
+    private void ChoseNewMonster_RPC(int key)
     {
-        m_cardChose = (key != -1) ? ActiveCards[key] : null;
+        m_monsterChosenID = key;
     }
 
 
@@ -287,7 +303,8 @@ public class Player : MonoBehaviourPunCallbacks
     [PunRPC]
     private void AddNewMonster_RPC(int monsterViewID)
     {
-        m_myMonsters.Add(monsterViewID);
+        GameObject monsterObj = PhotonView.Find(monsterViewID)?.gameObject;
+        m_myMonsters.Add(monsterViewID, monsterObj);
     }
 
 }

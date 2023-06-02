@@ -24,13 +24,13 @@ public partial class GameManager
     private GamePlayState playState = new GamePlayState();
 
     public bool PlayerReady { get => playerReady; set => playerReady = value; }
-    private bool playerReady = false;
+    [SerializeField] private bool playerReady = false;
 
     public bool IsMyTurn { get => isMyTurn; set => isMyTurn = value; }
-    private bool isMyTurn = false;
+    [SerializeField] private bool isMyTurn = false;
 
     public bool OnAttack { get => onAttack; set => onAttack = value; }
-    private bool onAttack = false;
+    [SerializeField] private bool onAttack = false;
 
 
     private void UpdateGameplay()
