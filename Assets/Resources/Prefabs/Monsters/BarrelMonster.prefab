@@ -905,7 +905,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1e79252e4c5cbb40af94bb0f5b8403f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  photonView: {fileID: 1452474216769852958}
+  m_photonView: {fileID: 1452474216769852958}
   m_playField: {fileID: 0}
   m_isMonsterReady: 0
 --- !u!65 &370264067969679509

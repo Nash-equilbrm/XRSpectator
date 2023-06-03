@@ -17,8 +17,8 @@ public class PlayerInitState : MyStateMachine
 
         if (m_player.Opponent != null)
         {
-            ExitState = true;
         }
+            ExitState = true;
     }
 
 
@@ -35,8 +35,8 @@ public class PlayerInitState : MyStateMachine
             {
                 m_player.GetPlayFields();
                 InitPlayUIs();
+                StateInitialized = true;
             }
-            StateInitialized = true;
         }
     }
 

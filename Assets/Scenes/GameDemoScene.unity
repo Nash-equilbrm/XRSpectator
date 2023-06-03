@@ -422,6 +422,8 @@ MonoBehaviour:
     type: 3}
   invalidSignPrefab: {fileID: 786864677051450278, guid: 6821f3a7afba45b49961c9b111fdd708,
     type: 3}
+  guiObj: {fileID: 1814992600}
+  startGameBtn: {fileID: 1209471143}
   playFields:
   - {fileID: 1113851142}
   - {fileID: 2131422609}
@@ -443,9 +445,8 @@ MonoBehaviour:
   cardConfigs:
   - {fileID: 11400000, guid: e9662784528437846b457292c20472ee, type: 2}
   - {fileID: 11400000, guid: a1865e739e5858046ab279f88e25b3a6, type: 2}
+  - {fileID: 11400000, guid: 01cb4300baa8d4e40aa7a4defa0d04b0, type: 2}
   playerReady: 0
-  isMyTurn: 0
-  onAttack: 0
   isAudience: 0
   playerManager: {fileID: 0}
   playerAvatarPrefab: {fileID: 9001161893590927571, guid: b75e379a5cc679746946becc17b610f8,
@@ -880,10 +881,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: Menu
       objectReference: {fileID: 0}
+    - target: {fileID: 327298584257884126, guid: d55476ba18475c747862b94dc08c6658,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5080914478767961761, guid: d55476ba18475c747862b94dc08c6658,
         type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 6
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5080914478767961761, guid: d55476ba18475c747862b94dc08c6658,
         type: 3}
@@ -893,7 +899,7 @@ PrefabInstance:
     - target: {fileID: 5080914478767961761, guid: d55476ba18475c747862b94dc08c6658,
         type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: set_IsMyTurn
+      value: OnEndTurnPressed
       objectReference: {fileID: 0}
     - target: {fileID: 5080914478767961761, guid: d55476ba18475c747862b94dc08c6658,
         type: 3}
@@ -908,7 +914,7 @@ PrefabInstance:
     - target: {fileID: 5345014386050673950, guid: d55476ba18475c747862b94dc08c6658,
         type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 6
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5345014386050673950, guid: d55476ba18475c747862b94dc08c6658,
         type: 3}
@@ -918,7 +924,7 @@ PrefabInstance:
     - target: {fileID: 5345014386050673950, guid: d55476ba18475c747862b94dc08c6658,
         type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: set_OnAttack
+      value: OnAttackPressed
       objectReference: {fileID: 0}
     - target: {fileID: 5345014386050673950, guid: d55476ba18475c747862b94dc08c6658,
         type: 3}
@@ -933,7 +939,7 @@ PrefabInstance:
     - target: {fileID: 7131809951230654909, guid: d55476ba18475c747862b94dc08c6658,
         type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 6
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7131809951230654909, guid: d55476ba18475c747862b94dc08c6658,
         type: 3}
@@ -943,7 +949,7 @@ PrefabInstance:
     - target: {fileID: 7131809951230654909, guid: d55476ba18475c747862b94dc08c6658,
         type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: set_PlayerReady
+      value: OnStartGamePressed
       objectReference: {fileID: 0}
     - target: {fileID: 7131809951230654909, guid: d55476ba18475c747862b94dc08c6658,
         type: 3}
@@ -1107,6 +1113,12 @@ GameObject:
 --- !u!4 &1158055693 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 327298584706699707, guid: d55476ba18475c747862b94dc08c6658,
+    type: 3}
+  m_PrefabInstance: {fileID: 1050544493}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1209471143 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 214777493221778370, guid: d55476ba18475c747862b94dc08c6658,
     type: 3}
   m_PrefabInstance: {fileID: 1050544493}
   m_PrefabAsset: {fileID: 0}
@@ -1451,6 +1463,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1814992600 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 327298584257884126, guid: d55476ba18475c747862b94dc08c6658,
+    type: 3}
+  m_PrefabInstance: {fileID: 1050544493}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1892801497 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 327298584942561928, guid: d55476ba18475c747862b94dc08c6658,
@@ -1884,6 +1902,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: LargePlayGround
+      objectReference: {fileID: 0}
+    - target: {fileID: 5372204675799616042, guid: e6fcfaaf012412042bf7f626b9ddd473,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8254680104988252350, guid: e6fcfaaf012412042bf7f626b9ddd473,
         type: 3}

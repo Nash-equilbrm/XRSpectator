@@ -1378,7 +1378,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1e79252e4c5cbb40af94bb0f5b8403f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  photonView: {fileID: 7328862912876552454}
+  m_photonView: {fileID: 7328862912876552454}
   m_playField: {fileID: 0}
   m_isMonsterReady: 0
 --- !u!65 &1958720509299801605

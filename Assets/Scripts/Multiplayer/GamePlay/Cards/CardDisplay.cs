@@ -30,9 +30,9 @@ public class CardDisplay : MonoBehaviour
                 }
             }
 
-            if (Monster.photonView.IsMine)
+            if (Monster.m_photonView.IsMine)
             {
-                GameManager.Instance.playerManager.AddNewMonster(Monster.photonView.ViewID);
+                GameManager.Instance.playerManager.AddNewMonster(Monster.m_photonView.ViewID);
             }
 
         } 
@@ -42,7 +42,7 @@ public class CardDisplay : MonoBehaviour
     public void OnCardPressed()
     {
         Debug.Log("OnCardPressed");
-        GameManager.Instance.playerManager.ChoseNewMonster(Monster.photonView.ViewID);
+        GameManager.Instance.playerManager.ChoseNewMonster(Monster.m_photonView.ViewID);
     }
    
 }

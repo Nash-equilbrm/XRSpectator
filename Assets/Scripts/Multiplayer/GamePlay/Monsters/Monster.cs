@@ -5,7 +5,7 @@ using UnityEngine;
 
 public partial class Monster : MonoBehaviour
 {
-    public PhotonView photonView;
+    public PhotonView m_photonView;
     private Animator m_animator;
     private Collider m_collider;
     public PlayField PlayField { get => m_playField; set => m_playField = value; }
@@ -25,7 +25,8 @@ public partial class Monster : MonoBehaviour
     {
         m_animator = GetComponent<Animator>();
         m_collider = GetComponent<Collider>();
-        photonView = GetComponent<PhotonView>();
+        m_photonView = PhotonView.Get(this);
+
 
         m_animator.enabled = false;
         m_collider.enabled = false;
@@ -91,10 +92,10 @@ public partial class Monster : MonoBehaviour
     // ==================== PUNRPC ====================
     public void SetMonsterTag(string tag)
     {
-        if (photonView.IsMine)
+        if (m_photonView.IsMine)
         {
-            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "SetMonsterTag_RPC");
-            photonView.RPC("SetMonsterTag_RPC", RpcTarget.AllBuffered, tag);
+            PhotonNetwork.RemoveBufferedRPCs(m_photonView.ViewID, "SetMonsterTag_RPC");
+            m_photonView.RPC("SetMonsterTag_RPC", RpcTarget.AllBuffered, tag);
             PhotonNetwork.SendAllOutgoingCommands();
         }
     }
@@ -109,10 +110,10 @@ public partial class Monster : MonoBehaviour
 
     public void SetMonsterReady()
     {
-        if (photonView.IsMine)
+        if (m_photonView.IsMine)
         {
-            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "SetMonsterReady_RPC");
-            photonView.RPC("SetMonsterReady_RPC", RpcTarget.AllBuffered);
+            PhotonNetwork.RemoveBufferedRPCs(m_photonView.ViewID, "SetMonsterReady_RPC");
+            m_photonView.RPC("SetMonsterReady_RPC", RpcTarget.AllBuffered);
             PhotonNetwork.SendAllOutgoingCommands();
         }
     }

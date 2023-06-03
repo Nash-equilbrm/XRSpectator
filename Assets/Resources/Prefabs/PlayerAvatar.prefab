@@ -266,12 +266,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5504a5edb9d149c40adade8998dd93c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CurrentStateName: 0
   m_playerID: 0
   m_invalidSign: {fileID: 0}
   photonView: {fileID: 2971360194156331780}
-  cardCollectionIds: 01000000000000000100000000000000
+  cardCollectionIds: 01000000020000000000000002000000
+  m_onAttack: 0
+  m_isMyTurn: 0
   m_opponent: {fileID: 0}
-  m_opponentEndTurn: 0
   m_monsterChosenID: -1
   m_myPlayFields: []
   MyMonsterCounts: 0
