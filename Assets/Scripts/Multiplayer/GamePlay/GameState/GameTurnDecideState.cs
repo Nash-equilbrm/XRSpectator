@@ -11,7 +11,6 @@ public class GameTurnDecideState : MyStateMachine
         // if player press start button
         if (GameManager.Instance.PlayerReady)
         {
-            InitPlayer();  
             StateInitialized = true;
         }
 
@@ -35,26 +34,6 @@ public class GameTurnDecideState : MyStateMachine
         GameManager.Instance.SwitchState(GameStateEnum.PLAY_GAME); 
     }
     
-    private void InitPlayer()
-    {
-        GameManager gameManager = GameManager.Instance;
-
-        GameObject playerModel = PhotonNetwork.Instantiate("Prefabs/" + gameManager.playerAvatarPrefab.name, gameManager.ARCamera.transform.position, gameManager.ARCamera.transform.rotation);
-        if (playerModel.GetComponent<PhotonView>().IsMine)
-        {
-            playerModel.GetComponent<MoveARCamera>().ARCamera = gameManager.ARCamera.transform;
-            gameManager.playerManager = playerModel.GetComponent<Player>();
-            if (PhotonNetwork.IsMasterClient)
-            {
-                gameManager.playerManager.SetPlayerID(1);
-            }
-            else
-            {
-                gameManager.playerManager.SetPlayerID(2);
-            }
-        }
-    }
-
 
     private void InitPlayerTurn(bool playerGoFirst)
     {
