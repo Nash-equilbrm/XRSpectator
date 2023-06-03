@@ -23,13 +23,15 @@ public class Player : MonoBehaviourPunCallbacks
 
     public int[] cardCollectionIds;
 
+    public bool OnAttack { get => m_onAttack; }
+    [SerializeField] private bool m_onAttack = false;
+
+    public bool IsMyTurn { get => m_isMyTurn; }
+    [SerializeField] private bool m_isMyTurn = false;
+
 
     public Player Opponent { get => m_opponent; set => m_opponent = value; }
     [SerializeField] private Player m_opponent;
-
-    public bool OpponentEndTurn { get => m_opponentEndTurn; set => m_opponentEndTurn = value; }
-    [SerializeField] private bool m_opponentEndTurn = false;
-    
 
 
     public int MonsterChosenID { get => m_monsterChosenID; }
@@ -170,6 +172,41 @@ public class Player : MonoBehaviourPunCallbacks
 
 
     // ==================== PUNRPC ====================
+    public void StartMyTurn(bool startTurn)
+    {
+        if (photonView.IsMine)
+        {
+            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "StartMyTurn_RPC");
+            photonView.RPC("StartMyTurn_RPC", RpcTarget.AllBuffered, startTurn);
+            PhotonNetwork.SendAllOutgoingCommands();
+        }
+    }
+
+    [PunRPC]
+    public void StartMyTurn_RPC(bool startTurn)
+    {
+        m_isMyTurn = startTurn;
+    }
+
+
+
+    public void DoAttack(bool attack)
+    {
+        if (photonView.IsMine)
+        {
+            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "OnAttack_RPC");
+            photonView.RPC("OnAttack_RPC", RpcTarget.AllBuffered, attack);
+            PhotonNetwork.SendAllOutgoingCommands();
+        }
+    }
+
+    [PunRPC]
+    public void OnAttack_RPC(bool attack)
+    {
+        m_onAttack = attack;
+    }
+
+
     public void ShowModel(Vector3 position, Quaternion rotation, bool active)
     {
         if (photonView.IsMine)
@@ -229,17 +266,15 @@ public class Player : MonoBehaviourPunCallbacks
             photonView.RPC("EndMyTurn_RPC", RpcTarget.AllBuffered);
             PhotonNetwork.SendAllOutgoingCommands();
         }
-        
     }
 
     [PunRPC]
     private void EndMyTurn_RPC()
     {
-        GameManager.Instance.IsMyTurn = false;
-        OpponentEndTurn = false;
+        m_isMyTurn = false;
         if (Opponent != null)
         {
-            Opponent.OpponentEndTurn = true;
+            Opponent.m_isMyTurn = true;
         }
     }
 

@@ -12,10 +12,9 @@ public class PlayerWaitState : MyStateMachine
     protected override void DoBehavior()
     {
         Debug.Log("WAIT");
-        if (m_player.OpponentEndTurn)
+        if (m_player.IsMyTurn)
         {
-            GameManager.Instance.IsMyTurn = true;
-            m_player.OpponentEndTurn = false;
+            m_player.StartMyTurn(true);
             ExitState = true;
         }
         else

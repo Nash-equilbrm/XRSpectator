@@ -11,7 +11,7 @@ public class PlayerChooseCardState : MyStateMachine
     {
         Debug.Log("CHOOSE CARD");
 
-        if (!GameManager.Instance.IsMyTurn || GameManager.Instance.OnAttack || m_player.MonsterChosenID != -1)
+        if (!m_player.IsMyTurn || m_player.OnAttack || m_player.MonsterChosenID != -1)
         {
             ExitState = true;
         }
@@ -19,12 +19,12 @@ public class PlayerChooseCardState : MyStateMachine
 
     protected override void Exit()
     {
-        if (!GameManager.Instance.IsMyTurn)
+        if (!m_player.IsMyTurn)
         {
             m_player.EndMyTurn();
             m_player.SwitchState(PlayerStateEnum.WAIT);
         }
-        else if (GameManager.Instance.OnAttack)
+        else if (m_player.OnAttack)
         {
             m_player.SwitchState(PlayerStateEnum.ATTACK);
         }

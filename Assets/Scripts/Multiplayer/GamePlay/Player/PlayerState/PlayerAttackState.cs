@@ -20,7 +20,7 @@ public class PlayerAttackState : MyStateMachine
     {
         Debug.Log("ATTACK");
 
-        if (!GameManager.Instance.IsMyTurn || m_player.MyMonsters.Count == 0)
+        if (!m_player.IsMyTurn || m_player.MyMonsters.Count == 0)
         {
             ExitState = true;
             return;
@@ -51,7 +51,7 @@ public class PlayerAttackState : MyStateMachine
 
     protected override void Exit()
     {
-        if (!GameManager.Instance.IsMyTurn)
+        if (!m_player.IsMyTurn)
         {
             m_player.EndMyTurn();
             m_player.SwitchState(PlayerStateEnum.WAIT);
@@ -61,7 +61,7 @@ public class PlayerAttackState : MyStateMachine
         }
         m_attacker = null;
         m_target = null;
-        GameManager.Instance.OnAttack = false;
+        m_player.DoAttack(false);
     }
 
     protected override void Initialize()

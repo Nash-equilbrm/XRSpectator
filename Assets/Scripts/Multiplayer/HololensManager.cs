@@ -23,22 +23,22 @@ public partial class GameManager
         ARCamera.transform.localPosition = Vector3.zero;
         ARCamera.GetComponent<Camera>().clearFlags = CameraClearFlags.SolidColor;
 
-        GameObject playerModel = PhotonNetwork.Instantiate("Prefabs/" + playerAvatarPrefab.name, ARCamera.transform.position, ARCamera.transform.rotation);
+        //GameObject playerModel = PhotonNetwork.Instantiate("Prefabs/" + playerAvatarPrefab.name, ARCamera.transform.position, ARCamera.transform.rotation);
 
 
-        if (playerModel.GetComponent<PhotonView>().IsMine)
-        {
-            playerModel.GetComponent<MoveARCamera>().ARCamera = ARCamera.transform;
-            playerManager = playerModel.GetComponent<Player>();
-            if (PhotonNetwork.IsMasterClient)
-            {
-                playerManager.SetPlayerID(1);
-            }
-            else
-            {
-                playerManager.SetPlayerID(2);
-            }
-        }
+        //if (playerModel.GetComponent<PhotonView>().IsMine)
+        //{
+        //    playerModel.GetComponent<MoveARCamera>().ARCamera = ARCamera.transform;
+        //    playerManager = playerModel.GetComponent<Player>();
+        //    if (PhotonNetwork.IsMasterClient)
+        //    {
+        //        playerManager.SetPlayerID(1);
+        //    }
+        //    else
+        //    {
+        //        playerManager.SetPlayerID(2);
+        //    }
+        //}
 
         m_userRoleInitialized = true;
     }

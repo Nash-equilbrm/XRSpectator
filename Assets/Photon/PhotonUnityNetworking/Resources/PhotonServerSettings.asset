@@ -58,6 +58,7 @@ MonoBehaviour:
   - SetPlayerID_RPC
   - SetMonsterReady_RPC
   - GetInvalidSign_RPC
+  - StartMyTurn_RPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

@@ -8,6 +8,8 @@ public partial class GameManager
     [Header("Gameplay")]
     public GameObject turnDecideCoinPrefab;
     public GameObject invalidSignPrefab;
+    public GameObject guiObj;
+    public GameObject startGameBtn;
     public GameObject[] playFields;
     public GameObject cardPrefab;
     public Transform[] cardMenuSlots;
@@ -22,19 +24,19 @@ public partial class GameManager
     private GameTurnDecideState turnDecideState = new GameTurnDecideState();
     private GamePlayState playState = new GamePlayState();
 
-    public bool PlayerReady { get => playerReady; set => playerReady = value; }
+    public bool PlayerReady { get => playerReady; }
     [SerializeField] private bool playerReady = false;
 
-    public bool IsMyTurn { get => isMyTurn; set => isMyTurn = value; }
-    [SerializeField] private bool isMyTurn = false;
 
-    public bool OnAttack { get => onAttack; set => onAttack = value; }
-    [SerializeField] private bool onAttack = false;
-
-
+    private bool gameplayInit = false;
     private void UpdateGameplay()
     {
-        InitGameStates();
+        if (TrackedWithVuforia && !gameplayInit)
+        {
+            guiObj.SetActive(true);
+            InitGameStates();
+            gameplayInit = true;
+        }
         currentState.UpdateState();
     }
 
@@ -63,7 +65,31 @@ public partial class GameManager
                 }
         }
     }
+
+
+
+    public void OnAttackPressed()
+    {
+        if(playerManager != null)
+        {
+            playerManager.DoAttack(true);
+        }
+    }
    
+
+    public void OnEndTurnPressed()
+    {
+        if(playerManager != null)
+        {
+            playerManager.StartMyTurn(false);
+        }
+    }
+
+    public void OnStartGamePressed()
+    {
+        playerReady = true;
+    }
+
 }
 
 public enum GameStateEnum

@@ -21,7 +21,7 @@ public class PlayerDisplayModelState : MyStateMachine
     {
         Debug.Log("DISPLAY_MODEL");
 
-        if (!GameManager.Instance.IsMyTurn || GameManager.Instance.OnAttack)
+        if (!m_player.IsMyTurn || m_player.OnAttack)
         {
             ExitState = true;
             return;
@@ -84,12 +84,12 @@ public class PlayerDisplayModelState : MyStateMachine
    
     protected override void Exit()
     {
-        if (!GameManager.Instance.IsMyTurn)
+        if (!m_player.IsMyTurn)
         {
             m_player.EndMyTurn();
             m_player.SwitchState(PlayerStateEnum.WAIT);
         }
-        else if (GameManager.Instance.OnAttack)
+        else if (m_player.OnAttack)
         {
             m_player.SwitchState(PlayerStateEnum.ATTACK);
         }
