@@ -4,6 +4,9 @@ public class PlayerWaitState : MyStateMachine
 {
 
     public Player m_player;
+
+    public PlayerStateEnum name = PlayerStateEnum.WAIT;
+
     public PlayerWaitState(Player player)
     {
         m_player = player;
@@ -12,6 +15,7 @@ public class PlayerWaitState : MyStateMachine
     protected override void DoBehavior()
     {
         Debug.Log("WAIT");
+        m_player.CurrentStateName = name;
         if (m_player.IsMyTurn)
         {
             m_player.StartMyTurn(true);

@@ -8,6 +8,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviourPunCallbacks
 {
+    public PlayerStateEnum CurrentStateName = PlayerStateEnum.NONE;
+
     public int PlayerID { get => m_playerID; }
     [SerializeField] private int m_playerID;
     public GameObject InvalidSign { get => m_invalidSign; set => m_invalidSign = value; }
@@ -68,10 +70,7 @@ public class Player : MonoBehaviourPunCallbacks
             if (photonView.IsMine)
             {
                 GameObject sign = PhotonNetwork.Instantiate("Prefabs/Menus/" + GameManager.Instance.invalidSignPrefab.name, new Vector3(100, 100, 100), Quaternion.identity);
-
-                PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "GetInvalidSign_RPC");
-                photonView.RPC("GetInvalidSign_RPC", RpcTarget.AllBuffered, sign.GetComponent<PhotonView>().ViewID);
-                PhotonNetwork.SendAllOutgoingCommands();
+                GetInvalidSign(sign.GetComponent<PhotonView>().ViewID);
             }
 
         }
@@ -129,10 +128,16 @@ public class Player : MonoBehaviourPunCallbacks
         return null;
     }
 
-
-    
-
     public void SwitchState(PlayerStateEnum nextState)
+    {
+        PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "SwitchState_RPC");
+        photonView.RPC("SwitchState_RPC", RpcTarget.AllBuffered, nextState);
+        PhotonNetwork.SendAllOutgoingCommands();
+    }
+
+
+    [PunRPC]
+    private void SwitchState_RPC(PlayerStateEnum nextState)
     {
         switch (nextState)
         {
@@ -159,11 +164,11 @@ public class Player : MonoBehaviourPunCallbacks
         }
     }
 
-    private GameObject currentMonsterChosen = null;
     public GameObject GetChosenMonster()
     {
         if (MyMonsters.ContainsKey(MonsterChosenID))
         {
+            Debug.Log("Player " + m_playerID + " choose monster: " + MonsterChosenID);
             return MyMonsters[MonsterChosenID];
         }
 
@@ -389,6 +394,14 @@ public class Player : MonoBehaviourPunCallbacks
     private void SetPlayerID_RPC(int ID)
     {
         m_playerID = ID;
+    }
+
+    private void GetInvalidSign(int viewID)
+    {
+
+        PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "GetInvalidSign_RPC");
+        photonView.RPC("GetInvalidSign_RPC", RpcTarget.AllBuffered, viewID);
+        PhotonNetwork.SendAllOutgoingCommands();
     }
 
     [PunRPC]

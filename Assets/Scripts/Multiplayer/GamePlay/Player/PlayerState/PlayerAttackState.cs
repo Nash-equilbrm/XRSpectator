@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class PlayerAttackState : MyStateMachine
 {
+    public PlayerStateEnum name = PlayerStateEnum.ATTACK;
+
+
     public Player m_player;
     private GameObject m_attacker = null;
     private GameObject m_target = null;
@@ -19,6 +22,7 @@ public class PlayerAttackState : MyStateMachine
     protected override void DoBehavior()
     {
         Debug.Log("ATTACK");
+        m_player.CurrentStateName = name;
 
         if (!m_player.IsMyTurn || m_player.MyMonsters.Count == 0)
         {

@@ -12,6 +12,8 @@ public class PlayerDisplayModelState : MyStateMachine
 
 
     public Player m_player;
+
+    public PlayerStateEnum name = PlayerStateEnum.DISPLAY_MODEL;
     public PlayerDisplayModelState(Player player)
     {
         m_player = player;
@@ -20,6 +22,7 @@ public class PlayerDisplayModelState : MyStateMachine
     protected override void DoBehavior()
     {
         Debug.Log("DISPLAY_MODEL");
+        m_player.CurrentStateName = name;
 
         if (!m_player.IsMyTurn || m_player.OnAttack)
         {
@@ -41,7 +44,7 @@ public class PlayerDisplayModelState : MyStateMachine
                 // delete invalid sign or model if remove pointer from previous pointed playfield
                 if (m_prevHit != null)
                 {
-                    m_player.GetChosenMonster().SetActive(false);
+                    m_player.GetChosenMonster()?.SetActive(false);
                     m_player.ShowInvalidSign(Vector3.zero, Quaternion.identity ,false);
                 }
 

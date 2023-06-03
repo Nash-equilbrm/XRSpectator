@@ -3,6 +3,9 @@ using UnityEngine;
 public class PlayerChooseCardState : MyStateMachine
 {
     public Player m_player;
+
+    public PlayerStateEnum name = PlayerStateEnum.CHOOSE_CARD;
+
     public PlayerChooseCardState(Player player)
     {
         m_player = player;
@@ -10,6 +13,7 @@ public class PlayerChooseCardState : MyStateMachine
     protected override void DoBehavior()
     {
         Debug.Log("CHOOSE CARD");
+        m_player.CurrentStateName = name;
 
         if (!m_player.IsMyTurn || m_player.OnAttack || m_player.MonsterChosenID != -1)
         {
