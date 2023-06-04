@@ -6,8 +6,8 @@ using UnityEngine;
 public partial class Monster
 {
     private int m_HP;
-    public int CurrentHP { get => m_currentHP; set => m_currentHP = value; }
-    private int m_currentHP;
+    public int CurrentHP { get => m_currentHP; }
+    [SerializeField] private int m_currentHP;
 
 
 
@@ -15,7 +15,6 @@ public partial class Monster
     // ==================== PUNRPC ====================
     private void TakeDamage(int damage)
     {
-        Debug.Log("TAKE DAMAGE");
         PhotonNetwork.RemoveBufferedRPCs(m_photonView.ViewID, "TakeDamage_RPC");
         m_photonView.RPC("TakeDamage_RPC", RpcTarget.AllBuffered, damage);
         PhotonNetwork.SendAllOutgoingCommands();
@@ -25,6 +24,7 @@ public partial class Monster
     [PunRPC]
     public void TakeDamage_RPC(int damage)
     {
+        Debug.Log("TAKE DAMAGE");
         m_currentHP -= damage;
         if (m_currentHP < 0)
         {

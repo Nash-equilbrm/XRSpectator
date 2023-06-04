@@ -115,6 +115,7 @@ public partial class Monster : MonoBehaviour
             if (targetMonster)
             {
                 transform.LookAt(targetObj.transform);
+                Debug.Log(m_photonView.ViewID + " attack " + targetMonster.m_photonView.ViewID);
                 targetMonster.TakeDamage(m_ATK);
                 m_onAttack = true;
             }

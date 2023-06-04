@@ -88,8 +88,7 @@ MonoBehaviour:
   normalField: {fileID: 5727092015015782219}
   monsterField: {fileID: 8546501944225689506}
   attackPhaseField: {fileID: 6157922338944450293}
-  monsterName: {fileID: 4512117585526725609}
-  monsterHP: {fileID: 0}
+  text: {fileID: 4512117585526725609}
   m_currentMonster: {fileID: 0}
 --- !u!65 &4559165560181801306
 BoxCollider:
