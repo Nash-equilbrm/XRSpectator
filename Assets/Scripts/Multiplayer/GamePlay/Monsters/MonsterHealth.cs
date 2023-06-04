@@ -15,12 +15,10 @@ public partial class Monster
     // ==================== PUNRPC ====================
     private void TakeDamage(int damage)
     {
-        if (m_photonView.IsMine)
-        {
-            PhotonNetwork.RemoveBufferedRPCs(m_photonView.ViewID, "TakeDamage_RPC");
-            m_photonView.RPC("TakeDamage_RPC", RpcTarget.AllBuffered, damage);
-            PhotonNetwork.SendAllOutgoingCommands();
-        }
+        Debug.Log("TAKE DAMAGE");
+        PhotonNetwork.RemoveBufferedRPCs(m_photonView.ViewID, "TakeDamage_RPC");
+        m_photonView.RPC("TakeDamage_RPC", RpcTarget.AllBuffered, damage);
+        PhotonNetwork.SendAllOutgoingCommands();
     }
 
 

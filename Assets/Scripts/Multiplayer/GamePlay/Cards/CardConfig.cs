@@ -6,6 +6,7 @@ using UnityEngine;
 public class CardConfig : ScriptableObject
 {
     public int configID;
+    public string name;
     public GameObject model;
     public Sprite avatarImg;
 

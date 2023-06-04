@@ -72,7 +72,7 @@ public partial class Monster : MonoBehaviour
         if (m_photonView.IsMine)
         {
             PhotonNetwork.RemoveBufferedRPCs(m_photonView.ViewID, "SetUpStats_RPC");
-            m_photonView.RPC("SetUpStats_RPC", RpcTarget.AllBuffered, config.HP, config.ATK, config.attackDuration);
+            m_photonView.RPC("SetUpStats_RPC", RpcTarget.AllBuffered,config.name, config.HP, config.ATK, config.attackDuration);
             PhotonNetwork.SendAllOutgoingCommands();
             UpdateAnimation();
 
@@ -80,10 +80,11 @@ public partial class Monster : MonoBehaviour
     }
 
     [PunRPC]
-    public void SetUpStats_RPC(int HP, int ATK, float attackDuration)
+    public void SetUpStats_RPC(string name, int HP, int ATK, float attackDuration)
     {
+        m_name = name;
         m_HP = HP;
-        CurrentHP = HP;
+        m_currentHP = HP;
         m_ATK = ATK;
         m_attackDuration = attackDuration;
         m_attackTimer = m_attackDuration;
