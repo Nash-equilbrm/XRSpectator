@@ -25,11 +25,11 @@ public partial class Monster
     [PunRPC]
     public void TakeDamage_RPC(int damage)
     {
-        m_HP -= damage;
-        if (m_HP < 0)
+        m_currentHP -= damage;
+        if (m_currentHP < 0)
         {
             //Die
-            m_HP = 0;
+            m_currentHP = 0;
 
             m_isMonsterReady = false;
             m_animator.enabled = false;
