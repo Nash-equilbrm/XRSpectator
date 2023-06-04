@@ -10,5 +10,6 @@ public class CardConfig : ScriptableObject
     public Sprite avatarImg;
 
     public int HP;
+    public int ATK;
     public float attackDuration;
 }

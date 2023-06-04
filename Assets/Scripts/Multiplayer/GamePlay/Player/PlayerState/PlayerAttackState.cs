@@ -41,12 +41,16 @@ public class PlayerAttackState : MyStateMachine
         }
         else if (m_attacker && m_target)
         {
+            m_player.ShowInvalidSign(Vector3.zero, Quaternion.identity, false);
+
             Monster monster = m_attacker.GetComponent<Monster>();
+            Monster target = m_attacker.GetComponent<Monster>();
+
             //Monster monsterTarget = m_target.GetComponent<Monster>();
             if (monster)
             {
                 Debug.Log(m_attacker.name + " Attack " + m_target.name);
-                monster.StartAttack(m_target.transform);
+                monster.StartAttack(target.m_photonView.ViewID);
                 ExitState = true;
             }
         }

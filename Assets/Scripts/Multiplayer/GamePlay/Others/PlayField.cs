@@ -9,7 +9,10 @@ public class PlayField : MonoBehaviour
     public GameObject normalField;
     public GameObject monsterField;
     public GameObject attackPhaseField;
-    public Monster CurrentMonster { get => m_currentMonster; set => m_currentMonster = value; }
+    public TMPro.TextMeshPro monsterName;
+    public TMPro.TextMeshPro monsterHP;
+
+    public Monster CurrentMonster { get => m_currentMonster; }
     [SerializeField] private Monster m_currentMonster = null;
 
 
@@ -22,25 +25,42 @@ public class PlayField : MonoBehaviour
     {
         if(CurrentMonster == null)
         {
-            normalField.SetActive(true);
-            monsterField.SetActive(false);
-            attackPhaseField.SetActive(false);
+            TurnOnNormalField();
         }
         else if(CurrentMonster.OnAttack)
         {
-            normalField.SetActive(false);
-            monsterField.SetActive(false);
-            attackPhaseField.SetActive(true);
+            TurnOnAttackField();
         }
         else
         {
-            normalField.SetActive(false);
-            monsterField.SetActive(true);
-            attackPhaseField.SetActive(false);
+            TurnOnMonsterField();
         }
-
-
+        monsterName.text = m_currentMonster.Name + ": ";
+        monsterHP.text = m_currentMonster.CurrentHP.ToString();
     }
+    public void TurnOnNormalField()
+    {
+        normalField.SetActive(true);
+        monsterField.SetActive(false);
+        attackPhaseField.SetActive(false);
+    }
+
+
+    public void TurnOnMonsterField()
+    {
+        normalField.SetActive(false);
+        monsterField.SetActive(true);
+        attackPhaseField.SetActive(false);
+    }
+
+    public void TurnOnAttackField()
+    {
+        normalField.SetActive(false);
+        monsterField.SetActive(false);
+        attackPhaseField.SetActive(true);
+    }
+
+    // ============== RPC ================
 
 
     public void SetNewMonster(int viewID)
@@ -53,13 +73,18 @@ public class PlayField : MonoBehaviour
     [PunRPC]
     public void SetNewMonster_RPC(int viewID)
     {
-
-        GameObject monster = PhotonView.Find(viewID).gameObject;
-        monster.transform.SetParent(transform.Find("Content"));
-        monster.GetComponent<Monster>().PlayField = this;
+        if(viewID == -1)
+        {
+            m_currentMonster = null;
+            return;
+        }
+        GameObject monsterobj = PhotonView.Find(viewID).gameObject;
+        monsterobj.transform.SetParent(transform.Find("Content"));
+        Monster monster = monsterobj.GetComponent<Monster>();
         if (monster)
         {
-            CurrentMonster = monster.GetComponent<Monster>();
+            monster.PlayField = this;
+            m_currentMonster = monster;
         }
     }
 }

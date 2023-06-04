@@ -61,6 +61,11 @@ MonoBehaviour:
   - StartMyTurn_RPC
   - OnAttack_RPC
   - SwitchState_RPC
+  - DoAttack_RPC
+  - SetUpStats_RPC
+  - StartAttack_RPC
+  - StopAttack_RPC
+  - TakeDamage_RPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

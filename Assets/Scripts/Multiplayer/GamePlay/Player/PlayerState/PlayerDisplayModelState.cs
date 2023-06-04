@@ -103,7 +103,7 @@ public class PlayerDisplayModelState : MyStateMachine
             {
                 Monster monster = m_player.GetChosenMonster().GetComponent<Monster>();
                 playField.SetNewMonster(m_player.MonsterChosenID);
-                monster.SetMonsterReady();
+                monster.SetMonsterReady(true);
             }
             
             int monsterViewID = m_player.GetChosenMonster().GetComponent<Monster>().m_photonView.ViewID;

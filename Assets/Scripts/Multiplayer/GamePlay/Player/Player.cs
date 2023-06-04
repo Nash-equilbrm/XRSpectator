@@ -199,14 +199,14 @@ public class Player : MonoBehaviourPunCallbacks
     {
         if (photonView.IsMine)
         {
-            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "OnAttack_RPC");
-            photonView.RPC("OnAttack_RPC", RpcTarget.AllBuffered, attack);
+            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "DoAttack_RPC");
+            photonView.RPC("DoAttack_RPC", RpcTarget.AllBuffered, attack);
             PhotonNetwork.SendAllOutgoingCommands();
         }
     }
 
     [PunRPC]
-    public void OnAttack_RPC(bool attack)
+    public void DoAttack_RPC(bool attack)
     {
         m_onAttack = attack;
     }
