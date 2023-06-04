@@ -35,8 +35,16 @@ public class PlayField : MonoBehaviour
         {
             TurnOnMonsterField();
         }
-        monsterName.text = m_currentMonster.Name + ": ";
-        monsterHP.text = m_currentMonster.CurrentHP.ToString();
+        if(m_currentMonster != null)
+        {
+            monsterName.text = m_currentMonster.Name + ": ";
+            monsterHP.text = m_currentMonster.CurrentHP.ToString();
+        }
+        else
+        {
+            monsterName.text = "";
+            monsterHP.text = "";
+        }
     }
     public void TurnOnNormalField()
     {
