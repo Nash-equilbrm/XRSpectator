@@ -30,7 +30,7 @@ public partial class Monster
         Debug.Log(m_name + " id " + m_photonView.ViewID + " TAKE DAMAGE: " + damage);
         m_currentHP -= damage;
         Debug.Log("Current HP: " + m_currentHP);
-        if (m_currentHP < 0)
+        if (m_currentHP <= 0)
         {
             //Die
             m_currentHP = 0;
