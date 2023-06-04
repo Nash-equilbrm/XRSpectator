@@ -44,7 +44,7 @@ public class PlayerAttackState : MyStateMachine
             m_player.ShowInvalidSign(Vector3.zero, Quaternion.identity, false);
 
             Monster monster = m_attacker.GetComponent<Monster>();
-            Monster target = m_attacker.GetComponent<Monster>();
+            Monster target = m_target.GetComponent<Monster>();
 
             //Monster monsterTarget = m_target.GetComponent<Monster>();
             if (monster)
