@@ -108,12 +108,16 @@ public partial class Monster : MonoBehaviour
     [PunRPC]
     public void StartAttack_RPC(int monsterViewID)
     {
-        Monster targetMonster = PhotonView.Find(monsterViewID).gameObject?.GetComponent<Monster>();
-        if (targetMonster)
+        GameObject targetObj = PhotonView.Find(monsterViewID).gameObject;
+        if (targetObj)
         {
-            transform.LookAt(targetMonster.transform.position);
-            targetMonster.TakeDamage(m_ATK);
-            m_onAttack = true;
+            Monster targetMonster = targetObj.GetComponent<Monster>();
+            if (targetMonster)
+            {
+                transform.LookAt(targetObj.transform);
+                targetMonster.TakeDamage(m_ATK);
+                m_onAttack = true;
+            }
         }
     }
 

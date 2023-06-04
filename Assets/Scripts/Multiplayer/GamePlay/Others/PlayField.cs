@@ -9,8 +9,7 @@ public class PlayField : MonoBehaviour
     public GameObject normalField;
     public GameObject monsterField;
     public GameObject attackPhaseField;
-    public TMPro.TextMeshPro monsterName;
-    public TMPro.TextMeshPro monsterHP;
+    public TMPro.TextMeshPro text;
 
     public Monster CurrentMonster { get => m_currentMonster; }
     [SerializeField] private Monster m_currentMonster = null;
@@ -37,13 +36,11 @@ public class PlayField : MonoBehaviour
         }
         if(m_currentMonster != null)
         {
-            monsterName.text = m_currentMonster.Name + ": ";
-            monsterHP.text = m_currentMonster.CurrentHP.ToString();
+            text.text = m_currentMonster.Name + ": " + m_currentMonster.CurrentHP;
         }
         else
         {
-            monsterName.text = "";
-            monsterHP.text = "";
+            text.text = "";
         }
     }
     public void TurnOnNormalField()
