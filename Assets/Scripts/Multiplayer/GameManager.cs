@@ -24,12 +24,7 @@ public partial class GameManager : MonoBehaviourPunCallbacks
     public Transform imageTarget;
   
 
-    [Header("ZedCamera")]
-    public Transform zedCameraTransform;
-    public GameObject marker;
-    public GameObject zedRigStereo;
-    public GameObject zedCaptureToOpenCV;
-    public GameObject ArUcoDetectManager;
+   
 
     private bool m_userRoleInitialized = false;
     private void Update()

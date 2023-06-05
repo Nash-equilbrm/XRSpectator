@@ -4,8 +4,13 @@ using Vuforia;
 
 public partial class GameManager
 {
+    [Header("ZedCamera")]
+    public Transform zedCameraTransform;
+    public GameObject marker;
+    public GameObject zedRigStereo;
+    public GameObject zedCaptureToOpenCV;
+    public GameObject ArUcoDetectManager;
     public Transform leftEye;
-
     public float retrackMarkerInterval = 10f;
     private float m_retrackTimer = 0f;
     private void InitZED()
