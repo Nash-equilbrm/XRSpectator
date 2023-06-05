@@ -58,15 +58,6 @@
       "source": "local-tarball",
       "dependencies": {}
     },
-    "com.microsoft.mixedreality.webrtc.samples": {
-      "version": "file:C:/Users/MSI-NK/Downloads/com.microsoft.mixedreality.webrtc.samples-2.0.2.tgz",
-      "depth": 0,
-      "source": "local-tarball",
-      "dependencies": {
-        "com.microsoft.mixedreality.webrtc": "2.0.2",
-        "com.unity.textmeshpro": "1.4.1"
-      }
-    },
     "com.ptc.vuforia.engine": {
       "version": "file:com.ptc.vuforia.engine-10.15.4.tgz",
       "depth": 0,
