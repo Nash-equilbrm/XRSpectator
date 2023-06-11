@@ -269,8 +269,9 @@ MonoBehaviour:
   CurrentStateName: 0
   m_playerID: 0
   m_invalidSign: {fileID: 0}
+  m_deathEffect: {fileID: 0}
   photonView: {fileID: 2971360194156331780}
-  cardCollectionIds: 01000000020000000000000002000000
+  cardCollectionIds: 01000000020000000400000005000000
   m_onAttack: 0
   m_isMyTurn: 0
   m_opponent: {fileID: 0}

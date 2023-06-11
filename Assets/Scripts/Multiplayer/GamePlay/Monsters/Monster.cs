@@ -11,19 +11,22 @@ public partial class Monster : MonoBehaviour
     public PlayField PlayField { get => m_playField; set => m_playField = value; }
     [SerializeField] private PlayField m_playField;
 
-    [SerializeField]private bool m_isMonsterReady = false;
-
-    public bool OnAttack { get => m_onAttack;}
+    private bool m_isStatInit = false;
     public string Name { get => m_name; }
     private string m_name;
 
+
+
+    [SerializeField]private bool m_isMonsterReady = false;
+
+    public bool OnAttack { get => m_onAttack;}
     private bool m_onAttack = false;
+    private Monster m_currentTarget = null;
 
     private int m_ATK;
     private float m_attackDuration;
     private float m_attackTimer;
 
-    private bool m_isStatInit = false;
 
     private void Start()
     {
@@ -38,13 +41,9 @@ public partial class Monster : MonoBehaviour
         {
             UpdateAttackPhase();
         }
-
     }
 
-    private void UpdateAnimation()
-    {
-        m_animator.SetBool("Attacking", OnAttack);
-    }
+   
 
     
 
@@ -72,7 +71,7 @@ public partial class Monster : MonoBehaviour
         if (m_photonView.IsMine)
         {
             PhotonNetwork.RemoveBufferedRPCs(m_photonView.ViewID, "SetUpStats_RPC");
-            m_photonView.RPC("SetUpStats_RPC", RpcTarget.AllBuffered,config.name, config.HP, config.ATK, config.attackDuration);
+            m_photonView.RPC("SetUpStats_RPC", RpcTarget.AllBuffered,config.monsterName, config.HP, config.ATK, config.attackDuration);
             PhotonNetwork.SendAllOutgoingCommands();
             UpdateAnimation();
 
@@ -116,12 +115,15 @@ public partial class Monster : MonoBehaviour
             {
                 transform.LookAt(targetObj.transform);
                 Debug.Log(m_photonView.ViewID + " attack " + targetMonster.m_photonView.ViewID);
-                targetMonster.TakeDamage(m_ATK);
+                //targetMonster.TakeDamage(m_ATK);
+                m_currentTarget = targetMonster;
                 m_onAttack = true;
             }
+            
         }
     }
 
+    ParticleSystem.Particle[] p = new ParticleSystem.Particle[200];
 
     public void StopAttack()
     {
@@ -131,6 +133,8 @@ public partial class Monster : MonoBehaviour
             m_photonView.RPC("StopAttack_RPC", RpcTarget.AllBuffered);
             PhotonNetwork.SendAllOutgoingCommands();
             UpdateAnimation();
+
+            Debug.Log("Attack particle remains when stop attack: " + m_attackEffect.GetParticles(p));
         }
     }
     [PunRPC]
@@ -138,6 +142,7 @@ public partial class Monster : MonoBehaviour
     {
         m_attackTimer = m_attackDuration;
         if (PlayField != null) transform.eulerAngles = new Vector3(0, PlayField.transform.eulerAngles.y, 0);
+        m_currentTarget = null;
         m_onAttack = false;
     }
 
@@ -177,5 +182,34 @@ public partial class Monster : MonoBehaviour
         m_isMonsterReady = ready;
         m_animator.enabled = ready;
         m_collider.enabled = ready;
+    }
+
+
+    public void DealDamage()
+    {
+        if (m_photonView.IsMine)
+        {
+            PhotonNetwork.RemoveBufferedRPCs(m_photonView.ViewID, "DealDamage_RPC");
+            m_photonView.RPC("DealDamage_RPC", RpcTarget.AllBuffered);
+            PhotonNetwork.SendAllOutgoingCommands();
+        }
+    }
+
+
+    [PunRPC]
+    public void DealDamage_RPC()
+    {
+        if (m_currentTarget)
+        {
+            m_currentTarget.TakeDamage(m_ATK);
+            if (m_attackEffect != null)
+            {
+                m_attackEffect.gameObject.SetActive(true);
+                m_attackEffect.Play();
+                Debug.Log("Attack particle remains when dealing: " + m_attackEffect.GetParticles(p));
+
+            }
+
+        }
     }
 }

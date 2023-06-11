@@ -12,8 +12,10 @@ public class Player : MonoBehaviourPunCallbacks
 
     public int PlayerID { get => m_playerID; }
     [SerializeField] private int m_playerID;
-    public GameObject InvalidSign { get => m_invalidSign; set => m_invalidSign = value; }
+
+
     [SerializeField] private GameObject m_invalidSign = null;
+    [SerializeField] private ParticleSystem m_deathEffect = null;
 
     public PhotonView photonView;
     private MyStateMachine m_currentState;
@@ -71,6 +73,9 @@ public class Player : MonoBehaviourPunCallbacks
             {
                 GameObject sign = PhotonNetwork.Instantiate("Prefabs/Menus/" + GameManager.Instance.invalidSignPrefab.name, new Vector3(100, 100, 100), Quaternion.identity);
                 GetInvalidSign(sign.GetComponent<PhotonView>().ViewID);
+
+                GameObject deathEffect = PhotonNetwork.Instantiate("Prefabs/Effects/" + GameManager.Instance.deathEffectPrefab.name, new Vector3(100, 100, 100), Quaternion.identity);
+                GetDeathEffect(deathEffect.GetComponent<PhotonView>().ViewID);
             }
 
         }
@@ -238,29 +243,6 @@ public class Player : MonoBehaviourPunCallbacks
     }
 
 
-    public void ShowInvalidSign(Vector3 position, Quaternion rotation, bool active = true)
-    {
-        if (photonView.IsMine)
-        {
-            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "ShowInvalidSign_RPC");
-            photonView.RPC("ShowInvalidSign_RPC", RpcTarget.AllBuffered, position, rotation, active);
-            PhotonNetwork.SendAllOutgoingCommands();
-        }
-    }
-
-    [PunRPC]
-    private void ShowInvalidSign_RPC(Vector3 position, Quaternion rotation, bool active = true)
-    {
-        if (!active)
-        {
-            m_invalidSign.SetActive(false);
-            return;
-        }
-        m_invalidSign.SetActive(true);
-        m_invalidSign.transform.position = position;
-        m_invalidSign.transform.rotation = rotation;
-    }
-
 
 
     public void EndMyTurn()
@@ -411,9 +393,69 @@ public class Player : MonoBehaviourPunCallbacks
     [PunRPC]
     private void GetInvalidSign_RPC(int viewID)
     {
-        InvalidSign = PhotonView.Find(viewID).gameObject;
+        m_invalidSign = PhotonView.Find(viewID).gameObject;
     }
 
+
+    public void ShowInvalidSign(Vector3 position, Quaternion rotation, bool active = true)
+    {
+        if (photonView.IsMine)
+        {
+            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "ShowInvalidSign_RPC");
+            photonView.RPC("ShowInvalidSign_RPC", RpcTarget.AllBuffered, position, rotation, active);
+            PhotonNetwork.SendAllOutgoingCommands();
+        }
+    }
+
+    [PunRPC]
+    private void ShowInvalidSign_RPC(Vector3 position, Quaternion rotation, bool active = true)
+    {
+        if (!active)
+        {
+            m_invalidSign.SetActive(false);
+            return;
+        }
+        m_invalidSign.SetActive(true);
+        m_invalidSign.transform.position = position;
+        m_invalidSign.transform.rotation = rotation;
+    }
+
+
+
+    private void GetDeathEffect(int viewID)
+    {
+
+        PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "GetDeathEffect_RPC");
+        photonView.RPC("GetDeathEffect_RPC", RpcTarget.AllBuffered, viewID);
+        PhotonNetwork.SendAllOutgoingCommands();
+    }
+
+    [PunRPC]
+    private void GetDeathEffect_RPC(int viewID)
+    {
+        GameObject effectObj = PhotonView.Find(viewID).gameObject;
+        if (effectObj)
+        {
+            m_deathEffect = effectObj.GetComponent<ParticleSystem>();
+        }
+    }
+
+    public void PlayDeathEffect(Vector3 position)
+    {
+        if (photonView.IsMine)
+        {
+            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "PlayDeathEffect_RPC");
+            photonView.RPC("PlayDeathEffect_RPC", RpcTarget.AllBuffered, position);
+            PhotonNetwork.SendAllOutgoingCommands();
+        }
+    }
+
+    [PunRPC]
+    private void PlayDeathEffect_RPC(Vector3 position)
+    {
+        m_deathEffect.transform.position = position;
+        m_deathEffect.Play();
+    }
 
 }
 

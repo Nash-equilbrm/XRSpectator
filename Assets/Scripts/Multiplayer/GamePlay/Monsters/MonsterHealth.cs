@@ -27,9 +27,7 @@ public partial class Monster
     [PunRPC]
     public void TakeDamage_RPC(int damage)
     {
-        Debug.Log(m_name + " id " + m_photonView.ViewID + " TAKE DAMAGE: " + damage);
         m_currentHP -= damage;
-        Debug.Log("Current HP: " + m_currentHP);
         if (m_currentHP <= 0)
         {
             //Die
@@ -38,11 +36,20 @@ public partial class Monster
             m_isMonsterReady = false;
             m_animator.enabled = false;
             m_collider.enabled = false;
-            
-            PlayField.SetNewMonster(-1);
+
+            Vector3 pos = transform.position;
+            PlayField?.SetNewMonster(-1);
             PlayField = null;
 
             transform.position = new Vector3(100, 100, 100);
+            GameManager.Instance.playerManager.PlayDeathEffect(pos);
+        }
+        else if (m_takeDamageEffect != null)
+        {
+            m_takeDamageEffect.gameObject.SetActive(true);
+            m_takeDamageEffect.Play();
+            Debug.Log("Attack particle remains when take damage: " + m_takeDamageEffect.GetParticles(p));
+
         }
 
 

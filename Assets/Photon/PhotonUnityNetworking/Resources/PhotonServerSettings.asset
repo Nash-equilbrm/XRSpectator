@@ -66,6 +66,12 @@ MonoBehaviour:
   - StartAttack_RPC
   - StopAttack_RPC
   - TakeDamage_RPC
+  - TurnOnAttackEffect_RPC
+  - Die_RPC
+  - TurnOnDamagedEffect_RPC
+  - GetDeathEffect_RPC
+  - PlayDeathEffect_RPC
+  - DealDamage_RPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

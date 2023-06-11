@@ -24,8 +24,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 777927821019809782}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.104, z: 0.761}
-  m_LocalScale: {x: 2, y: 3, z: 1}
+  m_LocalPosition: {x: 0, y: 0.15, z: 0.8}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7188886417365574895}
@@ -88,6 +88,7 @@ MonoBehaviour:
   normalField: {fileID: 5727092015015782219}
   monsterField: {fileID: 8546501944225689506}
   attackPhaseField: {fileID: 6157922338944450293}
+  monsterHolder: {fileID: 8539211520176191643}
   text: {fileID: 4512117585526725609}
   m_currentMonster: {fileID: 0}
 --- !u!65 &4559165560181801306
@@ -169,7 +170,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8539211520176191643}
   m_Layer: 0
-  m_Name: Content
+  m_Name: MonsterHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -248,7 +249,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -5992233495836902305, guid: 8b55feb0efd94d04cb5d292cdfc9a7e6, type: 2}
+  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -294,16 +295,15 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8b55feb0efd94d04cb5d292cdfc9a7e6, type: 2}
-  m_sharedMaterial: {fileID: -5992233495836902305, guid: 8b55feb0efd94d04cb5d292cdfc9a7e6,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278386818
-  m_fontColor: {r: 0.50980395, g: 0, b: 0.013570692, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -326,7 +326,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 33
+  m_fontStyle: 16
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535

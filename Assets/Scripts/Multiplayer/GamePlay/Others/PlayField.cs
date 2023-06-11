@@ -9,6 +9,7 @@ public class PlayField : MonoBehaviour
     public GameObject normalField;
     public GameObject monsterField;
     public GameObject attackPhaseField;
+    public Transform monsterHolder;
     public TMPro.TextMeshPro text;
 
     public Monster CurrentMonster { get => m_currentMonster; }
@@ -80,11 +81,12 @@ public class PlayField : MonoBehaviour
     {
         if(viewID == -1)
         {
+            m_currentMonster?.transform.SetParent(null);
             m_currentMonster = null;
             return;
         }
         GameObject monsterobj = PhotonView.Find(viewID).gameObject;
-        monsterobj.transform.SetParent(transform.Find("Content"));
+        monsterobj.transform.SetParent(monsterHolder);
         Monster monster = monsterobj.GetComponent<Monster>();
         if (monster)
         {

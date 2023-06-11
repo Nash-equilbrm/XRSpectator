@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Fishie
   m_EditorClassIdentifier: 
   configID: 1
-  name: Fishie
+  monsterName: Fishie
   model: {fileID: 7328862912876552449, guid: 05707e4c59209bd44b0b9a2469308141, type: 3}
   avatarImg: {fileID: 21300000, guid: 9f1f9a795c1412f4f82d3dd35729bce0, type: 3}
-  HP: 100
+  HP: 200
   ATK: 60
-  attackDuration: 2.16
+  attackDuration: 1.08
