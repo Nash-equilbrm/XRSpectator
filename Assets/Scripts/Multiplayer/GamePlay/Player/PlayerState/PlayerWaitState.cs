@@ -16,14 +16,12 @@ public class PlayerWaitState : MyStateMachine
     {
         Debug.Log("WAIT");
         m_player.CurrentStateName = name;
+
         if (m_player.IsMyTurn)
         {
             m_player.StartMyTurn(true);
             ExitState = true;
-        }
-        else
-        {
-            m_player.ChoseNewMonster(-1);
+            return;
         }
     }
 
@@ -32,7 +30,7 @@ public class PlayerWaitState : MyStateMachine
         // reset attack so that monsters are able to attack in the new turn.
         foreach (int monsterID in m_player.MyMonsters.Keys)
         {
-            if (m_player.MyMonsters[monsterID].CurrentHP >= 0)
+            if (m_player.MyMonsters[monsterID].CurrentHP > 0)
             {
                 m_player.MyMonsters[monsterID].ResetMonsterAttack();
             }
@@ -43,6 +41,7 @@ public class PlayerWaitState : MyStateMachine
 
     protected override void Initialize()
     {
+        m_player.ChoseNewMonster(-1);
         StateInitialized = true;
     }
 }

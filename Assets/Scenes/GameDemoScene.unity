@@ -418,6 +418,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4efd3cc6be70fc04686f4384dba7ade0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameResultPrefab: {fileID: 1541617848298344139, guid: 6aa319e2b8467834fa3675578b32837a,
+    type: 3}
   turnDecideCoinPrefab: {fileID: 2746561352560966897, guid: f5dd265173a366d4b9f99e0dd4b8a397,
     type: 3}
   invalidSignPrefab: {fileID: 786864677051450278, guid: 6821f3a7afba45b49961c9b111fdd708,
@@ -437,8 +439,6 @@ MonoBehaviour:
   - {fileID: 1722714572}
   - {fileID: 54032262}
   - {fileID: 829685612}
-  cardPrefab: {fileID: 7970814724612182409, guid: 9b6fa9d0f6486974396c90fa3fc52988,
-    type: 3}
   cardMenuSlots:
   - {fileID: 2131550109}
   - {fileID: 754772292}

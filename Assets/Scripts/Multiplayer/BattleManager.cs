@@ -6,13 +6,13 @@ using UnityEngine;
 public partial class GameManager
 {
     [Header("Gameplay")]
+    public GameObject gameResultPrefab;
     public GameObject turnDecideCoinPrefab;
     public GameObject invalidSignPrefab;
     public GameObject deathEffectPrefab;
     public GameObject guiObj;
     public GameObject startGameBtn;
     public GameObject[] playFields;
-    public GameObject cardPrefab;
     public GameObject[] cardMenuSlots;
     public CardConfig[] cardConfigs;
 
@@ -104,5 +104,6 @@ public enum GameResultEnum
 {
     WIN,
     LOSE,
+    DRAW,
     NONE
 }

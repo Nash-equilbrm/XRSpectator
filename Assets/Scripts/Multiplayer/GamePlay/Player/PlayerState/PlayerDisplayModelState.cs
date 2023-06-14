@@ -105,14 +105,11 @@ public class PlayerDisplayModelState : MyStateMachine
                 monster.SetMonsterReady();
             }
             
-            int monsterViewID = m_player.GetChosenMonsterObject().GetComponent<Monster>().m_photonView.ViewID;
-
-            if(m_player.m_cardCollectionIds.Count > 0)
+            if(m_player.CardCollection.Count > 0)
             {
                 Card card = GameManager.Instance.cardMenuSlots[m_player.CardChoseIndex].GetComponent<Card>();
-                card.InitCardUI(m_player.CardChoseIndex, GameManager.Instance.cardConfigs[m_player.m_cardCollectionIds[0]]);
-                m_player.m_cardCollectionIds.RemoveAt(0);
-
+                card.InitCardUI(m_player.CardChoseIndex, GameManager.Instance.cardConfigs[m_player.CardCollection[0]]);
+                m_player.CardCollection.RemoveAt(0);
             }
             else
             {

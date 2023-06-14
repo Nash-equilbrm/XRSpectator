@@ -50,9 +50,9 @@ public class PlayerInitState : MyStateMachine
             GameObject cardObj = GameManager.Instance.cardMenuSlots[i];
             cardObj.SetActive(true);
             Card card = cardObj.GetComponent<Card>();
-            card.InitCardUI(i, GameManager.Instance.cardConfigs[m_player.m_cardCollectionIds[0]]);
+            card.InitCardUI(i, GameManager.Instance.cardConfigs[m_player.CardCollection[0]]);
 
-            m_player.m_cardCollectionIds.RemoveAt(0);
+            m_player.CardCollection.RemoveAt(0);
         }
     }
 

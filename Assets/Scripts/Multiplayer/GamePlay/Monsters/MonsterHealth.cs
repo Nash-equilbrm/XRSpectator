@@ -42,7 +42,10 @@ public partial class Monster
             PlayField = null;
 
             transform.position = new Vector3(100, 100, 100);
+            gameObject.SetActive(false);
             GameManager.Instance.playerManager.PlayDeathEffect(pos);
+            GameManager.Instance.playerManager.RemoveMonster(m_photonView.ViewID);
+
         }
         else if (m_takeDamageEffect != null)
         {

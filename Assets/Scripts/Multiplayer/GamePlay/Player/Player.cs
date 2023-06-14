@@ -25,7 +25,8 @@ public class Player : MonoBehaviourPunCallbacks
     private PlayerAttackState m_attackState;
     private PlayerInitState m_initState;
 
-    public List<int> m_cardCollectionIds;
+    public List<int> CardCollection { get => m_cardCollectionIds; }
+    [SerializeField] private List<int> m_cardCollectionIds;
 
     public bool OnAttack { get => m_onAttack; }
     [SerializeField] private bool m_onAttack = false;
@@ -51,6 +52,8 @@ public class Player : MonoBehaviourPunCallbacks
     public Dictionary<int, Monster> MyMonsters { get => m_myMonsters; }
     [SerializeField] private Dictionary<int, Monster> m_myMonsters;
     public List<int> DebugMonsterList = new List<int>();
+
+
 
     void Start()
     {
@@ -86,21 +89,11 @@ public class Player : MonoBehaviourPunCallbacks
 
     void Update()
     {
-        if (GameManager.Instance.TrackedWithVuforia)
+        if (GameManager.Instance.TrackedWithVuforia && GameManager.Instance.GameResult == GameResultEnum.NONE)
         {
-            UpdatePlayer();
+            m_currentState.UpdateState();
         }
     }
-
-
-    private void UpdatePlayer()
-    {
-        Debug.Log("UpdatePlayer");
-
-        m_currentState.UpdateState();
-    }
-
-    
 
 
     public GameObject GetRayCastHit()
@@ -366,6 +359,29 @@ public class Player : MonoBehaviourPunCallbacks
         Monster monster = monsterObj.GetComponent<Monster>();
         m_myMonsters.Add(monsterViewID, monster);
         DebugMonsterList.Add(monsterViewID);
+    }
+
+    public void RemoveMonster(int monsterViewID)
+    {
+        if (photonView.IsMine)
+        {
+            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "RemoveMonster_RPC");
+            photonView.RPC("RemoveMonster_RPC", RpcTarget.AllBuffered, monsterViewID);
+            PhotonNetwork.SendAllOutgoingCommands();
+        }
+    }
+
+    [PunRPC]
+    private void RemoveMonster_RPC(int monsterViewID)
+    {
+        if (m_myMonsters.ContainsKey(monsterViewID))
+        {
+            m_myMonsters.Remove(monsterViewID);
+        }
+        else
+        {
+            Debug.LogError("Monster List does not contains Key: " + monsterViewID);
+        }
     }
 
 
