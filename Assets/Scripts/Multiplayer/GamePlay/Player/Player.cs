@@ -25,7 +25,7 @@ public class Player : MonoBehaviourPunCallbacks
     private PlayerAttackState m_attackState;
     private PlayerInitState m_initState;
 
-    public int[] cardCollectionIds;
+    public List<int> m_cardCollectionIds;
 
     public bool OnAttack { get => m_onAttack; }
     [SerializeField] private bool m_onAttack = false;
@@ -41,12 +41,15 @@ public class Player : MonoBehaviourPunCallbacks
     public int MonsterChosenID { get => m_monsterChosenID; }
     [SerializeField] private int m_monsterChosenID = -1;
 
+    public int CardChoseIndex { get => m_cardChoseIndex; set => m_cardChoseIndex = value; }
+    private int m_cardChoseIndex = -1;
+
+
     public List<GameObject> MyPlayFields { get => m_myPlayFields; }
     [SerializeField] private List<GameObject> m_myPlayFields;
 
-    public Dictionary<int, GameObject> MyMonsters { get => m_myMonsters; }
-    [SerializeField] Dictionary<int, GameObject> m_myMonsters;
-    public int MyMonsterCounts;
+    public Dictionary<int, Monster> MyMonsters { get => m_myMonsters; }
+    [SerializeField] private Dictionary<int, Monster> m_myMonsters;
     public List<int> DebugMonsterList = new List<int>();
 
     void Start()
@@ -59,7 +62,7 @@ public class Player : MonoBehaviourPunCallbacks
         {
             photonView = GetComponent<PhotonView>();
             m_myPlayFields = new List<GameObject>();
-            m_myMonsters = new Dictionary<int, GameObject>();
+            m_myMonsters = new Dictionary<int, Monster>();
 
             m_chooseCardState = new PlayerChooseCardState(this);
             m_displayModelState = new PlayerDisplayModelState(this);
@@ -87,7 +90,6 @@ public class Player : MonoBehaviourPunCallbacks
         {
             UpdatePlayer();
         }
-        MyMonsterCounts = m_myMonsters.Count;
     }
 
 
@@ -169,12 +171,11 @@ public class Player : MonoBehaviourPunCallbacks
         }
     }
 
-    public GameObject GetChosenMonster()
+    public GameObject GetChosenMonsterObject()
     {
         if (MyMonsters.ContainsKey(MonsterChosenID))
         {
-            Debug.Log("Player " + m_playerID + " choose monster: " + MonsterChosenID);
-            return MyMonsters[MonsterChosenID];
+            return MyMonsters[MonsterChosenID].gameObject;
         }
 
         return null;
@@ -231,7 +232,7 @@ public class Player : MonoBehaviourPunCallbacks
     private void ShowModel_RPC(Vector3 position, Quaternion rotation, bool active)
     {
         Debug.Log("ShowModel_RPC");
-        GameObject model = GetChosenMonster();
+        GameObject model = GetChosenMonsterObject();
         if (!active)
         {
             model.SetActive(false);
@@ -362,7 +363,8 @@ public class Player : MonoBehaviourPunCallbacks
     private void AddNewMonster_RPC(int monsterViewID)
     {
         GameObject monsterObj = PhotonView.Find(monsterViewID)?.gameObject;
-        m_myMonsters.Add(monsterViewID, monsterObj);
+        Monster monster = monsterObj.GetComponent<Monster>();
+        m_myMonsters.Add(monsterViewID, monster);
         DebugMonsterList.Add(monsterViewID);
     }
 

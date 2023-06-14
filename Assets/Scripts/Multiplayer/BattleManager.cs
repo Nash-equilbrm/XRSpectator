@@ -13,7 +13,7 @@ public partial class GameManager
     public GameObject startGameBtn;
     public GameObject[] playFields;
     public GameObject cardPrefab;
-    public Transform[] cardMenuSlots;
+    public GameObject[] cardMenuSlots;
     public CardConfig[] cardConfigs;
 
     public GameResultEnum GameResult { get => gameResult; set => gameResult = value; }

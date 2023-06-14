@@ -271,11 +271,10 @@ MonoBehaviour:
   m_invalidSign: {fileID: 0}
   m_deathEffect: {fileID: 0}
   photonView: {fileID: 2971360194156331780}
-  cardCollectionIds: 01000000020000000400000005000000
+  m_cardCollectionIds: 00000000010000000200000003000000040000000500000006000000
   m_onAttack: 0
   m_isMyTurn: 0
   m_opponent: {fileID: 0}
   m_monsterChosenID: -1
   m_myPlayFields: []
-  MyMonsterCounts: 0
   DebugMonsterList: 

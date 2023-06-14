@@ -21,13 +21,13 @@ public class PlayField : MonoBehaviour
         photonView = GetComponent<PhotonView>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if(CurrentMonster == null)
         {
             TurnOnNormalField();
         }
-        else if(CurrentMonster.OnAttack)
+        else if(CurrentMonster.HasAttacked)
         {
             TurnOnAttackField();
         }
@@ -35,6 +35,7 @@ public class PlayField : MonoBehaviour
         {
             TurnOnMonsterField();
         }
+
         if(m_currentMonster != null)
         {
             text.text = m_currentMonster.Name + ": " + m_currentMonster.CurrentHP;
@@ -44,6 +45,8 @@ public class PlayField : MonoBehaviour
             text.text = "";
         }
     }
+
+
     public void TurnOnNormalField()
     {
         normalField.SetActive(true);

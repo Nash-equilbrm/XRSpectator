@@ -48,8 +48,6 @@ public partial class Monster
         {
             m_takeDamageEffect.gameObject.SetActive(true);
             m_takeDamageEffect.Play();
-            Debug.Log("Attack particle remains when take damage: " + m_takeDamageEffect.GetParticles(p));
-
         }
 
 

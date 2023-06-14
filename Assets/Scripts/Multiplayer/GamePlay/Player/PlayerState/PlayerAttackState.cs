@@ -34,6 +34,10 @@ public class PlayerAttackState : MyStateMachine
         if (m_attacker == null)
         {
             SetAttacker();
+            if(m_attacker != null && (bool)(m_attacker.GetComponent<Monster>()?.HasAttacked))
+            {
+                m_attacker = null;
+            }
         }
         else if (m_target == null)
         {
@@ -73,7 +77,7 @@ public class PlayerAttackState : MyStateMachine
     }
 
     protected override void Initialize()
-    {
+    {   
         StateInitialized = true;
     }
 
@@ -139,7 +143,7 @@ public class PlayerAttackState : MyStateMachine
         bool hitCreature = false;
 
         if (hit && hit.tag.Length >= "Creature".Length && hit.tag.Substring(0, 8) == "Creature")
-        {
+            {
             if (m_player.PlayerID == int.Parse(hit.tag.Substring(8)))
             {
                 m_selectedObj = hit;

@@ -47,12 +47,12 @@ public class PlayerInitState : MyStateMachine
     {
         for (int i = 0; i < GameManager.Instance.cardMenuSlots.Length; ++i)
         {
-            GameObject cardObj = GameObject.Instantiate(GameManager.Instance.cardPrefab);
-            cardObj.transform.SetParent(GameManager.Instance.cardMenuSlots[i]);
-            cardObj.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
-            CardDisplay card = cardObj.GetComponent<CardDisplay>();
-            card.Config = GameManager.Instance.cardConfigs[m_player.cardCollectionIds[i]];
-            card.InitCardUI();
+            GameObject cardObj = GameManager.Instance.cardMenuSlots[i];
+            cardObj.SetActive(true);
+            Card card = cardObj.GetComponent<Card>();
+            card.InitCardUI(i, GameManager.Instance.cardConfigs[m_player.m_cardCollectionIds[0]]);
+
+            m_player.m_cardCollectionIds.RemoveAt(0);
         }
     }
 

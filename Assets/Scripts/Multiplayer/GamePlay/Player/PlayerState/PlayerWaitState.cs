@@ -29,6 +29,15 @@ public class PlayerWaitState : MyStateMachine
 
     protected override void Exit()
     {
+        // reset attack so that monsters are able to attack in the new turn.
+        foreach (int monsterID in m_player.MyMonsters.Keys)
+        {
+            if (m_player.MyMonsters[monsterID].CurrentHP >= 0)
+            {
+                m_player.MyMonsters[monsterID].ResetMonsterAttack();
+            }
+        }
+
         m_player.SwitchState(PlayerStateEnum.CHOOSE_CARD);
     }
 

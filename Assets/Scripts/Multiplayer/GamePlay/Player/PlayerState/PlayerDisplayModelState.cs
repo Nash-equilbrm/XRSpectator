@@ -10,7 +10,6 @@ public class PlayerDisplayModelState : MyStateMachine
     private GameObject m_selectedPlayField = null;
     private GameObject m_prevHit = null;
 
-
     public Player m_player;
 
     public PlayerStateEnum name = PlayerStateEnum.DISPLAY_MODEL;
@@ -44,7 +43,7 @@ public class PlayerDisplayModelState : MyStateMachine
                 // delete invalid sign or model if remove pointer from previous pointed playfield
                 if (m_prevHit != null)
                 {
-                    m_player.GetChosenMonster()?.SetActive(false);
+                    m_player.GetChosenMonsterObject()?.SetActive(false);
                     m_player.ShowInvalidSign(Vector3.zero, Quaternion.identity ,false);
                 }
 
@@ -101,13 +100,24 @@ public class PlayerDisplayModelState : MyStateMachine
             PlayField playField = m_selectedPlayField.GetComponent<PlayField>();
             if (playField)
             {
-                Monster monster = m_player.GetChosenMonster().GetComponent<Monster>();
+                Monster monster = m_player.GetChosenMonsterObject().GetComponent<Monster>();
                 playField.SetNewMonster(m_player.MonsterChosenID);
-                monster.SetMonsterReady(true);
+                monster.SetMonsterReady();
             }
             
-            int monsterViewID = m_player.GetChosenMonster().GetComponent<Monster>().m_photonView.ViewID;
+            int monsterViewID = m_player.GetChosenMonsterObject().GetComponent<Monster>().m_photonView.ViewID;
 
+            if(m_player.m_cardCollectionIds.Count > 0)
+            {
+                Card card = GameManager.Instance.cardMenuSlots[m_player.CardChoseIndex].GetComponent<Card>();
+                card.InitCardUI(m_player.CardChoseIndex, GameManager.Instance.cardConfigs[m_player.m_cardCollectionIds[0]]);
+                m_player.m_cardCollectionIds.RemoveAt(0);
+
+            }
+            else
+            {
+                GameManager.Instance.cardMenuSlots[m_player.CardChoseIndex].SetActive(false);
+            }
 
             m_player.SwitchState(PlayerStateEnum.CHOOSE_CARD);
         }
