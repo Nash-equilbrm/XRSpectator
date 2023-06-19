@@ -199,6 +199,21 @@ public class Player : MonoBehaviourPunCallbacks
         m_isReady = ready;
     }
 
+    public void ChooseNewCard(int index)
+    {
+        if (photonView.IsMine)
+        {
+            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "ChooseNewCard_RPC");
+            photonView.RPC("ChooseNewCard_RPC", RpcTarget.AllBuffered, index);
+            PhotonNetwork.SendAllOutgoingCommands();
+        }
+    }
+
+    [PunRPC]
+    public void ChooseNewCard_RPC(int index)
+    {
+        m_cardChoseIndex = index;
+    }
 
     public void StartMyTurn(bool startTurn)
     {

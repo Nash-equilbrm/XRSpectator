@@ -44,7 +44,7 @@ public class Card : MonoBehaviour
     {
         Debug.Log("OnCardPressed");
         GameManager.Instance.playerManager.ChoseNewMonster(Monster.m_photonView.ViewID);
-        GameManager.Instance.playerManager.CardChoseIndex = m_index;
+        GameManager.Instance.playerManager.ChooseNewCard(m_index);
 
     }
 
