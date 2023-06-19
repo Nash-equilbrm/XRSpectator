@@ -89,6 +89,7 @@ public partial class GameManager
     {
         if(playerManager != null)
         {
+            playerManager.ResetTurn();
             playerManager.StartMyTurn(false);
         }
     }

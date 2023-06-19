@@ -542,8 +542,8 @@ public class Player : MonoBehaviourPunCallbacks
     {
         if (photonView.IsMine)
         {
-            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "PlayDeathEffect_RPC");
-            photonView.RPC("PlayDeathEffect_RPC", RpcTarget.AllBuffered);
+            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "ResetTurn_RPC");
+            photonView.RPC("ResetTurn_RPC", RpcTarget.AllBuffered);
             PhotonNetwork.SendAllOutgoingCommands();
         }
     }

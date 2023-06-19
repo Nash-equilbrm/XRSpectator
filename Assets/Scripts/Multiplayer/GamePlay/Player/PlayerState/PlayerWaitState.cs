@@ -33,8 +33,7 @@ public class PlayerWaitState : MyStateMachine
     protected override void Initialize()
     {
         m_player.ChoseNewMonster(-1);
-        // reset attack so that monsters are able to attack in the new turn.
-        m_player.ResetTurn();
+        
         StateInitialized = true;
     }
 }
