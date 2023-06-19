@@ -377,34 +377,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1050544493}
   m_PrefabAsset: {fileID: 0}
---- !u!21 &248971943
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Hidden/FMCubemapToEquirect
-  m_Shader: {fileID: 4800000, guid: d9cdde4a4997d467b99c1360420f5ce1, type: 3}
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Ints: []
-    m_Floats: []
-    m_Colors: []
-  m_BuildTextureStacks: []
 --- !u!1 &449527318 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 553945272814960376, guid: e6fcfaaf012412042bf7f626b9ddd473,
@@ -510,80 +482,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &581407288
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 581407290}
-  - component: {fileID: 581407289}
-  m_Layer: 0
-  m_Name: FMNetworkManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &581407289
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 581407288}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f68ecff929c04b31832e383f4dfe4fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AutoInit: 1
-  Initialised: 0
-  NetworkType: 0
-  Server: {fileID: 0}
-  Client: {fileID: 0}
-  ServerSettings:
-    ServerListenPort: 3333
-    UseAsyncListener: 0
-    UseMainThreadSender: 1
-    ConnectionCount: 0
-  ClientSettings:
-    ClientListenPort: 3334
-    UseMainThreadSender: 1
-    AutoNetworkDiscovery: 1
-    ServerIP: 
-    IsConnected: 0
-  ShowLog: 1
-  Status: 
-  UIStatus: {fileID: 0}
-  OnReceivedByteDataEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnReceivedStringDataEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  GetRawReceivedData:
-    m_PersistentCalls:
-      m_Calls: []
-  NetworkObjects: []
-  SyncFPS: 20
---- !u!4 &581407290
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 581407288}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5524521, y: -1.6046224, z: -2.060237}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &658881817
 GameObject:
@@ -1626,7 +1524,6 @@ GameObject:
   - component: {fileID: 1926886331}
   - component: {fileID: 1926886330}
   - component: {fileID: 1926886329}
-  - component: {fileID: 1926886339}
   m_Layer: 0
   m_Name: ARCamera
   m_TagString: MainCamera
@@ -1835,61 +1732,6 @@ Transform:
   m_Father: {fileID: 1795056381}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 16.692, y: -138.66, z: -15.379}
---- !u!114 &1926886339
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1926886328}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a9483c7a45cc456b85c2f3db18182e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CaptureMode: 1
-  Resize: 2
-  MainCam: {fileID: 1926886337}
-  RenderCam: {fileID: 0}
-  Resolution: {x: 512, y: 512}
-  MatchScreenAspect: 1
-  FastMode: 1
-  AsyncMode: 0
-  GZipMode: 0
-  PanoramaMode: 0
-  Quality: 40
-  StreamFPS: 20
-  ignoreSimilarTexture: 1
-  similarByteSizeThreshold: 8
-  CapturedTexture: {fileID: 0}
-  MatPano: {fileID: 248971943}
-  CubemapResolution: 1024
-  FMDesktopResolution: {x: 0, y: 0}
-  FMDesktopFlipX: 0
-  FMDesktopFlipY: 0
-  FMDesktopRangeX: 1
-  FMDesktopRangeY: 1
-  FMDesktopOffsetX: 0
-  FMDesktopOffsetY: 0
-  FMDesktopMonitorID: 0
-  FMDesktopMonitorCount: 0
-  OnDataByteReadyEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 581407289}
-        m_TargetAssemblyTypeName: FMNetworkManager, Assembly-CSharp
-        m_MethodName: SendToOthers
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  label: 1001
-  dataLength: 0
 --- !u!1 &2127354474
 GameObject:
   m_ObjectHideFlags: 0

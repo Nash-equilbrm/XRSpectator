@@ -145,21 +145,25 @@ public class Player : MonoBehaviourPunCallbacks
             {
                 case PlayerStateEnum.CHOOSE_CARD:
                     {
+                        Debug.Log("Player: " + m_playerID + "Switch state " + PlayerStateEnum.CHOOSE_CARD);
                         m_currentState = m_chooseCardState;
                         break;
                     }
                 case PlayerStateEnum.DISPLAY_MODEL:
                     {
+                        Debug.Log("Player: " + m_playerID + "Switch state " + PlayerStateEnum.DISPLAY_MODEL);
                         m_currentState = m_displayModelState;
                         break;
                     }
                 case PlayerStateEnum.ATTACK:
                     {
+                        Debug.Log("Player: " + m_playerID + "Switch state " + PlayerStateEnum.ATTACK);
                         m_currentState = m_attackState;
                         break;
                     }
                 case PlayerStateEnum.WAIT:
                     {
+                        Debug.Log("Player: " + m_playerID + "Switch state " + PlayerStateEnum.WAIT);
                         m_currentState = m_waitState;
                         break;
                     }
