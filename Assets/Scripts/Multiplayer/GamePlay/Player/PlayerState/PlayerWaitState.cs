@@ -27,6 +27,12 @@ public class PlayerWaitState : MyStateMachine
 
     protected override void Exit()
     {
+        m_player.SwitchState(PlayerStateEnum.CHOOSE_CARD);
+    }
+
+    protected override void Initialize()
+    {
+        m_player.ChoseNewMonster(-1);
         // reset attack so that monsters are able to attack in the new turn.
         foreach (int monsterID in m_player.MyMonsters.Keys)
         {
@@ -35,13 +41,6 @@ public class PlayerWaitState : MyStateMachine
                 m_player.MyMonsters[monsterID].ResetMonsterAttack();
             }
         }
-
-        m_player.SwitchState(PlayerStateEnum.CHOOSE_CARD);
-    }
-
-    protected override void Initialize()
-    {
-        m_player.ChoseNewMonster(-1);
         StateInitialized = true;
     }
 }
