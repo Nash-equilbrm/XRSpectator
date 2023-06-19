@@ -43,7 +43,7 @@ public class PlayerDisplayModelState : MyStateMachine
                 // delete invalid sign or model if remove pointer from previous pointed playfield
                 if (m_prevHit != null)
                 {
-                    m_player.GetChosenMonsterObject()?.SetActive(false);
+                    //m_player.GetChosenMonsterObject()?.SetActive(false);
                     m_player.ShowInvalidSign(Vector3.zero, Quaternion.identity ,false);
                 }
 
