@@ -271,7 +271,7 @@ MonoBehaviour:
   m_invalidSign: {fileID: 0}
   m_deathEffect: {fileID: 0}
   photonView: {fileID: 2971360194156331780}
-  m_cardCollectionIds: 00000000010000000200000003000000040000000500000006000000
+  m_cardCollectionIds: 0000000001000000
   m_isReady: 0
   m_onAttack: 0
   m_isMyTurn: 0

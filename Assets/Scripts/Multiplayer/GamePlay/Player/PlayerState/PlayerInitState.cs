@@ -45,7 +45,10 @@ public class PlayerInitState : MyStateMachine
 
     private void InitPlayUIs()
     {
-        for (int i = 0; i < GameManager.Instance.cardMenuSlots.Length; ++i)
+        int slotCnt = GameManager.Instance.cardMenuSlots.Length;
+        int cardCnt = GameManager.Instance.playerManager.CardCollection.Count;
+        int cnt = (slotCnt < cardCnt) ? slotCnt : cardCnt;
+        for (int i = 0; i < cnt; ++i)
         {
             GameObject cardObj = GameManager.Instance.cardMenuSlots[i];
             cardObj.SetActive(true);
