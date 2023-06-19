@@ -15,20 +15,23 @@ public class GamePlayState : MyStateMachine
     {
         Debug.Log("Game play state DoBehavior");
 
-        if(GameManager.Instance.playerManager.MyMonsters.Count <= 0 && GameManager.Instance.playerManager.Opponent.MyMonsters.Count > 0)
+        if(GameManager.Instance.playerManager.Opponent != null)
         {
-            GameManager.Instance.GameResult = GameResultEnum.LOSE;
-            ExitState = true;
-        }
-        else if(GameManager.Instance.playerManager.MyMonsters.Count > 0 && GameManager.Instance.playerManager.Opponent.MyMonsters.Count <= 0)
-        {
-            GameManager.Instance.GameResult = GameResultEnum.WIN;
-            ExitState = true;
-        }
-        else if(GameManager.Instance.playerManager.MyMonsters.Count == GameManager.Instance.playerManager.Opponent.MyMonsters.Count && GameManager.Instance.playerManager.MyMonsters.Count == 0)
-        {
-            GameManager.Instance.GameResult = GameResultEnum.DRAW;
-            ExitState = true;
+            if(GameManager.Instance.playerManager.MyMonsters.Count <= 0 && GameManager.Instance.playerManager.Opponent.MyMonsters.Count > 0)
+            {
+                GameManager.Instance.GameResult = GameResultEnum.LOSE;
+                ExitState = true;
+            }
+            else if(GameManager.Instance.playerManager.MyMonsters.Count > 0 && GameManager.Instance.playerManager.Opponent.MyMonsters.Count <= 0)
+            {
+                GameManager.Instance.GameResult = GameResultEnum.WIN;
+                ExitState = true;
+            }
+            else if(GameManager.Instance.playerManager.MyMonsters.Count == GameManager.Instance.playerManager.Opponent.MyMonsters.Count && GameManager.Instance.playerManager.MyMonsters.Count == 0)
+            {
+                GameManager.Instance.GameResult = GameResultEnum.DRAW;
+                ExitState = true;
+            }
         }
 
     }
