@@ -365,7 +365,7 @@ public class Player : MonoBehaviourPunCallbacks
     private void GetFirstHalfFields_RPC()
     {
         Debug.Log("GetFirstHalfFields_RPC");
-        for (int i = 0; i < 5; ++i)
+        for (int i = 0; i < 4; ++i)
         {
             m_myPlayFields.Add(GameManager.Instance.playFields[i]);
         }
@@ -375,9 +375,9 @@ public class Player : MonoBehaviourPunCallbacks
     private void GetSecondHalfFields_RPC()
     {
         Debug.Log("GetSecondHalfFields_RPC");
-        for (int i = 0; i < 5; ++i)
+        for (int i = 0; i < 4; ++i)
         {
-            m_myPlayFields.Add(GameManager.Instance.playFields[i + 5]);
+            m_myPlayFields.Add(GameManager.Instance.playFields[i + 4]);
         }
     }
 

@@ -123,12 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &54032262 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 553945271417178836, guid: e6fcfaaf012412042bf7f626b9ddd473,
-    type: 3}
-  m_PrefabInstance: {fileID: 2866161862482163910}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &76106930
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -437,8 +431,8 @@ MonoBehaviour:
   - {fileID: 844552696}
   - {fileID: 449527318}
   - {fileID: 1722714572}
-  - {fileID: 54032262}
-  - {fileID: 829685612}
+  - {fileID: 0}
+  - {fileID: 0}
   cardMenuSlots:
   - {fileID: 2131550109}
   - {fileID: 754772292}
@@ -452,6 +446,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2cee0c0ccd27e0a40bad177642335d5f, type: 2}
   - {fileID: 11400000, guid: cc677a2812778994bb19734b5bb3fcb2, type: 2}
   - {fileID: 11400000, guid: a0da0fcd1fd6db8468dced7f16b35420, type: 2}
+  gameResult: 3
   playerReady: 0
   isAudience: 0
   playerManager: {fileID: 0}
@@ -520,12 +515,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2710602657214776287, guid: d55476ba18475c747862b94dc08c6658,
     type: 3}
   m_PrefabInstance: {fileID: 1050544493}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &829685612 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 553945272355441782, guid: e6fcfaaf012412042bf7f626b9ddd473,
-    type: 3}
-  m_PrefabInstance: {fileID: 2866161862482163910}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &843671082 stripped
 GameObject:
