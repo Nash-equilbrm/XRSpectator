@@ -89,7 +89,12 @@ public partial class GameManager
     public void OnStartGamePressed()
     {
         playerReady = true;
-        playerManager.SetReady(true);
+        if (playerManager != null)
+
+        if (playerManager != null)
+        {
+            playerManager.SetReady(true);
+        }
     }
 
 }

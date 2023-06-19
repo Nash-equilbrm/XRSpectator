@@ -196,6 +196,7 @@ public class Player : MonoBehaviourPunCallbacks
     [PunRPC]
     public void SetReady_RPC(bool ready)
     {
+        Debug.Log(m_playerID + " SetReady: " + ready);
         m_isReady = ready;
     }
 
