@@ -516,6 +516,7 @@ public class Player : MonoBehaviourPunCallbacks
         if (effectObj)
         {
             m_deathEffect = effectObj.GetComponent<ParticleSystem>();
+            m_deathEffect.gameObject.SetActive(false);
         }
     }
 

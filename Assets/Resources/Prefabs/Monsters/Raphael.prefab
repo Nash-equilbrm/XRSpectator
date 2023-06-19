@@ -908,7 +908,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2780834939365820086
 Transform:
   m_ObjectHideFlags: 0
@@ -934,7 +934,7 @@ ParticleSystem:
   serializedVersion: 8
   lengthInSec: 0.1
   simulationSpeed: 1
-  stopAction: 0
+  stopAction: 1
   cullingMode: 3
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
@@ -5866,6 +5866,7 @@ MonoBehaviour:
   m_collider: {fileID: 2705546573135969127}
   m_playField: {fileID: 0}
   m_isMonsterReady: 0
+  m_hasAttacked: 0
   m_attackEffect: {fileID: 0}
   m_takeDamageEffect: {fileID: 2780834939365820089}
   m_currentHP: 0

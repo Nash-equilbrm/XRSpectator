@@ -49,8 +49,8 @@ public partial class Monster
         }
         else if (m_takeDamageEffect != null)
         {
-            m_takeDamageEffect.gameObject.SetActive(true);
-            m_takeDamageEffect.Play();
+            m_takeDamageEffect?.gameObject.SetActive(true);
+            m_takeDamageEffect?.Play();
         }
 
 

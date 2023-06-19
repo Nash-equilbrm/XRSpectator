@@ -228,8 +228,8 @@ public partial class Monster : MonoBehaviour
             m_currentTarget.TakeDamage(m_ATK);
             if (m_attackEffect != null)
             {
-                m_attackEffect.gameObject.SetActive(true);
-                m_attackEffect.Play();
+                m_attackEffect?.gameObject.SetActive(true);
+                m_attackEffect?.Play();
                 Debug.Log("Attack particle remains when dealing: " + m_attackEffect.GetParticles(p));
 
             }

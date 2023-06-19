@@ -153,6 +153,7 @@ MonoBehaviour:
   m_collider: {fileID: 8875323788177300226}
   m_playField: {fileID: 0}
   m_isMonsterReady: 0
+  m_hasAttacked: 0
   m_attackEffect: {fileID: 7074296714978097871}
   m_takeDamageEffect: {fileID: 1922019707507704939}
   m_currentHP: 0
@@ -186,7 +187,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1922019707507704932
 Transform:
   m_ObjectHideFlags: 0
@@ -14781,7 +14782,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7074296714978097856
 Transform:
   m_ObjectHideFlags: 0
