@@ -139,28 +139,31 @@ public class Player : MonoBehaviourPunCallbacks
     [PunRPC]
     private void SwitchState_RPC(PlayerStateEnum nextState)
     {
-        switch (nextState)
+        if (photonView.IsMine)
         {
-            case PlayerStateEnum.CHOOSE_CARD:
-                {
-                    m_currentState = m_chooseCardState;
-                    break;
-                }
-            case PlayerStateEnum.DISPLAY_MODEL:
-                {
-                    m_currentState = m_displayModelState;
-                    break;
-                }
-            case PlayerStateEnum.ATTACK:
-                {
-                    m_currentState = m_attackState;
-                    break;
-                }
-            case PlayerStateEnum.WAIT:
-                {
-                    m_currentState = m_waitState;
-                    break;
-                }
+            switch (nextState)
+            {
+                case PlayerStateEnum.CHOOSE_CARD:
+                    {
+                        m_currentState = m_chooseCardState;
+                        break;
+                    }
+                case PlayerStateEnum.DISPLAY_MODEL:
+                    {
+                        m_currentState = m_displayModelState;
+                        break;
+                    }
+                case PlayerStateEnum.ATTACK:
+                    {
+                        m_currentState = m_attackState;
+                        break;
+                    }
+                case PlayerStateEnum.WAIT:
+                    {
+                        m_currentState = m_waitState;
+                        break;
+                    }
+            }
         }
     }
 

@@ -17,8 +17,8 @@ public class PlayerInitState : MyStateMachine
 
         if (m_player.Opponent != null)
         {
-        }
             ExitState = true;
+        }
     }
 
 
