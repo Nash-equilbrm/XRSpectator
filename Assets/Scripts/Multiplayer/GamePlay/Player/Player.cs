@@ -402,10 +402,6 @@ public class Player : MonoBehaviourPunCallbacks
         {
             m_myMonsters.Remove(monsterViewID);
         }
-        else
-        {
-            Debug.LogError("Monster List does not contains Key: " + monsterViewID);
-        }
     }
 
 

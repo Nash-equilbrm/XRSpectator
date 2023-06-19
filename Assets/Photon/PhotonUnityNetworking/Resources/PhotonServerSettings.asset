@@ -74,6 +74,7 @@ MonoBehaviour:
   - DealDamage_RPC
   - ResetMonsterAttack_RPC
   - RemoveMonster_RPC
+  - SetReady_RPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
