@@ -8,7 +8,11 @@ public class GamePlayState : MyStateMachine
     protected override void Initialize()
     {
         Debug.Log("Game play state Init");
-        StateInitialized = true;
+        if (GameManager.Instance.playerManager.Opponent != null && GameManager.Instance.playerManager.Opponent.IsReady && GameManager.Instance.playerManager.Opponent.MyMonsters.Count > 0)
+        {
+            StateInitialized = true;
+        }
+
     }
 
     protected override void DoBehavior()

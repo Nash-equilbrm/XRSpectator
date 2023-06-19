@@ -434,6 +434,14 @@ public class Player : MonoBehaviourPunCallbacks
         if (m_myMonsters.ContainsKey(monsterViewID))
         {
             m_myMonsters.Remove(monsterViewID);
+            for(int i = 0; i < DebugMonsterList.Count; ++i)
+            {
+                if(DebugMonsterList[i] == monsterViewID)
+                {
+                    DebugMonsterList.RemoveAt(i);
+                    return;
+                }
+            }
         }
     }
 
