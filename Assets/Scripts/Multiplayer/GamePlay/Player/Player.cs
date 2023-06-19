@@ -533,9 +533,29 @@ public class Player : MonoBehaviourPunCallbacks
     private void PlayDeathEffect_RPC(Vector3 position)
     {
         m_deathEffect.transform.position = position;
+        m_deathEffect.gameObject.SetActive(true);
         m_deathEffect.Play();
     }
 
+
+    public void ResetTurn()
+    {
+        if (photonView.IsMine)
+        {
+            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "PlayDeathEffect_RPC");
+            photonView.RPC("PlayDeathEffect_RPC", RpcTarget.AllBuffered);
+            PhotonNetwork.SendAllOutgoingCommands();
+        }
+    }
+
+    [PunRPC]
+    private void ResetTurn_RPC()
+    {
+        foreach (int monsterID in m_myMonsters.Keys)
+        {
+            m_myMonsters[monsterID].ResetMonsterAttack();
+        }
+    }
 }
 
     

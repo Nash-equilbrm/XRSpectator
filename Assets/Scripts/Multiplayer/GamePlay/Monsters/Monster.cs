@@ -29,7 +29,7 @@ public partial class Monster : MonoBehaviour
     private float m_attackTimer;
 
     public bool HasAttacked { get => m_hasAttacked; }
-    private bool m_hasAttacked = false;
+    [SerializeField] private bool m_hasAttacked = false;
 
     private void Start()
     {
