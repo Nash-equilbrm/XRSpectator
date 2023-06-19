@@ -109,7 +109,7 @@ public class PlayerDisplayModelState : MyStateMachine
             {
                 Card card = GameManager.Instance.cardMenuSlots[m_player.CardChoseIndex].GetComponent<Card>();
                 card.InitCardUI(m_player.CardChoseIndex, GameManager.Instance.cardConfigs[m_player.CardCollection[0]]);
-                m_player.CardCollection.RemoveAt(0);
+                m_player.RemoveRemainCard(0);
             }
             else
             {

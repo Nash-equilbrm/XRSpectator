@@ -55,7 +55,7 @@ public class PlayerInitState : MyStateMachine
             Card card = cardObj.GetComponent<Card>();
             card.InitCardUI(i, GameManager.Instance.cardConfigs[m_player.CardCollection[0]]);
 
-            m_player.CardCollection.RemoveAt(0);
+            m_player.RemoveRemainCard(0);
         }
     }
 

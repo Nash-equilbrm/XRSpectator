@@ -183,6 +183,23 @@ public class Player : MonoBehaviourPunCallbacks
 
 
     // ==================== PUNRPC ====================
+    public void RemoveRemainCard(int index)
+    {
+        if (photonView.IsMine)
+        {
+            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "RemoveRemainCard_RPC");
+            photonView.RPC("RemoveRemainCard_RPC", RpcTarget.AllBuffered, index);
+            PhotonNetwork.SendAllOutgoingCommands();
+        }
+    }
+
+    [PunRPC]
+    public void RemoveRemainCard_RPC(int index)
+    {
+        m_cardCollectionIds.RemoveAt(index);
+    }
+
+
     public void SetReady(bool ready)
     {
         if (photonView.IsMine)
