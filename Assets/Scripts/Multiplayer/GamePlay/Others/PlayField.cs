@@ -12,7 +12,6 @@ public class PlayField : MonoBehaviour
     public Transform monsterHolder;
     public TMPro.TextMeshPro text;
 
-    public Monster CurrentMonster { get => m_currentMonster; }
     [SerializeField] private Monster m_currentMonster = null;
 
 
@@ -23,11 +22,11 @@ public class PlayField : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(CurrentMonster == null)
+        if(m_currentMonster == null)
         {
             TurnOnNormalField();
         }
-        else if(CurrentMonster.HasAttacked)
+        else if(m_currentMonster.HasAttacked)
         {
             TurnOnAttackField();
         }
@@ -36,13 +35,15 @@ public class PlayField : MonoBehaviour
             TurnOnMonsterField();
         }
 
-        if(m_currentMonster != null)
+        if (m_currentMonster != null)
         {
             text.text = m_currentMonster.Name + ": " + m_currentMonster.CurrentHP;
+            SetNewTag("OccupiedPlayField");
         }
         else
         {
             text.text = "";
+            SetNewTag("PlayField");
         }
     }
 
@@ -96,6 +97,20 @@ public class PlayField : MonoBehaviour
             monster.PlayField = this;
             m_currentMonster = monster;
         }
+    }
+
+    public void SetNewTag(string tag)
+    {
+        PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "SetNewTag_RPC");
+        photonView.RPC("SetNewTag_RPC", RpcTarget.AllBuffered, tag);
+        PhotonNetwork.SendAllOutgoingCommands();
+    }
+
+    [PunRPC]
+    public void SetNewTag_RPC(string tag)
+    {
+        gameObject.tag = "OccupiedPlayField";
+        gameObject.tag = tag;
     }
 }
  
