@@ -78,6 +78,7 @@ MonoBehaviour:
   - ChooseNewCard_RPC
   - SetNewTag_RPC
   - RemoveRemainCard_RPC
+  - ResetTurn_RPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

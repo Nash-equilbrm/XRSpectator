@@ -745,11 +745,11 @@ PlayerSettings:
   m_MobileRenderingPath: 1
   metroPackageName: FMETPU2017
   metroPackageVersion: 1.0.0.0
-  metroCertificatePath: 
+  metroCertificatePath: Assets\WSATestCertificate.pfx
   metroCertificatePassword: 
-  metroCertificateSubject: 
-  metroCertificateIssuer: 
-  metroCertificateNotAfter: 0000000000000000
+  metroCertificateSubject: NAM
+  metroCertificateIssuer: NAM
+  metroCertificateNotAfter: 0057e48fb791da01
   metroApplicationDescription: FMETP_U2017
   wsaImages: {}
   metroTileShortName: GameDemo

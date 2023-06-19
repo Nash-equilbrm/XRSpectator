@@ -16,6 +16,6 @@ MonoBehaviour:
   monsterName: Razorshell
   model: {fileID: 8040028597747077968, guid: d3a9dcd4e22b40e479c89a1b87114fba, type: 3}
   avatarImg: {fileID: 21300000, guid: 6f766cfcda76bc7409e04bcffb5c1208, type: 3}
-  HP: 110
+  HP: 13
   ATK: 30
   attackDuration: 1
