@@ -108,6 +108,7 @@ public partial class Monster : MonoBehaviour
     [PunRPC]
     private void ResetMonsterAttack_RPC()
     {
+        Debug.Log("Reset attack");
         m_hasAttacked = false;
     }
 
