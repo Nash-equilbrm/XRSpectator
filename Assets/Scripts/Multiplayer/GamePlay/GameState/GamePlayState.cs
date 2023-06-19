@@ -55,7 +55,7 @@ public class GamePlayState : MyStateMachine
                 {
                     rotation.y = 0;
                 }
-                else if (GameManager.Instance.GameResult == GameResultEnum.WIN)
+                else if (GameManager.Instance.GameResult == GameResultEnum.LOSE)
                 {
                     rotation.y = 180;
                 }
@@ -68,7 +68,7 @@ public class GamePlayState : MyStateMachine
                 {
                     rotation.y = 180;
                 }
-                else if (GameManager.Instance.GameResult == GameResultEnum.WIN)
+                else if (GameManager.Instance.GameResult == GameResultEnum.LOSE)
                 {
                     rotation.y = 0;
                 }
