@@ -42,7 +42,7 @@ public class GamePlayState : MyStateMachine
         // show result panels
         if (PhotonNetwork.IsMasterClient)
         {
-            GameObject gameResultPanel = PhotonNetwork.Instantiate("Menus/" + GameManager.Instance.gameResultPrefab.name, new Vector3(0, 1.5f, 0), Quaternion.identity);
+            GameObject gameResultPanel = PhotonNetwork.Instantiate("Prefabs/Menus/" + GameManager.Instance.gameResultPrefab.name, new Vector3(0, 1.5f, 0), Quaternion.identity);
             Vector3 rotation = gameResultPanel.transform.eulerAngles;
 
             if (GameManager.Instance.playerManager.PlayerID == 1)
