@@ -10,6 +10,7 @@ TagManager:
   - Creature1
   - Creature2
   - Temp
+  - OccupiedPlayField
   layers:
   - Default
   - TransparentFX
