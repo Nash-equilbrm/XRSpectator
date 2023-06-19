@@ -28,59 +28,63 @@ public class PlayerDisplayModelState : MyStateMachine
             ExitState = true;
             return;
         }
-
-        m_prevHit = m_selectedPlayField;
-        m_selectedPlayField = m_player.GetRayCastHit();
-
-
-        if(m_selectedPlayField != null && m_selectedPlayField.CompareTag("PlayField"))
+        if (m_player.photonView.IsMine)
         {
-            if(m_selectedPlayField != m_prevHit || m_prevHit == null)
-            {
-                // reset timer
-                m_timer = m_chooseSlotDuration;
-
-                // delete invalid sign or model if remove pointer from previous pointed playfield
-                if (m_prevHit != null)
-                {
-                    //m_player.GetChosenMonsterObject()?.SetActive(false);
-                    m_player.ShowInvalidSign(Vector3.zero, Quaternion.identity ,false);
-                }
-
-
-                // set new model
-                Vector3 position = m_selectedPlayField.transform.position;
-                Vector3 rotation = new Vector3(0, m_selectedPlayField.transform.eulerAngles.y, 0);
-                // show creatures in card
-                if (m_player.MyPlayFields.Contains(m_selectedPlayField))
-                {
-                    m_player.ShowModel(position, Quaternion.Euler(rotation), true);
-                }
-                // invalid action -> show invalid sign
-                else
-                {
-                    m_player.ShowInvalidSign(position, Quaternion.Euler(rotation), true);
-                }
-                
-            }
-
-
-            // if holding user's pointer on the playfield owns by player, start timer.
-            else if(m_player.MyPlayFields.Contains(m_selectedPlayField))
-            {
-                if(m_timer <= 0)
-                {
-                    ExitState = true;
-                    return;
-                }
-                else
-                {
-                    m_timer -= Time.deltaTime;
-                }
-            }
-
             m_prevHit = m_selectedPlayField;
+            m_selectedPlayField = m_player.GetRayCastHit();
+
+
+            if(m_selectedPlayField != null && m_selectedPlayField.CompareTag("PlayField"))
+            {
+                if(m_selectedPlayField != m_prevHit || m_prevHit == null)
+                {
+                    // reset timer
+                    m_timer = m_chooseSlotDuration;
+
+                    // delete invalid sign or model if remove pointer from previous pointed playfield
+                    if (m_prevHit != null)
+                    {
+                        //m_player.GetChosenMonsterObject()?.SetActive(false);
+                        m_player.ShowInvalidSign(Vector3.zero, Quaternion.identity ,false);
+                    }
+
+
+                    // set new model
+                    Vector3 position = m_selectedPlayField.transform.position;
+                    Vector3 rotation = new Vector3(0, m_selectedPlayField.transform.eulerAngles.y, 0);
+                    // show creatures in card
+                    if (m_player.MyPlayFields.Contains(m_selectedPlayField))
+                    {
+                        m_player.ShowModel(position, Quaternion.Euler(rotation), true);
+                    }
+                    // invalid action -> show invalid sign
+                    else
+                    {
+                        m_player.ShowInvalidSign(position, Quaternion.Euler(rotation), true);
+                    }
+                
+                }
+
+
+                // if holding user's pointer on the playfield owns by player, start timer.
+                else if(m_player.MyPlayFields.Contains(m_selectedPlayField))
+                {
+                    if(m_timer <= 0)
+                    {
+                        ExitState = true;
+                        return;
+                    }
+                    else
+                    {
+                        m_timer -= Time.deltaTime;
+                    }
+                }
+
+                m_prevHit = m_selectedPlayField;
+            }
+
         }
+
     }
 
    
