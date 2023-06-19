@@ -24,6 +24,8 @@ public partial class GameManager
     private MyStateMachine currentState = null;
     private GameTurnDecideState turnDecideState = new GameTurnDecideState();
     private GamePlayState playState = new GamePlayState();
+    private GameWaitState endState = new GameWaitState();
+
 
     public bool PlayerReady { get => playerReady; }
     [SerializeField] private bool playerReady = false;
@@ -62,6 +64,11 @@ public partial class GameManager
             case GameStateEnum.PLAY_GAME:
                 {
                     currentState = playState;
+                    break;
+                }
+            case GameStateEnum.END_GAME:
+                {
+                    currentState = endState;
                     break;
                 }
         }
