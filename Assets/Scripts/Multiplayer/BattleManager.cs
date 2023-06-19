@@ -89,6 +89,7 @@ public partial class GameManager
     public void OnStartGamePressed()
     {
         playerReady = true;
+        playerManager.SetReady(true);
     }
 
 }

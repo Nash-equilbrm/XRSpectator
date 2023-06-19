@@ -28,6 +28,9 @@ public class Player : MonoBehaviourPunCallbacks
     public List<int> CardCollection { get => m_cardCollectionIds; }
     [SerializeField] private List<int> m_cardCollectionIds;
 
+    public bool IsReady { get => m_isReady; }
+    [SerializeField] private bool m_isReady = false;
+
     public bool OnAttack { get => m_onAttack; }
     [SerializeField] private bool m_onAttack = false;
 
@@ -139,35 +142,32 @@ public class Player : MonoBehaviourPunCallbacks
     [PunRPC]
     private void SwitchState_RPC(PlayerStateEnum nextState)
     {
-        if (photonView.IsMine)
+        switch (nextState)
         {
-            switch (nextState)
-            {
-                case PlayerStateEnum.CHOOSE_CARD:
-                    {
-                        Debug.Log("Player: " + m_playerID + "Switch state " + PlayerStateEnum.CHOOSE_CARD);
-                        m_currentState = m_chooseCardState;
-                        break;
-                    }
-                case PlayerStateEnum.DISPLAY_MODEL:
-                    {
-                        Debug.Log("Player: " + m_playerID + "Switch state " + PlayerStateEnum.DISPLAY_MODEL);
-                        m_currentState = m_displayModelState;
-                        break;
-                    }
-                case PlayerStateEnum.ATTACK:
-                    {
-                        Debug.Log("Player: " + m_playerID + "Switch state " + PlayerStateEnum.ATTACK);
-                        m_currentState = m_attackState;
-                        break;
-                    }
-                case PlayerStateEnum.WAIT:
-                    {
-                        Debug.Log("Player: " + m_playerID + "Switch state " + PlayerStateEnum.WAIT);
-                        m_currentState = m_waitState;
-                        break;
-                    }
-            }
+            case PlayerStateEnum.CHOOSE_CARD:
+                {
+                    Debug.Log("Player: " + m_playerID + "Switch state " + PlayerStateEnum.CHOOSE_CARD);
+                    m_currentState = m_chooseCardState;
+                    break;
+                }
+            case PlayerStateEnum.DISPLAY_MODEL:
+                {
+                    Debug.Log("Player: " + m_playerID + "Switch state " + PlayerStateEnum.DISPLAY_MODEL);
+                    m_currentState = m_displayModelState;
+                    break;
+                }
+            case PlayerStateEnum.ATTACK:
+                {
+                    Debug.Log("Player: " + m_playerID + "Switch state " + PlayerStateEnum.ATTACK);
+                    m_currentState = m_attackState;
+                    break;
+                }
+            case PlayerStateEnum.WAIT:
+                {
+                    Debug.Log("Player: " + m_playerID + "Switch state " + PlayerStateEnum.WAIT);
+                    m_currentState = m_waitState;
+                    break;
+                }
         }
     }
 
@@ -183,6 +183,23 @@ public class Player : MonoBehaviourPunCallbacks
 
 
     // ==================== PUNRPC ====================
+    public void SetReady(bool ready)
+    {
+        if (photonView.IsMine)
+        {
+            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "SetReady_RPC");
+            photonView.RPC("SetReady_RPC", RpcTarget.AllBuffered, ready);
+            PhotonNetwork.SendAllOutgoingCommands();
+        }
+    }
+
+    [PunRPC]
+    public void SetReady_RPC(bool ready)
+    {
+        m_isReady = ready;
+    }
+
+
     public void StartMyTurn(bool startTurn)
     {
         if (photonView.IsMine)
