@@ -18,7 +18,7 @@ public partial class GameManager
 
     public GameResultEnum GameResult { get => gameResult; set => gameResult = value; }
 
-    private GameResultEnum gameResult = GameResultEnum.NONE;
+    [SerializeField] private GameResultEnum gameResult = GameResultEnum.NONE;
 
     // game states
     private MyStateMachine currentState = null;

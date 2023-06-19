@@ -7,7 +7,7 @@ public class GamePlayState : MyStateMachine
 {
     protected override void Initialize()
     {
-        Debug.Log("Game play state Init");
+        Debug.Log(GameManager.Instance.playerManager.PlayerID + " Game play state Init");
         if (GameManager.Instance.playerManager.Opponent != null && GameManager.Instance.playerManager.Opponent.IsReady && GameManager.Instance.playerManager.Opponent.MyMonsters.Count > 0)
         {
             StateInitialized = true;
@@ -17,7 +17,7 @@ public class GamePlayState : MyStateMachine
 
     protected override void DoBehavior()
     {
-        Debug.Log("Game play state DoBehavior");
+        Debug.Log(GameManager.Instance.playerManager.PlayerID + " Game play state DoBehavior");
 
         if (GameManager.Instance.playerManager.Opponent != null && GameManager.Instance.playerManager.Opponent.IsReady)
         {
@@ -42,7 +42,7 @@ public class GamePlayState : MyStateMachine
     private bool exit = false;
     protected override void Exit()
     {
-        Debug.Log("Game play state Exit");
+        Debug.Log(GameManager.Instance.playerManager.PlayerID + " Game play state Exit");
         // show result panels
         if (!exit)
         {
