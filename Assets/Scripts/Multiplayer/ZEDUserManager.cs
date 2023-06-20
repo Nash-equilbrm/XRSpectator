@@ -14,8 +14,9 @@ public partial class GameManager
         MixedRealityToolkit.Instance.enabled = false;
         ARCamera.SetActive(false);
 
-        zedRigStereo.SetActive(true);
-
+        //zedRigStereo.SetActive(true);
+        GameObject zedManager = Instantiate(zedRigStereo);
+        leftEye = zedManager.transform.Find("Camera_eyes").Find("Left_eye");
         leftEye.gameObject.tag = "MainCamera";
 
         Instantiate(zedCaptureToOpenCV);

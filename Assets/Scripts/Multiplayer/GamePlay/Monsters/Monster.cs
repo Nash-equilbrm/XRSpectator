@@ -33,14 +33,17 @@ public partial class Monster : MonoBehaviour
 
     private void Start()
     {
-        m_animator.enabled = false;
-        m_collider.enabled = false;
+        if (m_photonView.IsMine)
+        {
+            m_animator.enabled = false;
+            m_collider.enabled = false;
+        }
 
     }
 
     private void Update()
     {
-        if (m_isMonsterReady && m_isStatInit)
+        if (m_photonView.IsMine && m_isMonsterReady && m_isStatInit)
         {
             UpdateAttackPhase();
         }

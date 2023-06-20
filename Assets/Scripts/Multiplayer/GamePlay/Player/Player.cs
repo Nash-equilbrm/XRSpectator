@@ -60,11 +60,7 @@ public class Player : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        if (GameManager.Instance.isAudience)
-        {
-            Destroy(gameObject);
-        }
-        else
+        if (photonView.IsMine)
         {
             photonView = GetComponent<PhotonView>();
             m_myPlayFields = new List<GameObject>();
@@ -78,21 +74,19 @@ public class Player : MonoBehaviourPunCallbacks
 
             m_currentState = m_initState;
 
-            if (photonView.IsMine)
-            {
-                GameObject sign = PhotonNetwork.Instantiate("Prefabs/Menus/" + GameManager.Instance.invalidSignPrefab.name, new Vector3(100, 100, 100), Quaternion.identity);
-                GetInvalidSign(sign.GetComponent<PhotonView>().ViewID);
+            
+            GameObject sign = PhotonNetwork.Instantiate("Prefabs/Menus/" + GameManager.Instance.invalidSignPrefab.name, new Vector3(100, 100, 100), Quaternion.identity);
+            GetInvalidSign(sign.GetComponent<PhotonView>().ViewID);
 
-                GameObject deathEffect = PhotonNetwork.Instantiate("Prefabs/Effects/" + GameManager.Instance.deathEffectPrefab.name, new Vector3(100, 100, 100), Quaternion.identity);
-                GetDeathEffect(deathEffect.GetComponent<PhotonView>().ViewID);
-            }
-
+            GameObject deathEffect = PhotonNetwork.Instantiate("Prefabs/Effects/" + GameManager.Instance.deathEffectPrefab.name, new Vector3(100, 100, 100), Quaternion.identity);
+            GetDeathEffect(deathEffect.GetComponent<PhotonView>().ViewID);
         }
+
     }
 
     void Update()
     {
-        if (GameManager.Instance.TrackedWithVuforia && GameManager.Instance.GameResult == GameResultEnum.NONE)
+        if (photonView.IsMine && GameManager.Instance.TrackedWithVuforia && GameManager.Instance.GameResult == GameResultEnum.NONE)
         {
             m_currentState.UpdateState();
         }
