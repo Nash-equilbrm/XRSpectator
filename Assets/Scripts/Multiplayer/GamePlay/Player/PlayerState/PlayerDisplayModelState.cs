@@ -71,6 +71,25 @@ public class PlayerDisplayModelState : MyStateMachine
                 {
                     if(m_timer <= 0)
                     {
+                        PlayField playField = m_selectedPlayField.GetComponent<PlayField>();
+                        if (playField)
+                        {
+                            Monster monster = m_player.GetChosenMonsterObject().GetComponent<Monster>();
+                            playField.SetNewMonster(m_player.MonsterChosenID);
+                            monster.SetMonsterReady();
+                        }
+
+                        if (m_player.CardCollection.Count > 0)
+                        {
+                            Card card = GameManager.Instance.cardMenuSlots[m_player.CardChoseIndex].GetComponent<Card>();
+                            card.InitCardUI(m_player.CardChoseIndex, GameManager.Instance.cardConfigs[m_player.CardCollection[0]]);
+                            m_player.RemoveRemainCard(0);
+                        }
+                        else
+                        {
+                            GameManager.Instance.cardMenuSlots[m_player.CardChoseIndex].SetActive(false);
+                        }
+
                         ExitState = true;
                         return;
                     }
@@ -101,25 +120,6 @@ public class PlayerDisplayModelState : MyStateMachine
         }
         else
         {
-            PlayField playField = m_selectedPlayField.GetComponent<PlayField>();
-            if (playField)
-            {
-                Monster monster = m_player.GetChosenMonsterObject().GetComponent<Monster>();
-                playField.SetNewMonster(m_player.MonsterChosenID);
-                monster.SetMonsterReady();
-            }
-            
-            if(m_player.CardCollection.Count > 0)
-            {
-                Card card = GameManager.Instance.cardMenuSlots[m_player.CardChoseIndex].GetComponent<Card>();
-                card.InitCardUI(m_player.CardChoseIndex, GameManager.Instance.cardConfigs[m_player.CardCollection[0]]);
-                m_player.RemoveRemainCard(0);
-            }
-            else
-            {
-                GameManager.Instance.cardMenuSlots[m_player.CardChoseIndex].SetActive(false);
-            }
-
             m_player.SwitchState(PlayerStateEnum.CHOOSE_CARD);
         }
 

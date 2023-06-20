@@ -714,7 +714,7 @@ MonoBehaviour:
   ignoreAngleClamp: 0
   ignoreDistanceClamp: 0
   useFixedVerticalPosition: 1
-  fixedVerticalPosition: -1
+  fixedVerticalPosition: -2
   orientToReferenceDirection: 0
 --- !u!114 &327298584257884112
 MonoBehaviour:
