@@ -60,8 +60,6 @@ public class Player : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        if (photonView.IsMine)
-        {
             photonView = GetComponent<PhotonView>();
             m_myPlayFields = new List<GameObject>();
             m_myMonsters = new Dictionary<int, Monster>();
@@ -74,7 +72,8 @@ public class Player : MonoBehaviourPunCallbacks
 
             m_currentState = m_initState;
 
-            
+        if (photonView.IsMine)
+        {
             GameObject sign = PhotonNetwork.Instantiate("Prefabs/Menus/" + GameManager.Instance.invalidSignPrefab.name, new Vector3(100, 100, 100), Quaternion.identity);
             GetInvalidSign(sign.GetComponent<PhotonView>().ViewID);
 
@@ -86,7 +85,7 @@ public class Player : MonoBehaviourPunCallbacks
 
     void Update()
     {
-        if (photonView.IsMine && GameManager.Instance.TrackedWithVuforia && GameManager.Instance.GameResult == GameResultEnum.NONE)
+        if (GameManager.Instance.TrackedWithVuforia && GameManager.Instance.GameResult == GameResultEnum.NONE)
         {
             m_currentState.UpdateState();
         }
