@@ -21,6 +21,8 @@ public class CardFieldsMovement : MonoBehaviour
         {
             transform.position = m_playerTransform.position + m_offset;
         }
+
+        transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
     }
 
 
