@@ -743,14 +743,14 @@ PlayerSettings:
     iPhone: 3
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: FMETPU2017
+  metroPackageName: 
   metroPackageVersion: 1.0.0.0
   metroCertificatePath: Assets\WSATestCertificate.pfx
   metroCertificatePassword: 
   metroCertificateSubject: NAM
   metroCertificateIssuer: NAM
   metroCertificateNotAfter: 0057e48fb791da01
-  metroApplicationDescription: FMETP_U2017
+  metroApplicationDescription: CardGameDemo_XRSpectator
   wsaImages: {}
   metroTileShortName: GameDemo
   metroTileShowName: 0

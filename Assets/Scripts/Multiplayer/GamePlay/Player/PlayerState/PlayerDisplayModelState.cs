@@ -34,9 +34,9 @@ public class PlayerDisplayModelState : MyStateMachine
             m_selectedPlayField = m_player.GetRayCastHit();
 
 
-            if(m_selectedPlayField != null && m_selectedPlayField.CompareTag("PlayField"))
+            if (m_selectedPlayField != null && m_selectedPlayField.CompareTag("CardDisplayField"))
             {
-                if(m_selectedPlayField != m_prevHit || m_prevHit == null)
+                if (m_selectedPlayField != m_prevHit || m_prevHit == null)
                 {
                     // reset timer
                     m_timer = m_chooseSlotDuration;
@@ -45,7 +45,7 @@ public class PlayerDisplayModelState : MyStateMachine
                     if (m_prevHit != null)
                     {
                         //m_player.GetChosenMonsterObject()?.SetActive(false);
-                        m_player.ShowInvalidSign(Vector3.zero, Quaternion.identity ,false);
+                        m_player.ShowInvalidSign(Vector3.zero, Quaternion.identity, false);
                     }
 
 
@@ -53,36 +53,44 @@ public class PlayerDisplayModelState : MyStateMachine
                     Vector3 position = m_selectedPlayField.transform.position;
                     Vector3 rotation = new Vector3(0, m_selectedPlayField.transform.eulerAngles.y, 0);
                     // show creatures in card
-                    if (m_player.MyPlayFields.Contains(m_selectedPlayField))
+                    if (!m_player.MyPlayFields.Contains(m_selectedPlayField))
                     {
-                        m_player.ShowModel(position, Quaternion.Euler(rotation), true);
-                    }
-                    // invalid action -> show invalid sign
-                    else
-                    {
+                        //    m_player.ShowModel(position, Quaternion.Euler(rotation), true);
+                        //}
+                        //// invalid action -> show invalid sign
+                        //else
+                        //{
                         m_player.ShowInvalidSign(position, Quaternion.Euler(rotation), true);
                     }
-                
+
                 }
 
 
                 // if holding user's pointer on the playfield owns by player, start timer.
-                else if(m_player.MyPlayFields.Contains(m_selectedPlayField))
+                else if (m_player.MyPlayFields.Contains(m_selectedPlayField))
                 {
-                    if(m_timer <= 0)
+                    if (m_timer <= 0)
                     {
-                        PlayField playField = m_selectedPlayField.GetComponent<PlayField>();
-                        if (playField)
+                        CardDisplayField cardDisplayField = m_selectedPlayField.GetComponent<CardDisplayField>();
+                        if (cardDisplayField)
                         {
                             Monster monster = m_player.GetChosenMonsterObject().GetComponent<Monster>();
-                            playField.SetNewMonster(m_player.MonsterChosenID);
+                            cardDisplayField.SetNewMonster(m_player.MonsterChosenID);
                             monster.SetMonsterReady();
+                            cardDisplayField.ChangeImage(m_player.CardChoseID);
+                            m_player.ShowModel(cardDisplayField.m_playField.transform.position,
+                                Quaternion.Euler(new Vector3(0, cardDisplayField.m_playField.transform.eulerAngles.y, 0))
+                                , true);
+
+                            cardDisplayField.LiftUp();
+                            GameManager.Instance.cardDisplays.Rotate(-cardDisplayField.transform.parent.parent.localEulerAngles.y);
+
                         }
 
                         if (m_player.CardCollection.Count > 0)
                         {
                             Card card = GameManager.Instance.cardMenuSlots[m_player.CardChoseIndex].GetComponent<Card>();
-                            card.InitCardUI(m_player.CardChoseIndex, GameManager.Instance.cardConfigs[m_player.CardCollection[0]]);
+                            card.InitCardUI(m_player.CardChoseIndex, m_player.cardConfigs[m_player.CardCollection[0]]);
                             m_player.RemoveRemainCard(0);
                         }
                         else
@@ -101,6 +109,11 @@ public class PlayerDisplayModelState : MyStateMachine
 
                 m_prevHit = m_selectedPlayField;
             }
+            else
+            {
+                m_player.ShowInvalidSign(Vector3.zero, Quaternion.identity, false);
+            }
+
 
         }
 

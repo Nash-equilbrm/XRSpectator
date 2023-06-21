@@ -6,6 +6,7 @@ using UnityEngine;
 public class MoveARCamera : MonoBehaviour
 {
     public Transform ARCamera;
+    public Transform Head;
 
     // Update is called once per frame
     void Update()
@@ -15,7 +16,9 @@ public class MoveARCamera : MonoBehaviour
             if (GetComponent<PhotonView>().IsMine)
             {
                 transform.position = ARCamera.position;
-                transform.eulerAngles = ARCamera.eulerAngles;
+                Vector3 euler = ARCamera.eulerAngles;
+                transform.eulerAngles = new Vector3(transform.eulerAngles.x, euler.y, transform.eulerAngles.z);
+                Head.eulerAngles = new Vector3(euler.x, Head.eulerAngles.y, euler.z);
             }
         }
     }

@@ -11,6 +11,7 @@ TagManager:
   - Creature2
   - Temp
   - OccupiedPlayField
+  - CardDisplayField
   layers:
   - Default
   - TransparentFX

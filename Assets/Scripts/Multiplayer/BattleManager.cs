@@ -12,9 +12,9 @@ public partial class GameManager
     public GameObject deathEffectPrefab;
     public GameObject guiObj;
     public GameObject startGameBtn;
-    public GameObject[] playFields;
+    public CardDisplayField[] cardFields;
     public GameObject[] cardMenuSlots;
-    public CardConfig[] cardConfigs;
+    public CardFieldsMovement cardDisplays;
 
     public GameResultEnum GameResult { get => gameResult; set => gameResult = value; }
 
@@ -97,15 +97,14 @@ public partial class GameManager
     public void OnStartGamePressed()
     {
         playerReady = true;
-        if (playerManager != null)
+        playerManager?.SetReady(true);
 
-        if (playerManager != null)
-        {
-            playerManager.SetReady(true);
-        }
+        startGameBtn.SetActive(false);
     }
 
+
 }
+
 
 public enum GameStateEnum
 {

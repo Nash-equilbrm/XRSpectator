@@ -38,7 +38,8 @@ public partial class Monster
             m_collider.enabled = false;
 
             Vector3 pos = transform.position;
-            PlayField?.SetNewMonster(-1);
+            PlayField?.cardDisplayField.SetNewMonster(-1);
+            PlayField.cardDisplayField.LiftDown();
             PlayField = null;
 
             transform.position = new Vector3(100, 100, 100);

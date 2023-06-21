@@ -5,10 +5,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviourPunCallbacks
 {
     public PlayerStateEnum CurrentStateName = PlayerStateEnum.NONE;
+    public CardConfig[] cardConfigs;
 
     public int PlayerID { get => m_playerID; }
     [SerializeField] private int m_playerID;
@@ -47,12 +49,16 @@ public class Player : MonoBehaviourPunCallbacks
 
     public int CardChoseIndex { get => m_cardChoseIndex; set => m_cardChoseIndex = value; }
     private int m_cardChoseIndex = -1;
+    public int CardChoseID { get => m_cardChoseID; set => m_cardChoseID = value; }
+    private int m_cardChoseID;
+
 
 
     public List<GameObject> MyPlayFields { get => m_myPlayFields; }
     [SerializeField] private List<GameObject> m_myPlayFields;
 
     public Dictionary<int, Monster> MyMonsters { get => m_myMonsters; }
+
     [SerializeField] private Dictionary<int, Monster> m_myMonsters;
     public List<int> DebugMonsterList = new List<int>();
 
@@ -85,7 +91,7 @@ public class Player : MonoBehaviourPunCallbacks
 
     void Update()
     {
-        if (GameManager.Instance.TrackedWithVuforia && GameManager.Instance.GameResult == GameResultEnum.NONE)
+        if (photonView.IsMine && GameManager.Instance.TrackedWithVuforia && GameManager.Instance.GameResult == GameResultEnum.NONE)
         {
             m_currentState.UpdateState();
         }
@@ -210,20 +216,21 @@ public class Player : MonoBehaviourPunCallbacks
         m_isReady = ready;
     }
 
-    public void ChooseNewCard(int index)
+    public void ChooseNewCard(int index, int cardID)
     {
         if (photonView.IsMine)
         {
             PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "ChooseNewCard_RPC");
-            photonView.RPC("ChooseNewCard_RPC", RpcTarget.AllBuffered, index);
+            photonView.RPC("ChooseNewCard_RPC", RpcTarget.AllBuffered, index, cardID);
             PhotonNetwork.SendAllOutgoingCommands();
         }
     }
 
     [PunRPC]
-    public void ChooseNewCard_RPC(int index)
+    public void ChooseNewCard_RPC(int index, int cardID)
     {
         m_cardChoseIndex = index;
+        m_cardChoseID = cardID;
     }
 
     public void StartMyTurn(bool startTurn)
@@ -360,7 +367,8 @@ public class Player : MonoBehaviourPunCallbacks
         Debug.Log("GetFirstHalfFields_RPC");
         for (int i = 0; i < 4; ++i)
         {
-            m_myPlayFields.Add(GameManager.Instance.playFields[i]);
+            m_myPlayFields.Add(GameManager.Instance.cardFields[i].gameObject);
+            GameManager.Instance.cardFields[i].SetPlayer(photonView.ViewID);
         }
     }
 
@@ -370,7 +378,8 @@ public class Player : MonoBehaviourPunCallbacks
         Debug.Log("GetSecondHalfFields_RPC");
         for (int i = 0; i < 4; ++i)
         {
-            m_myPlayFields.Add(GameManager.Instance.playFields[i + 4]);
+            m_myPlayFields.Add(GameManager.Instance.cardFields[i + 4].gameObject);
+            GameManager.Instance.cardFields[i + 4].SetPlayer(photonView.ViewID);
         }
     }
 
@@ -550,6 +559,7 @@ public class Player : MonoBehaviourPunCallbacks
             m_myMonsters[monsterID].ResetMonsterAttack();
         }
     }
+    
 }
 
     
