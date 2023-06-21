@@ -7,10 +7,11 @@ using UnityEngine.UI;
 public class CardDisplayField : MonoBehaviour
 {
     public PhotonView photonView;
-    public Player Player { get => m_player; set => m_player = value; }
-    private Player m_player;
+    public Player m_player;
 
     public Image m_monsterImage;
+    public Image m_monsterImageBack;
+
     public PlayField m_playField;
 
     public float m_liftDuration;
@@ -20,13 +21,16 @@ public class CardDisplayField : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (m_currentMonster != null)
+        if(m_playField != null)
         {
-            m_playField.text.text = m_currentMonster.Name + ": " + m_currentMonster.CurrentHP;
-        }
-        else
-        {
-            m_playField.text.text = "";
+            if (m_currentMonster != null)
+            {
+                    m_playField.text.text = m_currentMonster.Name + ": " + m_currentMonster.CurrentHP;
+            }
+            else
+            {
+                m_playField.text.text = "";
+            }
         }
     }
 
@@ -118,6 +122,9 @@ public class CardDisplayField : MonoBehaviour
     public void ChangeImage_RPC(int id)
     {
         m_monsterImage.sprite = m_player.cardConfigs[id].avatarImg;
+        m_monsterImageBack.gameObject.SetActive(true);
+        m_monsterImageBack.sprite = m_player.cardConfigs[id].avatarImg;
+
     }
 
 
@@ -138,6 +145,27 @@ public class CardDisplayField : MonoBehaviour
         if(playerObj != null)
         {
             m_player = playerObj.GetComponent<Player>();
+        }
+    }
+
+
+    public void SetPlayField(int viewId)
+    {
+        if (photonView.IsMine)
+        {
+            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "SetPlayField_RPC");
+            photonView.RPC("SetPlayField_RPC", RpcTarget.AllBuffered, viewId);
+            PhotonNetwork.SendAllOutgoingCommands();
+        }
+    }
+
+    [PunRPC]
+    public void SetPlayField_RPC(int viewId)
+    {
+        GameObject playFieldObj = PhotonView.Find(viewId).gameObject;
+        if (playFieldObj != null)
+        {
+            m_playField = playFieldObj.GetComponent<PlayField>();
         }
     }
 

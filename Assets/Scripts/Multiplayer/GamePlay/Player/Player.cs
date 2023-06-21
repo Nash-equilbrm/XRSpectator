@@ -27,6 +27,9 @@ public class Player : MonoBehaviourPunCallbacks
     private PlayerAttackState m_attackState;
     private PlayerInitState m_initState;
 
+    public CardDisplayField[] cardFields;
+
+
     public List<int> CardCollection { get => m_cardCollectionIds; }
     [SerializeField] private List<int> m_cardCollectionIds;
 
@@ -67,7 +70,6 @@ public class Player : MonoBehaviourPunCallbacks
     void Start()
     {
             photonView = GetComponent<PhotonView>();
-            m_myPlayFields = new List<GameObject>();
             m_myMonsters = new Dictionary<int, Monster>();
 
             m_chooseCardState = new PlayerChooseCardState(this);
@@ -367,8 +369,9 @@ public class Player : MonoBehaviourPunCallbacks
         Debug.Log("GetFirstHalfFields_RPC");
         for (int i = 0; i < 4; ++i)
         {
-            m_myPlayFields.Add(GameManager.Instance.cardFields[i].gameObject);
-            GameManager.Instance.cardFields[i].SetPlayer(photonView.ViewID);
+            PlayField playField = GameManager.Instance.playFields[i].GetComponent<PlayField>();
+            cardFields[i].SetPlayField(playField.photonView.ViewID);
+            playField.SetCardDisplayField(cardFields[i].photonView.ViewID);
         }
     }
 
@@ -378,8 +381,9 @@ public class Player : MonoBehaviourPunCallbacks
         Debug.Log("GetSecondHalfFields_RPC");
         for (int i = 0; i < 4; ++i)
         {
-            m_myPlayFields.Add(GameManager.Instance.cardFields[i + 4].gameObject);
-            GameManager.Instance.cardFields[i + 4].SetPlayer(photonView.ViewID);
+            PlayField playField = GameManager.Instance.playFields[i+4].GetComponent<PlayField>();
+            cardFields[i].SetPlayField(playField.photonView.ViewID);
+            playField.SetCardDisplayField(cardFields[i].photonView.ViewID);
         }
     }
 

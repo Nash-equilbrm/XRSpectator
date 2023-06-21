@@ -12,9 +12,9 @@ public partial class GameManager
     public GameObject deathEffectPrefab;
     public GameObject guiObj;
     public GameObject startGameBtn;
-    public CardDisplayField[] cardFields;
+    public GameObject[] playFields;
     public GameObject[] cardMenuSlots;
-    public CardFieldsMovement cardDisplays;
+    public CardFieldsMovement cardDisplayMovementControll;
 
     public GameResultEnum GameResult { get => gameResult; set => gameResult = value; }
 

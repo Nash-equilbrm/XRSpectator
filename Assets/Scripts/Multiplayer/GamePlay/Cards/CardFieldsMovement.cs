@@ -4,20 +4,19 @@ using UnityEngine;
 
 public class CardFieldsMovement : MonoBehaviour
 {
-    public int id;
     public Transform m_playerTransform;
     public float m_rotateDuration;
     public Vector3 m_offset;
     public Transform[] m_cardDisplayTransforms;
 
-    // Update is called once per frame
+    private void Start()
+    {
+        gameObject.transform.SetParent(null);
+        GameManager.Instance.cardDisplayMovementControll = this;
+    }
+
     void Update()
     {
-        if (m_playerTransform == null && GameManager.Instance.playerManager != null && GameManager.Instance.playerManager.PlayerID == id)
-        {
-            m_playerTransform = GameManager.Instance.playerManager.transform;
-            GameManager.Instance.cardDisplays = this;
-        }
         if(m_playerTransform)
         {
             transform.position = m_playerTransform.position + m_offset;

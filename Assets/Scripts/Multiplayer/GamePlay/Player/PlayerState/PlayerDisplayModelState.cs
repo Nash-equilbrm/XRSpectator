@@ -83,7 +83,7 @@ public class PlayerDisplayModelState : MyStateMachine
                                 , true);
 
                             cardDisplayField.LiftUp();
-                            GameManager.Instance.cardDisplays.Rotate(-cardDisplayField.transform.parent.parent.localEulerAngles.y);
+                            GameManager.Instance.cardDisplayMovementControll.Rotate(-cardDisplayField.transform.parent.parent.localEulerAngles.y);
 
                         }
 
