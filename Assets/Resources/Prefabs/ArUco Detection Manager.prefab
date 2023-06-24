@@ -45,5 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   imageRetriever: {fileID: 0}
-  markerWidthMeters: 0.42
+  markerWidthMeters: 0.2
   markerDictionary: 0

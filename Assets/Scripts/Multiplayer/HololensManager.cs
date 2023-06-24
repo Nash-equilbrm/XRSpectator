@@ -15,13 +15,15 @@ public partial class GameManager
     private bool m_hololensMarkerTracked = false;
 
     private Transform m_ARPlaySpace;
-    
 
     public void InitHololens()
     {
         m_ARPlaySpace = ARCamera.transform.parent;
         ARCamera.transform.localPosition = Vector3.zero;
         ARCamera.GetComponent<Camera>().clearFlags = CameraClearFlags.SolidColor;
+
+
+
 
         GameObject playerModel = PhotonNetwork.Instantiate("Prefabs/" + playerAvatarPrefab.name, ARCamera.transform.position, ARCamera.transform.rotation);
 
@@ -52,6 +54,9 @@ public partial class GameManager
         {
             TurnOffVuforia();
             ARCamera.GetComponent<TrackedPoseDriver>().enabled = true;
+            firstPersonViewStreamCamera.SetActive(true);
+            firstPersonViewStreamCamera.GetComponent<FirstViewStreaming>().StartStreaming();
+
             m_trackedWithVuforia = true;
         }
         else

@@ -22,6 +22,7 @@ public partial class GameManager : MonoBehaviourPunCallbacks
     [Header("Hololens")]
     public GameObject ARCamera;
     public Transform imageTarget;
+    public GameObject firstPersonViewStreamCamera;
   
 
     [Header("ZedCamera")]

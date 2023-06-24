@@ -6,21 +6,15 @@ using UnityEngine;
 public class MoveARCamera : MonoBehaviour
 {
     public Transform ARCamera;
-    //public Transform Head;
-
-    // Update is called once per frame
+    public Vector3 offset;
     void Update()
     {
-        if(ARCamera != null)
+        if(ARCamera != null && GetComponent<PhotonView>().IsMine)
         {
-            if (GetComponent<PhotonView>().IsMine)
-            {
-                transform.position = ARCamera.position;
-                //Vector3 euler = ARCamera.eulerAngles;
-                //transform.eulerAngles = new Vector3(transform.eulerAngles.x, euler.y, transform.eulerAngles.z);
-                //Head.eulerAngles = new Vector3(euler.x, Head.eulerAngles.y, euler.z);
-                transform.rotation = ARCamera.rotation;
-            }
+            transform.position = ARCamera.position + offset;
+            transform.rotation = ARCamera.rotation;
         }
+        
+
     }
 }
