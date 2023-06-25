@@ -1,6 +1,6 @@
-using Microsoft.MixedReality.Toolkit;
-using Microsoft.MixedReality.Toolkit.Input;
-using Microsoft.MixedReality.Toolkit.CameraSystem;
+// using Microsoft.MixedReality.Toolkit;
+// using Microsoft.MixedReality.Toolkit.Input;
+// using Microsoft.MixedReality.Toolkit.CameraSystem;
 using Photon.Pun;
 using System;
 using System.Collections;
@@ -103,33 +103,33 @@ public class Player : MonoBehaviourPunCallbacks
 
     public GameObject GetRayCastHit()
     {
-        foreach (var source in MixedRealityToolkit.InputSystem.DetectedInputSources)
-        {
-            // Ignore anything that is not a hand because we want articulated hands
-            if (source.SourceType == Microsoft.MixedReality.Toolkit.Input.InputSourceType.Hand)
-            {
-                foreach (var p in source.Pointers)
-                {
-                    if (p is IMixedRealityNearPointer)
-                    {
-                        // Ignore near pointers, we only want the rays
-                        continue;
-                    }
-                    if (p.Result != null)
-                    {
-                        var startPoint = p.Position;
-                        var endPoint = p.Result.Details.Point;
-                        var hitObject = p.Result.Details.Object;
-                        if (hitObject)
-                        {
-                            Debug.Log("HitObject: " + hitObject.name + " type: " + hitObject.tag);
-                            return hitObject;
-                        }
-                    }
+        // foreach (var source in MixedRealityToolkit.InputSystem.DetectedInputSources)
+        // {
+        //     // Ignore anything that is not a hand because we want articulated hands
+        //     if (source.SourceType == Microsoft.MixedReality.Toolkit.Input.InputSourceType.Hand)
+        //     {
+        //         foreach (var p in source.Pointers)
+        //         {
+        //             if (p is IMixedRealityNearPointer)
+        //             {
+        //                 // Ignore near pointers, we only want the rays
+        //                 continue;
+        //             }
+        //             if (p.Result != null)
+        //             {
+        //                 var startPoint = p.Position;
+        //                 var endPoint = p.Result.Details.Point;
+        //                 var hitObject = p.Result.Details.Object;
+        //                 if (hitObject)
+        //                 {
+        //                     Debug.Log("HitObject: " + hitObject.name + " type: " + hitObject.tag);
+        //                     return hitObject;
+        //                 }
+        //             }
 
-                }
-            }
-        }
+        //         }
+        //     }
+        // }
         return null;
     }
 
