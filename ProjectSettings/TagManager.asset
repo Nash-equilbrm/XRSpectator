@@ -3,20 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - HelpObject
-  - PlayField
-  - GUI
-  - Creature1
-  - Creature2
-  - Temp
-  - OccupiedPlayField
-  - CardDisplayField
+  tags: []
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - QuadWebcam
+  - 
   - Water
   - UI
   - 
