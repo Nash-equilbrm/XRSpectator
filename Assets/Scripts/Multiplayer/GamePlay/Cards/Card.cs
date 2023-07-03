@@ -29,7 +29,6 @@ public class Card : MonoBehaviour
             if (Monster != null)
             {
                 Monster.SetUpStats(m_config);
-                Monster.SetMonsterTag("Creature" + GameManager.Instance.playerManager.PlayerID.ToString());
             }
         }
 
@@ -43,8 +42,8 @@ public class Card : MonoBehaviour
     public void OnCardPressed()
     {
         Debug.Log("OnCardPressed");
-        GameManager.Instance.playerManager.ChoseNewMonster(Monster.m_photonView.ViewID);
-        GameManager.Instance.playerManager.ChooseNewCard(m_index, m_config.configID);
+        //GameManager.Instance.playerManager.ChoseNewMonster(Monster.m_photonView.ViewID);
+        //GameManager.Instance.playerManager.ChooseNewCard(m_index, m_config.configID);
     }
 
 }

@@ -16510,7 +16510,7 @@ GameObject:
   - component: {fileID: -3187896925750858927}
   m_Layer: 0
   m_Name: FourAM
-  m_TagString: Untagged
+  m_TagString: Creature
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

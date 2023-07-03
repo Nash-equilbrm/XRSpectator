@@ -1,28 +1,37 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CardFieldsMovement : MonoBehaviour
 {
-    public Transform m_playerTransform;
+    public Player m_player;
     public float m_rotateDuration;
     public Vector3 m_offset;
-    public Transform[] m_cardDisplayTransforms;
-
+    public PhotonView m_photonView;
     private void Start()
     {
-        gameObject.transform.SetParent(null);
-        GameManager.Instance.cardDisplayMovementControll = this;
+        if (m_photonView.IsMine)
+        {
+            gameObject.transform.SetParent(null);
+        }
+
+        if (m_player.PlayerID == 0)
+        {
+            transform.eulerAngles = new Vector3(0, 0, 0);
+        }
+        else
+        {
+            transform.eulerAngles = new Vector3(0, 180, 0);
+        }
     }
 
     void Update()
     {
-        if(m_playerTransform)
+        if (m_player)
         {
-            transform.position = m_playerTransform.position + m_offset;
+            transform.position = m_player.transform.position + m_offset;
         }
-
-        transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
     }
 
 
@@ -49,7 +58,6 @@ public class CardFieldsMovement : MonoBehaviour
 
         transform.localRotation = targetRotation;
     }
-
 
 
 }

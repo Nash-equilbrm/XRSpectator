@@ -6,33 +6,17 @@ using UnityEngine.UI;
 
 public class CardDisplayField : MonoBehaviour
 {
-    public PhotonView photonView;
+    public PhotonView m_photonView;
     public Player m_player;
 
     public Image m_monsterImage;
     public Image m_monsterImageBack;
 
-    public PlayField m_playField;
-
     public float m_liftDuration;
 
-    [SerializeField] private Monster m_currentMonster = null;
+    public Monster Monster { get => m_Monster; }
+    [SerializeField] private Monster m_Monster = null;
 
-
-    private void FixedUpdate()
-    {
-        if(m_playField != null)
-        {
-            if (m_currentMonster != null)
-            {
-                    m_playField.text.text = m_currentMonster.Name + ": " + m_currentMonster.CurrentHP;
-            }
-            else
-            {
-                m_playField.text.text = "";
-            }
-        }
-    }
 
     public void LiftUp()
     {
@@ -79,11 +63,18 @@ public class CardDisplayField : MonoBehaviour
 
         parent.localRotation = targetRotation;
     }
+
+    public void OnChooseNewMonster()
+    {
+
+    }
+
+
     //=================RPC=================
     public void SetNewMonster(int viewID)
     {
-        PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "SetNewMonster_RPC");
-        photonView.RPC("SetNewMonster_RPC", RpcTarget.AllBuffered, viewID);
+        PhotonNetwork.RemoveBufferedRPCs(m_photonView.ViewID, "SetNewMonster_RPC");
+        m_photonView.RPC("SetNewMonster_RPC", RpcTarget.AllBuffered, viewID);
         PhotonNetwork.SendAllOutgoingCommands();
     }
 
@@ -92,28 +83,24 @@ public class CardDisplayField : MonoBehaviour
     {
         if (viewID == -1)
         {
-            m_currentMonster?.transform.SetParent(null);
-            m_currentMonster = null;
-            tag = "CardDisplayField";
+            m_Monster = null;
             return;
         }
+
         GameObject monsterobj = PhotonView.Find(viewID).gameObject;
-        monsterobj.transform.SetParent(m_playField.monsterHolder);
         Monster monster = monsterobj.GetComponent<Monster>();
         if (monster)
         {
-            monster.PlayField = m_playField;
-            m_currentMonster = monster;
+            m_Monster = monster;
         }
-        tag = "OccupiedPlayField";
     }
 
     public void ChangeImage(int id)
     {
-        if (photonView.IsMine)
+        if (m_photonView.IsMine)
         {
-            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "ChangeImage_RPC");
-            photonView.RPC("ChangeImage_RPC", RpcTarget.AllBuffered, id);
+            PhotonNetwork.RemoveBufferedRPCs(m_photonView.ViewID, "ChangeImage_RPC");
+            m_photonView.RPC("ChangeImage_RPC", RpcTarget.AllBuffered, id);
             PhotonNetwork.SendAllOutgoingCommands();
         }
     }
@@ -122,51 +109,26 @@ public class CardDisplayField : MonoBehaviour
     public void ChangeImage_RPC(int id)
     {
         m_monsterImage.sprite = m_player.cardConfigs[id].avatarImg;
-        m_monsterImageBack.gameObject.SetActive(true);
-        m_monsterImageBack.sprite = m_player.cardConfigs[id].avatarImg;
+        //m_monsterImageBack.gameObject.SetActive(true);
+        //m_monsterImageBack.sprite = m_player.cardConfigs[id].avatarImg;
 
     }
 
 
-    public void SetPlayer(int viewId)
+    public void InitMonster(int configID)
     {
-        if (photonView.IsMine)
+        if (m_photonView.IsMine)
         {
-            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "SetPlayer_RPC");
-            photonView.RPC("SetPlayer_RPC", RpcTarget.AllBuffered, viewId);
+            PhotonNetwork.RemoveBufferedRPCs(m_photonView.ViewID, "InitMonster_RPC");
+            m_photonView.RPC("InitMonster_RPC", RpcTarget.AllBuffered, configID);
             PhotonNetwork.SendAllOutgoingCommands();
         }
     }
 
     [PunRPC]
-    public void SetPlayer_RPC(int viewId)
+    public void InitMonster_RPC(int configID)
     {
-        GameObject playerObj = PhotonView.Find(viewId).gameObject;
-        if(playerObj != null)
-        {
-            m_player = playerObj.GetComponent<Player>();
-        }
     }
 
-
-    public void SetPlayField(int viewId)
-    {
-        if (photonView.IsMine)
-        {
-            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "SetPlayField_RPC");
-            photonView.RPC("SetPlayField_RPC", RpcTarget.AllBuffered, viewId);
-            PhotonNetwork.SendAllOutgoingCommands();
-        }
-    }
-
-    [PunRPC]
-    public void SetPlayField_RPC(int viewId)
-    {
-        GameObject playFieldObj = PhotonView.Find(viewId).gameObject;
-        if (playFieldObj != null)
-        {
-            m_playField = playFieldObj.GetComponent<PlayField>();
-        }
-    }
 
 }

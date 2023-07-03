@@ -32,14 +32,6 @@ public partial class GameManager
         {
             playerModel.GetComponent<MoveARCamera>().ARCamera = ARCamera.transform;
             playerManager = playerModel.GetComponent<Player>();
-            if (PhotonNetwork.IsMasterClient)
-            {
-                playerManager.SetPlayerID(1);
-            }
-            else
-            {
-                playerManager.SetPlayerID(2);
-            }
         }
 
         m_userRoleInitialized = true;
@@ -50,25 +42,33 @@ public partial class GameManager
 
     public void UpdateHololens()
     {
-        if(m_trackMarkerCount >= m_trackMarkerDuration && !TrackedWithVuforia)
+        if (!TrackedWithVuforia)
         {
-            TurnOffVuforia();
-            ARCamera.GetComponent<TrackedPoseDriver>().enabled = true;
-            firstPersonViewStreamCamera.SetActive(true);
-            firstPersonViewStreamCamera.GetComponent<FirstViewStreaming>().StartStreaming();
-
-            m_trackedWithVuforia = true;
-        }
-        else
-        {
-            if (HololensMarkerTracked)
+            if (m_trackMarkerCount >= m_trackMarkerDuration)
             {
-                m_trackMarkerCount += Time.deltaTime;
+                TurnOffVuforia();
+                ARCamera.GetComponent<TrackedPoseDriver>().enabled = true;
+                //firstPersonViewStreamCamera.SetActive(true);
+                //firstPersonViewStreamCamera.GetComponent<FirstViewStreaming>().StartStreaming();
+
+                m_trackedWithVuforia = true;
             }
             else
             {
-                m_trackMarkerCount = 0;
+                if (HololensMarkerTracked)
+                {
+                    m_trackMarkerCount += Time.deltaTime;
+                }
+                else
+                {
+                    m_trackMarkerCount = 0;
+                }
             }
+        }
+        else
+        {
+            // start gameplay for hololens user
+            UpdateGameplay();
         }
 
 

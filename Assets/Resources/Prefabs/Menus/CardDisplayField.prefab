@@ -184,13 +184,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 345dd6ed66ad416478af113b92f775c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  photonView: {fileID: 5100132841311729329}
+  m_photonView: {fileID: 5100132841311729329}
   m_player: {fileID: 0}
   m_monsterImage: {fileID: 8003317183833454308}
   m_monsterImageBack: {fileID: 8047964819827481320}
-  m_playField: {fileID: 0}
   m_liftDuration: 0.6
-  m_currentMonster: {fileID: 0}
+  m_Monster: {fileID: 0}
 --- !u!65 &321234495385682620
 BoxCollider:
   m_ObjectHideFlags: 0

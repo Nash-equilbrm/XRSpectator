@@ -83,6 +83,9 @@ MonoBehaviour:
   - SetPlayer_RPC
   - SetPlayField_RPC
   - SetCardDisplayField_RPC
+  - MoveCardToEnd_RPC
+  - InitMonster_RPC
+  - UpdateNewMonster_RPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

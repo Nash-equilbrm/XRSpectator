@@ -30,20 +30,13 @@ public partial class Monster
         m_currentHP -= damage;
         if (m_currentHP <= 0)
         {
-            //Die
-            m_currentHP = 0;
-
-            m_isMonsterReady = false;
-            m_animator.enabled = false;
-            m_collider.enabled = false;
-
             Vector3 pos = transform.position;
-            PlayField?.cardDisplayField.SetNewMonster(-1);
-            PlayField.cardDisplayField.LiftDown();
+            PlayField.CurrentCardDisplay.SetNewMonster(-1);
+            PlayField.CurrentCardDisplay.LiftDown();
             PlayField = null;
 
-            transform.position = new Vector3(100, 100, 100);
-            gameObject.SetActive(false);
+            SetMonsterReady(false);
+
             GameManager.Instance.playerManager.PlayDeathEffect(pos);
             GameManager.Instance.playerManager.RemoveMonster(m_photonView.ViewID);
 

@@ -14,21 +14,24 @@ public class Player : MonoBehaviourPunCallbacks
     public CardConfig[] cardConfigs;
 
     public int PlayerID { get => m_playerID; }
-    [SerializeField] private int m_playerID;
+    [SerializeField] private int m_playerID = -1;
 
 
     [SerializeField] private GameObject m_invalidSign = null;
     [SerializeField] private ParticleSystem m_deathEffect = null;
 
-    public PhotonView photonView;
+    public PhotonView m_photonView;
+    public CardFieldsMovement cardDisplayMovementControll;
+
+
     private MyStateMachine m_currentState;
-    private PlayerChooseCardState m_chooseCardState;
+    //private PlayerChooseCardState m_chooseCardState;
     private PlayerDisplayModelState m_displayModelState;
     private PlayerWaitState m_waitState;
     private PlayerAttackState m_attackState;
     private PlayerInitState m_initState;
 
-    public CardDisplayField[] cardFields;
+   
 
 
     public List<int> CardCollection { get => m_cardCollectionIds; }
@@ -47,33 +50,36 @@ public class Player : MonoBehaviourPunCallbacks
     public Player Opponent { get => m_opponent; set => m_opponent = value; }
     [SerializeField] private Player m_opponent;
 
-
-    public int MonsterChosenID { get => m_monsterChosenID; }
-    [SerializeField] private int m_monsterChosenID = -1;
-
-    public int CardChoseIndex { get => m_cardChoseIndex; set => m_cardChoseIndex = value; }
-    private int m_cardChoseIndex = -1;
-    public int CardChoseID { get => m_cardChoseID; set => m_cardChoseID = value; }
-    private int m_cardChoseID;
+    public Monster CurrentMonster { get => m_currentMonster; }
+    [SerializeField] private Monster m_currentMonster;
 
 
 
-    public List<GameObject> MyPlayFields { get => m_myPlayFields; }
-    [SerializeField] private List<GameObject> m_myPlayFields;
+    // gameobject instances => for pointing gesture when displaying model state
+    public List<GameObject> MyCardDisplayFields { get => m_myCardDisplayFields; }
+    [SerializeField] private List<GameObject> m_myCardDisplayFields;
+    // class instances => basically the same
+    public CardDisplayField[] cardFields;
+    public PlayField m_playField;
 
     public Dictionary<int, Monster> MyMonsters { get => m_myMonsters; }
-
     [SerializeField] private Dictionary<int, Monster> m_myMonsters;
+
     public List<int> DebugMonsterList = new List<int>();
 
+
+    public int HP { get => m_HP; }
+    private int m_HP = 1000;
 
 
     void Start()
     {
-            photonView = GetComponent<PhotonView>();
-            m_myMonsters = new Dictionary<int, Monster>();
+        m_photonView = GetComponent<PhotonView>();
+        m_myMonsters = new Dictionary<int, Monster>();
 
-            m_chooseCardState = new PlayerChooseCardState(this);
+        if (m_photonView.IsMine)
+        {
+            //m_chooseCardState = new PlayerChooseCardState(this);
             m_displayModelState = new PlayerDisplayModelState(this);
             m_waitState = new PlayerWaitState(this);
             m_attackState = new PlayerAttackState(this);
@@ -81,8 +87,6 @@ public class Player : MonoBehaviourPunCallbacks
 
             m_currentState = m_initState;
 
-        if (photonView.IsMine)
-        {
             GameObject sign = PhotonNetwork.Instantiate("Prefabs/Menus/" + GameManager.Instance.invalidSignPrefab.name, new Vector3(100, 100, 100), Quaternion.identity);
             GetInvalidSign(sign.GetComponent<PhotonView>().ViewID);
 
@@ -94,7 +98,7 @@ public class Player : MonoBehaviourPunCallbacks
 
     void Update()
     {
-        if (photonView.IsMine && GameManager.Instance.TrackedWithVuforia && GameManager.Instance.GameResult == GameResultEnum.NONE)
+        if (m_photonView.IsMine && GameManager.Instance.TrackedWithVuforia && GameManager.Instance.GameResult == GameResultEnum.NONE)
         {
             m_currentState.UpdateState();
         }
@@ -133,10 +137,13 @@ public class Player : MonoBehaviourPunCallbacks
         return null;
     }
 
+
+    // ==================== PUNRPC ====================
+
     public void SwitchState(PlayerStateEnum nextState)
     {
-        PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "SwitchState_RPC");
-        photonView.RPC("SwitchState_RPC", RpcTarget.AllBuffered, nextState);
+        PhotonNetwork.RemoveBufferedRPCs(m_photonView.ViewID, "SwitchState_RPC");
+        m_photonView.RPC("SwitchState_RPC", RpcTarget.AllBuffered, nextState);
         PhotonNetwork.SendAllOutgoingCommands();
     }
 
@@ -146,12 +153,6 @@ public class Player : MonoBehaviourPunCallbacks
     {
         switch (nextState)
         {
-            case PlayerStateEnum.CHOOSE_CARD:
-                {
-                    Debug.Log("Player: " + m_playerID + "Switch state " + PlayerStateEnum.CHOOSE_CARD);
-                    m_currentState = m_chooseCardState;
-                    break;
-                }
             case PlayerStateEnum.DISPLAY_MODEL:
                 {
                     Debug.Log("Player: " + m_playerID + "Switch state " + PlayerStateEnum.DISPLAY_MODEL);
@@ -173,41 +174,16 @@ public class Player : MonoBehaviourPunCallbacks
         }
     }
 
-    public GameObject GetChosenMonsterObject()
-    {
-        if (MyMonsters.ContainsKey(MonsterChosenID))
-        {
-            return MyMonsters[MonsterChosenID].gameObject;
-        }
 
-        return null;
-    }
-
-
-    // ==================== PUNRPC ====================
-    public void RemoveRemainCard(int index)
-    {
-        if (photonView.IsMine)
-        {
-            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "RemoveRemainCard_RPC");
-            photonView.RPC("RemoveRemainCard_RPC", RpcTarget.AllBuffered, index);
-            PhotonNetwork.SendAllOutgoingCommands();
-        }
-    }
-
-    [PunRPC]
-    public void RemoveRemainCard_RPC(int index)
-    {
-        m_cardCollectionIds.RemoveAt(index);
-    }
+   
 
 
     public void SetReady(bool ready)
     {
-        if (photonView.IsMine)
+        if (m_photonView.IsMine)
         {
-            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "SetReady_RPC");
-            photonView.RPC("SetReady_RPC", RpcTarget.AllBuffered, ready);
+            PhotonNetwork.RemoveBufferedRPCs(m_photonView.ViewID, "SetReady_RPC");
+            m_photonView.RPC("SetReady_RPC", RpcTarget.AllBuffered, ready);
             PhotonNetwork.SendAllOutgoingCommands();
         }
     }
@@ -219,29 +195,13 @@ public class Player : MonoBehaviourPunCallbacks
         m_isReady = ready;
     }
 
-    public void ChooseNewCard(int index, int cardID)
-    {
-        if (photonView.IsMine)
-        {
-            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "ChooseNewCard_RPC");
-            photonView.RPC("ChooseNewCard_RPC", RpcTarget.AllBuffered, index, cardID);
-            PhotonNetwork.SendAllOutgoingCommands();
-        }
-    }
-
-    [PunRPC]
-    public void ChooseNewCard_RPC(int index, int cardID)
-    {
-        m_cardChoseIndex = index;
-        m_cardChoseID = cardID;
-    }
 
     public void StartMyTurn(bool startTurn)
     {
-        if (photonView.IsMine)
+        if (m_photonView.IsMine)
         {
-            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "StartMyTurn_RPC");
-            photonView.RPC("StartMyTurn_RPC", RpcTarget.AllBuffered, startTurn);
+            PhotonNetwork.RemoveBufferedRPCs(m_photonView.ViewID, "StartMyTurn_RPC");
+            m_photonView.RPC("StartMyTurn_RPC", RpcTarget.AllBuffered, startTurn);
             PhotonNetwork.SendAllOutgoingCommands();
         }
     }
@@ -256,10 +216,10 @@ public class Player : MonoBehaviourPunCallbacks
 
     public void DoAttack(bool attack)
     {
-        if (photonView.IsMine)
+        if (m_photonView.IsMine)
         {
-            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "DoAttack_RPC");
-            photonView.RPC("DoAttack_RPC", RpcTarget.AllBuffered, attack);
+            PhotonNetwork.RemoveBufferedRPCs(m_photonView.ViewID, "DoAttack_RPC");
+            m_photonView.RPC("DoAttack_RPC", RpcTarget.AllBuffered, attack);
             PhotonNetwork.SendAllOutgoingCommands();
         }
     }
@@ -271,40 +231,13 @@ public class Player : MonoBehaviourPunCallbacks
     }
 
 
-    public void ShowModel(Vector3 position, Quaternion rotation, bool active)
-    {
-        if (photonView.IsMine)
-        {
-            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "ShowModel_RPC");
-            photonView.RPC("ShowModel_RPC", RpcTarget.AllBuffered, position, rotation, active);
-            PhotonNetwork.SendAllOutgoingCommands();
-        }
-    }
-
-    [PunRPC]
-    private void ShowModel_RPC(Vector3 position, Quaternion rotation, bool active)
-    {
-        Debug.Log("ShowModel_RPC");
-        GameObject model = GetChosenMonsterObject();
-        if (!active)
-        {
-            model.SetActive(false);
-            return;
-        }
-        model.SetActive(true);
-        model.transform.position = position;
-        model.transform.rotation = rotation;
-    }
-
-
-
 
     public void EndMyTurn()
     {
-        if (photonView.IsMine)
+        if (m_photonView.IsMine)
         {
-            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "EndMyTurn_RPC");
-            photonView.RPC("EndMyTurn_RPC", RpcTarget.AllBuffered);
+            PhotonNetwork.RemoveBufferedRPCs(m_photonView.ViewID, "EndMyTurn_RPC");
+            m_photonView.RPC("EndMyTurn_RPC", RpcTarget.AllBuffered);
             PhotonNetwork.SendAllOutgoingCommands();
         }
     }
@@ -322,8 +255,8 @@ public class Player : MonoBehaviourPunCallbacks
 
     public void FindOpponent()
     {
-        PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "FindOpponent_RPC");
-        photonView.RPC("FindOpponent_RPC", RpcTarget.AllBuffered);
+        PhotonNetwork.RemoveBufferedRPCs(m_photonView.ViewID, "FindOpponent_RPC");
+        m_photonView.RPC("FindOpponent_RPC", RpcTarget.AllBuffered);
         PhotonNetwork.SendAllOutgoingCommands();
     }
 
@@ -342,76 +275,13 @@ public class Player : MonoBehaviourPunCallbacks
         }
     }
 
-    public void GetPlayFields()
-    {
-        if (photonView.IsMine)
-        {
-            Debug.Log("GetPlayFields: player " + PlayerID);
-
-            if (PlayerID == 1)
-            {
-                PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "GetFirstHalfFields_RPC");
-                photonView.RPC("GetFirstHalfFields_RPC", RpcTarget.AllBuffered);
-                PhotonNetwork.SendAllOutgoingCommands();
-
-            }
-            else if (PlayerID == 2)
-            {
-                PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "GetSecondHalfFields_RPC");
-                photonView.RPC("GetSecondHalfFields_RPC", RpcTarget.AllBuffered);
-                PhotonNetwork.SendAllOutgoingCommands();
-            }
-        }
-    }
-
-    [PunRPC]
-    private void GetFirstHalfFields_RPC()
-    {
-        Debug.Log("GetFirstHalfFields_RPC");
-        for (int i = 0; i < 4; ++i)
-        {
-            PlayField playField = GameManager.Instance.playFields[i].GetComponent<PlayField>();
-            cardFields[i].SetPlayField(playField.photonView.ViewID);
-            playField.SetCardDisplayField(cardFields[i].photonView.ViewID);
-        }
-    }
-
-    [PunRPC]
-    private void GetSecondHalfFields_RPC()
-    {
-        Debug.Log("GetSecondHalfFields_RPC");
-        for (int i = 0; i < 4; ++i)
-        {
-            PlayField playField = GameManager.Instance.playFields[i+4].GetComponent<PlayField>();
-            cardFields[i].SetPlayField(playField.photonView.ViewID);
-            playField.SetCardDisplayField(cardFields[i].photonView.ViewID);
-        }
-    }
-
-
-    public void ChoseNewMonster(int key)
-    {
-        if (photonView.IsMine)
-        {
-            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "ChoseNewMonster_RPC");
-            photonView.RPC("ChoseNewMonster_RPC", RpcTarget.AllBuffered, key);
-            PhotonNetwork.SendAllOutgoingCommands();
-        }
-    }
-
-    [PunRPC]
-    private void ChoseNewMonster_RPC(int key)
-    {
-        m_monsterChosenID = key;
-    }
-
 
     public void AddNewMonster(int monsterViewID)
     {
-        if (photonView.IsMine)
+        if (m_photonView.IsMine)
         {
-            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "AddNewMonster_RPC");
-            photonView.RPC("AddNewMonster_RPC", RpcTarget.AllBuffered, monsterViewID);
+            PhotonNetwork.RemoveBufferedRPCs(m_photonView.ViewID, "AddNewMonster_RPC");
+            m_photonView.RPC("AddNewMonster_RPC", RpcTarget.AllBuffered, monsterViewID);
             PhotonNetwork.SendAllOutgoingCommands();
         }
     }
@@ -427,10 +297,10 @@ public class Player : MonoBehaviourPunCallbacks
 
     public void RemoveMonster(int monsterViewID)
     {
-        if (photonView.IsMine)
+        if (m_photonView.IsMine)
         {
-            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "RemoveMonster_RPC");
-            photonView.RPC("RemoveMonster_RPC", RpcTarget.AllBuffered, monsterViewID);
+            PhotonNetwork.RemoveBufferedRPCs(m_photonView.ViewID, "RemoveMonster_RPC");
+            m_photonView.RPC("RemoveMonster_RPC", RpcTarget.AllBuffered, monsterViewID);
             PhotonNetwork.SendAllOutgoingCommands();
         }
     }
@@ -455,10 +325,10 @@ public class Player : MonoBehaviourPunCallbacks
 
     public void SetPlayerID(int ID)
     {
-        if (photonView.IsMine)
+        if (m_photonView.IsMine)
         {
-            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "SetPlayerID_RPC");
-            photonView.RPC("SetPlayerID_RPC", RpcTarget.AllBuffered, ID);
+            PhotonNetwork.RemoveBufferedRPCs(m_photonView.ViewID, "SetPlayerID_RPC");
+            m_photonView.RPC("SetPlayerID_RPC", RpcTarget.AllBuffered, ID);
             PhotonNetwork.SendAllOutgoingCommands();
         }
     }
@@ -471,8 +341,8 @@ public class Player : MonoBehaviourPunCallbacks
     private void GetInvalidSign(int viewID)
     {
 
-        PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "GetInvalidSign_RPC");
-        photonView.RPC("GetInvalidSign_RPC", RpcTarget.AllBuffered, viewID);
+        PhotonNetwork.RemoveBufferedRPCs(m_photonView.ViewID, "GetInvalidSign_RPC");
+        m_photonView.RPC("GetInvalidSign_RPC", RpcTarget.AllBuffered, viewID);
         PhotonNetwork.SendAllOutgoingCommands();
     }
 
@@ -485,10 +355,10 @@ public class Player : MonoBehaviourPunCallbacks
 
     public void ShowInvalidSign(Vector3 position, Quaternion rotation, bool active = true)
     {
-        if (photonView.IsMine)
+        if (m_photonView.IsMine)
         {
-            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "ShowInvalidSign_RPC");
-            photonView.RPC("ShowInvalidSign_RPC", RpcTarget.AllBuffered, position, rotation, active);
+            PhotonNetwork.RemoveBufferedRPCs(m_photonView.ViewID, "ShowInvalidSign_RPC");
+            m_photonView.RPC("ShowInvalidSign_RPC", RpcTarget.AllBuffered, position, rotation, active);
             PhotonNetwork.SendAllOutgoingCommands();
         }
     }
@@ -511,8 +381,8 @@ public class Player : MonoBehaviourPunCallbacks
     private void GetDeathEffect(int viewID)
     {
 
-        PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "GetDeathEffect_RPC");
-        photonView.RPC("GetDeathEffect_RPC", RpcTarget.AllBuffered, viewID);
+        PhotonNetwork.RemoveBufferedRPCs(m_photonView.ViewID, "GetDeathEffect_RPC");
+        m_photonView.RPC("GetDeathEffect_RPC", RpcTarget.AllBuffered, viewID);
         PhotonNetwork.SendAllOutgoingCommands();
     }
 
@@ -529,10 +399,10 @@ public class Player : MonoBehaviourPunCallbacks
 
     public void PlayDeathEffect(Vector3 position)
     {
-        if (photonView.IsMine)
+        if (m_photonView.IsMine)
         {
-            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "PlayDeathEffect_RPC");
-            photonView.RPC("PlayDeathEffect_RPC", RpcTarget.AllBuffered, position);
+            PhotonNetwork.RemoveBufferedRPCs(m_photonView.ViewID, "PlayDeathEffect_RPC");
+            m_photonView.RPC("PlayDeathEffect_RPC", RpcTarget.AllBuffered, position);
             PhotonNetwork.SendAllOutgoingCommands();
         }
     }
@@ -548,10 +418,10 @@ public class Player : MonoBehaviourPunCallbacks
 
     public void ResetTurn()
     {
-        if (photonView.IsMine)
+        if (m_photonView.IsMine)
         {
-            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "ResetTurn_RPC");
-            photonView.RPC("ResetTurn_RPC", RpcTarget.AllBuffered);
+            PhotonNetwork.RemoveBufferedRPCs(m_photonView.ViewID, "ResetTurn_RPC");
+            m_photonView.RPC("ResetTurn_RPC", RpcTarget.AllBuffered);
             PhotonNetwork.SendAllOutgoingCommands();
         }
     }
@@ -564,7 +434,23 @@ public class Player : MonoBehaviourPunCallbacks
             m_myMonsters[monsterID].ResetMonsterAttack();
         }
     }
-    
+
+    public void UpdateNewMonster()
+    {
+        if (m_photonView.IsMine)
+        {
+            PhotonNetwork.RemoveBufferedRPCs(m_photonView.ViewID, "UpdateNewMonster_RPC");
+            m_photonView.RPC("UpdateNewMonster_RPC", RpcTarget.AllBuffered);
+            PhotonNetwork.SendAllOutgoingCommands();
+        }
+    }
+
+    [PunRPC]
+    private void UpdateNewMonster_RPC()
+    {
+        m_currentMonster = m_playField.CurrentCardDisplay.Monster;
+    }
+
 }
 
     

@@ -86,6 +86,9 @@ MonoBehaviour:
   normalField: {fileID: 7386910689712075339}
   monsterField: {fileID: 6873167885769833122}
   attackPhaseField: {fileID: 8974678208483355637}
+  monsterHolder: {fileID: 0}
+  text: {fileID: 0}
+  m_currentCardDisplayField: {fileID: 0}
 --- !u!65 &3859404557694023851
 BoxCollider:
   m_ObjectHideFlags: 0

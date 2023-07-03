@@ -16,7 +16,6 @@ public partial class Monster : MonoBehaviour
     private string m_name;
 
 
-
     [SerializeField]private bool m_isMonsterReady = false;
 
     public bool OnAttack { get => m_onAttack;}
@@ -130,10 +129,10 @@ public partial class Monster : MonoBehaviour
         GameObject targetObj = PhotonView.Find(monsterViewID).gameObject;
         if (targetObj)
         {
+            transform.LookAt(targetObj.transform);
             Monster targetMonster = targetObj.GetComponent<Monster>();
             if (targetMonster)
             {
-                transform.LookAt(targetObj.transform);
                 Debug.Log(m_photonView.ViewID + " attack " + targetMonster.m_photonView.ViewID);
                 //targetMonster.TakeDamage(m_ATK);
                 m_currentTarget = targetMonster;
@@ -163,7 +162,7 @@ public partial class Monster : MonoBehaviour
     private void StopAttack_RPC()
     {
         m_attackTimer = m_attackDuration;
-        if (PlayField != null) transform.eulerAngles = new Vector3(0, PlayField.transform.eulerAngles.y, 0);
+        if (PlayField != null) transform.localEulerAngles = Vector3.zero;
         m_currentTarget = null;
         m_onAttack = false;
     }
@@ -188,23 +187,37 @@ public partial class Monster : MonoBehaviour
     }
 
 
-    public void SetMonsterReady()
+    public void SetMonsterReady(bool ready)
     {
         if (m_photonView.IsMine)
         {
             PhotonNetwork.RemoveBufferedRPCs(m_photonView.ViewID, "SetMonsterReady_RPC");
-            m_photonView.RPC("SetMonsterReady_RPC", RpcTarget.AllBuffered);
+            m_photonView.RPC("SetMonsterReady_RPC", RpcTarget.AllBuffered, ready);
             PhotonNetwork.SendAllOutgoingCommands();
         }
     }
 
     [PunRPC]
-    public void SetMonsterReady_RPC()
+    public void SetMonsterReady_RPC(bool ready)
     {
-        m_isMonsterReady = true;
-        m_animator.enabled = true;
-        m_collider.enabled = true;
-        m_hasAttacked = false;
+        if (ready)
+        {
+            gameObject.SetActive(true);
+            m_isMonsterReady = true;
+            m_animator.enabled = true;
+            m_collider.enabled = true;
+            m_hasAttacked = false;
+        }
+        else
+        {
+            gameObject.SetActive(false);
+            transform.SetParent(null);
+            transform.position = new Vector3(100, 100, 100);
+            m_animator.enabled = false;
+            m_collider.enabled = false;
+            m_isMonsterReady = false;
+            m_hasAttacked = false;
+        }
     }
 
 
@@ -230,7 +243,6 @@ public partial class Monster : MonoBehaviour
                 m_attackEffect?.gameObject.SetActive(true);
                 m_attackEffect?.Play();
                 Debug.Log("Attack particle remains when dealing: " + m_attackEffect.GetParticles(p));
-
             }
 
         }

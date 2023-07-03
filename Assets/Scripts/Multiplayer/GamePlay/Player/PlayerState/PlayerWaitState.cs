@@ -27,13 +27,11 @@ public class PlayerWaitState : MyStateMachine
 
     protected override void Exit()
     {
-        m_player.SwitchState(PlayerStateEnum.CHOOSE_CARD);
+        m_player.SwitchState(PlayerStateEnum.DISPLAY_MODEL);
     }
 
     protected override void Initialize()
     {
-        m_player.ChoseNewMonster(-1);
-        
         StateInitialized = true;
     }
 }

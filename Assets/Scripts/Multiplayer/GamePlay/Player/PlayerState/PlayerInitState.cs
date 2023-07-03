@@ -17,8 +17,20 @@ public class PlayerInitState : MyStateMachine
 
         if (m_player.Opponent != null)
         {
+            // if find another player and PlayerID not set => set ID = 1 (Second Player)
+            if (m_player.PlayerID == -1)
+            {
+                m_player.SetPlayerID(1);
+            }
         }
-            ExitState = true;   
+        // if not find player and PlayerID is not set => set ID = 0 (First player)
+        else if(m_player.PlayerID == -1)
+        {
+            m_player.SetPlayerID(0);
+        }
+
+        // for testing 1 player
+        ExitState = true;
     }
 
 
@@ -31,32 +43,44 @@ public class PlayerInitState : MyStateMachine
     {
         if (GameManager.Instance.PlayerReady)
         {
-            if (m_player.photonView.IsMine)
+            if (m_player.m_photonView.IsMine)
             {
-                m_player.GetPlayFields();
-                InitPlayUIs();
+                InitCardAndMonster();
                 StateInitialized = true;
             }
         }
     }
 
 
-   
 
-    private void InitPlayUIs()
+
+    private void InitCardAndMonster()
     {
-        int slotCnt = GameManager.Instance.cardMenuSlots.Length;
-        int cardCnt = GameManager.Instance.playerManager.CardCollection.Count;
-        int cnt = (slotCnt < cardCnt) ? slotCnt : cardCnt;
-        for (int i = 0; i < cnt; ++i)
+        for (int i = 0; i < m_player.CardCollection.Count; ++i)
         {
-            GameObject cardObj = GameManager.Instance.cardMenuSlots[i];
-            cardObj.SetActive(true);
-            Card card = cardObj.GetComponent<Card>();
-            card.InitCardUI(i, m_player.cardConfigs[m_player.CardCollection[0]]);
+            Debug.Log("InitPlayUIs: " + i);
+            // create gameobject of monster
+            CardConfig config = m_player.cardConfigs[m_player.CardCollection[i]];
+            GameObject monsterObj = PhotonNetwork.Instantiate("Prefabs/Monsters/" + config.model.name, new Vector3(100, 100, 100), Quaternion.identity);
 
-            m_player.RemoveRemainCard(0);
+            // set up display card field for that monster
+            m_player.cardFields[i].gameObject.SetActive(true);
+            m_player.cardFields[i].ChangeImage(config.configID);
+            m_player.cardFields[i].SetNewMonster(monsterObj.GetPhotonView().ViewID);
+
+
+            // put monster to manager list
+            Monster monster = monsterObj.GetComponent<Monster>();
+            monster.SetUpStats(config);
+            if (monster.m_photonView.IsMine)
+            {
+                m_player.AddNewMonster(monster.m_photonView.ViewID);
+            }
+            monster.SetMonsterReady(false);
+
+
         }
+        
     }
 
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerDisplayModelState : MyStateMachine
 {
-    private float m_timer = 1f;
+    private float m_timer;
     private float m_chooseSlotDuration = 1f;
     private GameObject m_selectedPlayField = null;
     private GameObject m_prevHit = null;
@@ -16,6 +16,7 @@ public class PlayerDisplayModelState : MyStateMachine
     public PlayerDisplayModelState(Player player)
     {
         m_player = player;
+        m_timer = m_chooseSlotDuration;
     }
 
     protected override void DoBehavior()
@@ -28,7 +29,7 @@ public class PlayerDisplayModelState : MyStateMachine
             ExitState = true;
             return;
         }
-        if (m_player.photonView.IsMine)
+        if (m_player.m_photonView.IsMine)
         {
             m_prevHit = m_selectedPlayField;
             m_selectedPlayField = m_player.GetRayCastHit();
@@ -53,13 +54,8 @@ public class PlayerDisplayModelState : MyStateMachine
                     Vector3 position = m_selectedPlayField.transform.position;
                     Vector3 rotation = new Vector3(0, m_selectedPlayField.transform.eulerAngles.y, 0);
                     // show creatures in card
-                    if (!m_player.MyPlayFields.Contains(m_selectedPlayField))
+                    if (!m_player.MyCardDisplayFields.Contains(m_selectedPlayField))
                     {
-                        //    m_player.ShowModel(position, Quaternion.Euler(rotation), true);
-                        //}
-                        //// invalid action -> show invalid sign
-                        //else
-                        //{
                         m_player.ShowInvalidSign(position, Quaternion.Euler(rotation), true);
                     }
 
@@ -67,39 +63,43 @@ public class PlayerDisplayModelState : MyStateMachine
 
 
                 // if holding user's pointer on the playfield owns by player, start timer.
-                else if (m_player.MyPlayFields.Contains(m_selectedPlayField))
+                else if (m_player.MyCardDisplayFields.Contains(m_selectedPlayField))
                 {
                     if (m_timer <= 0)
                     {
                         CardDisplayField cardDisplayField = m_selectedPlayField.GetComponent<CardDisplayField>();
                         if (cardDisplayField)
                         {
-                            Monster monster = m_player.GetChosenMonsterObject().GetComponent<Monster>();
-                            cardDisplayField.SetNewMonster(m_player.MonsterChosenID);
-                            monster.SetMonsterReady();
-                            cardDisplayField.ChangeImage(m_player.CardChoseID);
-                            m_player.ShowModel(cardDisplayField.m_playField.transform.position,
-                                Quaternion.Euler(new Vector3(0, cardDisplayField.m_playField.transform.eulerAngles.y, 0))
-                                , true);
+                            Monster monster = cardDisplayField.Monster;
 
+                            // set the image for the card display and lift up
                             cardDisplayField.LiftUp();
-                            GameManager.Instance.cardDisplayMovementControll.Rotate(-cardDisplayField.transform.parent.parent.localEulerAngles.y);
+                            
+                            // display the monster and put it on Ready to use
+                            if(m_player.m_playField.CurrentCardDisplay != null)
+                            {
+                                m_player.m_playField.CurrentCardDisplay.Monster.SetMonsterReady(false);
+                            }
+
+                            monster.SetMonsterReady(true);
+                            monster.gameObject.transform.SetParent(m_player.m_playField.monsterHolder);
+                            monster.gameObject.transform.localPosition = Vector3.zero;
+                            monster.gameObject.transform.localRotation = Quaternion.identity;
+
+                            m_player.m_playField.SetNewCardDisplay(cardDisplayField.m_photonView.ViewID);
+                            m_player.UpdateNewMonster();
+
+                            float yAngle = (cardDisplayField.transform.parent.parent.localEulerAngles.y != 0) ? -cardDisplayField.transform.parent.parent.localEulerAngles.y : cardDisplayField.transform.parent.parent.localEulerAngles.z;
+                            m_player.cardDisplayMovementControll.Rotate(yAngle);
+
+                            // reset
+                            m_timer = m_chooseSlotDuration;
+                            m_selectedPlayField = null;
+                            m_prevHit = null;
+                            //ExitState = true;
+                            return;
 
                         }
-
-                        if (m_player.CardCollection.Count > 0)
-                        {
-                            Card card = GameManager.Instance.cardMenuSlots[m_player.CardChoseIndex].GetComponent<Card>();
-                            card.InitCardUI(m_player.CardChoseIndex, m_player.cardConfigs[m_player.CardCollection[0]]);
-                            m_player.RemoveRemainCard(0);
-                        }
-                        else
-                        {
-                            GameManager.Instance.cardMenuSlots[m_player.CardChoseIndex].SetActive(false);
-                        }
-
-                        ExitState = true;
-                        return;
                     }
                     else
                     {
@@ -131,16 +131,12 @@ public class PlayerDisplayModelState : MyStateMachine
         {
             m_player.SwitchState(PlayerStateEnum.ATTACK);
         }
-        else
-        {
-            m_player.SwitchState(PlayerStateEnum.CHOOSE_CARD);
-        }
+        //else
+        //{
+        //    m_player.SwitchState(PlayerStateEnum.CHOOSE_CARD);
+        //}
 
-        // reset
-        m_player.ChoseNewMonster(-1);
-        m_timer = m_chooseSlotDuration;
-        m_selectedPlayField = null;
-        m_prevHit = null;
+        
     }
 
     protected override void Initialize()

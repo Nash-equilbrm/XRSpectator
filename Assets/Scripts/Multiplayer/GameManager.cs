@@ -45,15 +45,7 @@ public partial class GameManager : MonoBehaviourPunCallbacks
             else 
             {
                 // update for hololens user to track marker, stop tracking after x(secs) and go to gameplay scene
-                if (!TrackedWithVuforia)
-                {
-                    UpdateHololens();
-                }
-                // start gameplay for hololens user
-                else
-                {
-                    UpdateGameplay();
-                }
+                UpdateHololens();
             }
         }
     }

@@ -12,9 +12,6 @@ public partial class GameManager
     public GameObject deathEffectPrefab;
     public GameObject guiObj;
     public GameObject startGameBtn;
-    public GameObject[] playFields;
-    public GameObject[] cardMenuSlots;
-    public CardFieldsMovement cardDisplayMovementControll;
 
     public GameResultEnum GameResult { get => gameResult; set => gameResult = value; }
 
@@ -37,10 +34,32 @@ public partial class GameManager
         if (TrackedWithVuforia && !gameplayInit)
         {
             guiObj.SetActive(true);
+            FollowTransform followTransform = guiObj.GetComponent<FollowTransform>();
+            if (followTransform)
+            {
+                followTransform.follow = playerManager.transform;
+            }
             InitGameStates();
             gameplayInit = true;
         }
         currentState.UpdateState();
+
+
+        // testing
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            OnStartGamePressed();
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            OnAttackPressed();
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            OnEndTurnPressed();
+        }
     }
 
     private void InitGameStates()
