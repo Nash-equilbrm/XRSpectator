@@ -70,8 +70,11 @@ public class PlayerDisplayModelState : MyStateMachine
                         CardDisplayField cardDisplayField = m_selectedPlayField.GetComponent<CardDisplayField>();
                         if (cardDisplayField)
                         {
+                            Monster monster = cardDisplayField.Monster;
+
+
                             // display the monster and put it on Ready to use
-                            if(m_player.m_playField.CurrentCardDisplay != null)
+                            if (m_player.m_playField.CurrentCardDisplay != null && monster.m_photonView.ViewID != m_player.m_playField.CurrentCardDisplay.Monster.m_photonView.ViewID)
                             {
                                 Debug.Log("Remove old card display");
                                 m_player.m_playField.CurrentCardDisplay.Monster.SetMonsterReady(false);
@@ -84,7 +87,6 @@ public class PlayerDisplayModelState : MyStateMachine
                             cardDisplayField.LiftUp();
 
                             Debug.Log("Set new monster ready");
-                            Monster monster = cardDisplayField.Monster;
                             monster.SetMonsterReady(true);
                             monster.gameObject.transform.SetParent(m_player.m_playField.monsterHolder);
                             monster.gameObject.transform.localPosition = Vector3.zero;

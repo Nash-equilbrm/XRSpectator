@@ -33,8 +33,6 @@ public partial class Monster : MonoBehaviour
     private void Start()
     {
         m_photonView = GetComponent<PhotonView>();
-        m_animator.enabled = false;
-        m_collider.enabled = false;
     }
 
     private void Update()
@@ -201,22 +199,19 @@ public partial class Monster : MonoBehaviour
     [PunRPC]
     public void SetMonsterReady_RPC(bool ready)
     {
-        Debug.Log("SetMonsterReady_RPC" + ready);
         if (ready)
         {
+            Debug.Log("SetMonsterReady_RPC: true");
             gameObject.SetActive(true);
             m_isMonsterReady = true;
-            m_animator.enabled = true;
-            m_collider.enabled = true;
             m_hasAttacked = false;
         }
         else
         {
+            Debug.Log("SetMonsterReady_RPC: false");
             gameObject.SetActive(false);
             transform.SetParent(null);
             transform.position = new Vector3(100, 100, 100);
-            m_animator.enabled = false;
-            m_collider.enabled = false;
             m_isMonsterReady = false;
             m_hasAttacked = false;
         }
