@@ -32,6 +32,7 @@ public partial class Monster : MonoBehaviour
 
     private void Start()
     {
+        m_photonView = GetComponent<PhotonView>();
         m_animator.enabled = false;
         m_collider.enabled = false;
     }
