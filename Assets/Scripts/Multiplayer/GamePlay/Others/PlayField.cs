@@ -42,27 +42,31 @@ public class PlayField : MonoBehaviour
     {
         if (m_photonView.IsMine)
         {
-            PhotonNetwork.RemoveBufferedRPCs(m_photonView.ViewID, "SetNewMonster_RPC");
-            m_photonView.RPC("SetNewMonster_RPC", RpcTarget.AllBuffered, viewID);
+            PhotonNetwork.RemoveBufferedRPCs(m_photonView.ViewID, "SetNewCardDisplay_RPC");
+            m_photonView.RPC("SetNewCardDisplay_RPC", RpcTarget.AllBuffered, viewID);
             PhotonNetwork.SendAllOutgoingCommands();
         }
     }
 
     [PunRPC]
-    public void SetNewMonster_RPC(int viewID)
+    public void SetNewCardDisplay_RPC(int viewID)
     {
-        if(viewID != -1)
+        if (viewID != -1)
         {
             GameObject cardDisplayObj = PhotonView.Find(viewID).gameObject;
             CardDisplayField cardDisplay = cardDisplayObj.GetComponent<CardDisplayField>();
-            if (cardDisplay) m_currentCardDisplay = cardDisplay;
+            if (cardDisplay)
+            {
+                m_currentCardDisplay = cardDisplay;
+                cardDisplay.Monster.PlayField = this;
+                cardDisplay.Monster.transform.SetParent(monsterHolder);
+            }
+            else
+            {
+                m_currentCardDisplay = null;
+            }
         }
-        else
-        {
-            m_currentCardDisplay = null;
-        }
+
     }
-
-
 }
  

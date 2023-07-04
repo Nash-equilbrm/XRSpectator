@@ -88,8 +88,8 @@ public class PlayerDisplayModelState : MyStateMachine
 
                             Debug.Log("Set new monster ready");
                             monster.SetMonsterReady(true);
-                            monster.gameObject.transform.position = m_player.m_playField.transform.position;
-                            monster.gameObject.transform.rotation = m_player.m_playField.transform.rotation;
+                            //monster.gameObject.transform.position = m_player.m_playField.transform.position;
+                            //monster.gameObject.transform.rotation = m_player.m_playField.transform.rotation;
 
                             Debug.Log("Player " + m_player.PlayerID + "set new monster " + monster.m_photonView.ViewID);
                             m_player.UpdateNewMonster();
