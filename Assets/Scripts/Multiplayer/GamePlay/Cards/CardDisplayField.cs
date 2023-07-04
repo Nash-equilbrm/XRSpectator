@@ -17,6 +17,10 @@ public class CardDisplayField : MonoBehaviour
     public Monster Monster { get => m_Monster; }
     [SerializeField] private Monster m_Monster = null;
 
+    private void Start()
+    {
+        m_photonView = GetComponent<PhotonView>();
+    }
 
     public void LiftUp()
     {

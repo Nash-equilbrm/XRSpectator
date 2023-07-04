@@ -11,6 +11,7 @@ public class CardFieldsMovement : MonoBehaviour
     public PhotonView m_photonView;
     private void Start()
     {
+        m_photonView = GetComponent<PhotonView>();
         if (m_photonView.IsMine)
         {
             gameObject.transform.SetParent(null);

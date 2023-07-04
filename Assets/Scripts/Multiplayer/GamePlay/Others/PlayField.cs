@@ -17,6 +17,7 @@ public class PlayField : MonoBehaviour
 
     private void Start()
     {
+        m_photonView = GetComponent<PhotonView>();
         transform.SetParent(null);
         FollowTransform followTransform = GetComponent<FollowTransform>();
         if (m_player.PlayerID == 0)

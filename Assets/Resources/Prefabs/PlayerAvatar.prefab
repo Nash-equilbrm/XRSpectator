@@ -568,6 +568,11 @@ PrefabInstance:
       propertyPath: m_player
       value: 
       objectReference: {fileID: 7133357693053756016}
+    - target: {fileID: 3702472284196618498, guid: d19a4c521a4dbcc46baa485eb04b156a,
+        type: 3}
+      propertyPath: m_photonView
+      value: 
+      objectReference: {fileID: 5074956597222198146}
     - target: {fileID: 6145202190392547743, guid: d19a4c521a4dbcc46baa485eb04b156a,
         type: 3}
       propertyPath: sceneViewId
@@ -621,6 +626,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1379784796749206045}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5074956597222198146 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6145202190392547743, guid: d19a4c521a4dbcc46baa485eb04b156a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1379784796749206045}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3698404976241891816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1986617147088968996
 PrefabInstance:
   m_ObjectHideFlags: 0
