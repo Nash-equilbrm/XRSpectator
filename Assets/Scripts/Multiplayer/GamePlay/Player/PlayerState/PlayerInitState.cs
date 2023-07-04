@@ -20,6 +20,10 @@ public class PlayerInitState : MyStateMachine
             // if find another player and PlayerID not set => set ID = 1 (Second Player)
             if (m_player.PlayerID == -1)
             {
+                m_player.SetPlayerID(0);
+            }
+            else if(m_player.PlayerID == 0)
+            {
                 m_player.SetPlayerID(1);
             }
         }
