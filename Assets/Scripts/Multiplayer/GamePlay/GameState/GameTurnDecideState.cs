@@ -24,6 +24,14 @@ public class GameTurnDecideState : MyStateMachine
                 GameManager.Instance.playerManager?.SetReady(true);
             }
 
+            GameObject guiObj = GameManager.Instance.guiObj;
+            guiObj.SetActive(true);
+            FollowTransform followTransform = guiObj.GetComponent<FollowTransform>();
+            if (followTransform)
+            {
+                followTransform.follow = GameManager.Instance.playerManager.transform;
+            }
+
 
             StateInitialized = true;
         }

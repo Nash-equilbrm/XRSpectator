@@ -33,12 +33,6 @@ public partial class GameManager
     {
         if (TrackedWithVuforia && !gameplayInit)
         {
-            guiObj.SetActive(true);
-            FollowTransform followTransform = guiObj.GetComponent<FollowTransform>();
-            if (followTransform)
-            {
-                followTransform.follow = playerManager.transform;
-            }
             InitGameStates();
             gameplayInit = true;
         }
