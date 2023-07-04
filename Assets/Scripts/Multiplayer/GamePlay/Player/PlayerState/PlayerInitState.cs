@@ -24,7 +24,7 @@ public class PlayerInitState : MyStateMachine
             }
         }
         // if not find player and PlayerID is not set => set ID = 0 (First player)
-        else if(m_player.PlayerID == -1)
+        else if (m_player.PlayerID == -1)
         {
             m_player.SetPlayerID(0);
         }
@@ -64,7 +64,7 @@ public class PlayerInitState : MyStateMachine
             GameObject monsterObj = PhotonNetwork.Instantiate("Prefabs/Monsters/" + config.model.name, new Vector3(100, 100, 100), Quaternion.identity);
 
             // set up display card field for that monster
-            m_player.cardFields[i].gameObject.SetActive(true);
+            m_player.cardFields[i].SetObjectActive(true);
             m_player.cardFields[i].ChangeImage(config.configID);
             m_player.cardFields[i].SetNewMonster(monsterObj.GetPhotonView().ViewID);
 
@@ -80,7 +80,7 @@ public class PlayerInitState : MyStateMachine
 
 
         }
-        
+
     }
 
 }

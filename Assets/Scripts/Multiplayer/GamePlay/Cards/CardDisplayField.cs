@@ -125,19 +125,20 @@ public class CardDisplayField : MonoBehaviour
     }
 
 
-    public void InitMonster(int configID)
+    public void SetObjectActive(bool active)
     {
         if (m_photonView.IsMine)
         {
-            PhotonNetwork.RemoveBufferedRPCs(m_photonView.ViewID, "InitMonster_RPC");
-            m_photonView.RPC("InitMonster_RPC", RpcTarget.AllBuffered, configID);
+            PhotonNetwork.RemoveBufferedRPCs(m_photonView.ViewID, "SetObjectActive_RPC");
+            m_photonView.RPC("SetObjectActive_RPC", RpcTarget.AllBuffered, active);
             PhotonNetwork.SendAllOutgoingCommands();
         }
     }
 
     [PunRPC]
-    public void InitMonster_RPC(int configID)
+    public void SetObjectActive_RPC(bool active)
     {
+        gameObject.SetActive(active);
     }
 
 
