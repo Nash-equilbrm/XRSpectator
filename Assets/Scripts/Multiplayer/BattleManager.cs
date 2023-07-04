@@ -34,6 +34,27 @@ public partial class GameManager
         if (TrackedWithVuforia && !gameplayInit)
         {
             InitGameStates();
+
+            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+            if (playerObj == null)
+            {
+                CreatePlayerAvatar(0);
+                playerManager?.SetReady(true);
+            }
+            else
+            {
+                CreatePlayerAvatar(1);
+                playerManager?.SetReady(true);
+            }
+
+            guiObj.SetActive(true);
+            FollowTransform followTransform = guiObj.GetComponent<FollowTransform>();
+            if (followTransform)
+            {
+                followTransform.follow = GameManager.Instance.playerManager.transform;
+            }
+
+
             gameplayInit = true;
         }
         currentState.UpdateState();
