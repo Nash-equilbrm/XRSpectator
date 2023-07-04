@@ -17,24 +17,31 @@ public class CardFieldsMovement : MonoBehaviour
         m_photonView = GetComponent<PhotonView>();
         gameObject.transform.SetParent(null);
 
-        if (m_player.PlayerID == 0)
-        {
-            Debug.Log("Init card fields rotation for player 0");
-            m_originYEuler = 0;
-        }
-        else if (m_player.PlayerID == 1)
-        {
-            Debug.Log("Init card fields rotation for player 1");
-            m_originYEuler = 180;
-        }
-        transform.eulerAngles = new Vector3(0, m_originYEuler, 0);
+        
     }
 
-    
 
+    private bool m_initRotation = false;
     void Update()
     {
-        if (m_photonView.IsMine && m_player)
+        if (!m_initRotation)
+        {
+            if (m_player.PlayerID == 0)
+            {
+                Debug.Log("Init card fields rotation for player 0");
+                m_originYEuler = 0;
+                m_initRotation = true;
+                transform.eulerAngles = new Vector3(0, m_originYEuler, 0);
+            }
+            else if (m_player.PlayerID == 1)
+            {
+                Debug.Log("Init card fields rotation for player 1");
+                m_originYEuler = 180;
+                m_initRotation = true;
+                transform.eulerAngles = new Vector3(0, m_originYEuler, 0);
+            }
+        }
+        if (m_initRotation && m_photonView.IsMine && m_player)
         {
             transform.position = m_player.transform.position + m_offset;
             transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);

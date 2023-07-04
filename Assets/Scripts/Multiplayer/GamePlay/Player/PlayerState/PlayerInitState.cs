@@ -17,15 +17,19 @@ public class PlayerInitState : MyStateMachine
 
         if (m_player.Opponent != null)
         {
-            // if find another player and PlayerID not set => set ID = 1 (Second Player)
-            if (!m_player.Opponent.IsReady)
+            if(m_player.PlayerID == -1)
             {
-                m_player.SetPlayerID(0);
+                // if find another player and PlayerID not set => set ID = 1 (Second Player)
+                if (!m_player.Opponent.IsReady)
+                {
+                    m_player.SetPlayerID(0);
+                }
+                else
+                {
+                    m_player.SetPlayerID(1);
+                }
             }
-            else
-            {
-                m_player.SetPlayerID(1);
-            }
+            ExitState = true;
         }
         // if not find player and PlayerID is not set => set ID = 0 (First player)
         else
@@ -33,14 +37,15 @@ public class PlayerInitState : MyStateMachine
             m_player.SetPlayerID(0);
         }
 
-        // for testing 1 player
-        ExitState = true;
     }
 
 
     protected override void Exit()
     {
-        m_player.SwitchState(PlayerStateEnum.WAIT);
+        if (m_player.Opponent.IsReady)
+        {
+            m_player.SwitchState(PlayerStateEnum.WAIT);
+        }
     }
 
     protected override void Initialize()
