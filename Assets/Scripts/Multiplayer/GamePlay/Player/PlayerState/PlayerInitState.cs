@@ -18,17 +18,17 @@ public class PlayerInitState : MyStateMachine
         if (m_player.Opponent != null)
         {
             // if find another player and PlayerID not set => set ID = 1 (Second Player)
-            if (m_player.PlayerID == -1)
+            if (!m_player.Opponent.IsReady)
             {
                 m_player.SetPlayerID(0);
             }
-            else if(m_player.PlayerID == 0)
+            else
             {
                 m_player.SetPlayerID(1);
             }
         }
         // if not find player and PlayerID is not set => set ID = 0 (First player)
-        else if (m_player.PlayerID == -1)
+        else
         {
             m_player.SetPlayerID(0);
         }
