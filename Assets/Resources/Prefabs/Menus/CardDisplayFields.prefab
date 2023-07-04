@@ -531,6 +531,7 @@ MonoBehaviour:
   m_rotateDuration: 0.3
   m_offset: {x: 0, y: -1, z: 0}
   m_photonView: {fileID: 1683066523592452702}
+  m_rotationControl: {fileID: 168504091538787720}
 --- !u!114 &1683066523592452702
 MonoBehaviour:
   m_ObjectHideFlags: 0

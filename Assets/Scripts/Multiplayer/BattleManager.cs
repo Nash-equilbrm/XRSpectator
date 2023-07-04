@@ -116,7 +116,7 @@ public partial class GameManager
     public void OnStartGamePressed()
     {
         playerReady = true;
-        playerManager?.SetReady(true);
+        //playerManager?.SetReady(true);
 
         startGameBtn.SetActive(false);
     }

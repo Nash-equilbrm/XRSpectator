@@ -25,14 +25,14 @@ public partial class GameManager
 
 
 
-        GameObject playerModel = PhotonNetwork.Instantiate("Prefabs/" + playerAvatarPrefab.name, ARCamera.transform.position, ARCamera.transform.rotation);
+        //GameObject playerModel = PhotonNetwork.Instantiate("Prefabs/" + player0AvatarPrefab.name, ARCamera.transform.position, ARCamera.transform.rotation);
 
 
-        if (playerModel.GetComponent<PhotonView>().IsMine)
-        {
-            playerModel.GetComponent<MoveARCamera>().ARCamera = ARCamera.transform;
-            playerManager = playerModel.GetComponent<Player>();
-        }
+        //if (playerModel.GetComponent<PhotonView>().IsMine)
+        //{
+        //    playerModel.GetComponent<MoveARCamera>().ARCamera = ARCamera.transform;
+        //    playerManager = playerModel.GetComponent<Player>();
+        //}
 
         m_userRoleInitialized = true;
     }
@@ -105,4 +105,25 @@ public partial class GameManager
       
     }
 
+
+
+    public void CreatePlayerAvatar(int playerID)
+    {
+        GameObject playerModel = null;
+        if (playerID == 0)
+        {
+            playerModel = PhotonNetwork.Instantiate("Prefabs/" + player0AvatarPrefab.name, ARCamera.transform.position, ARCamera.transform.rotation);
+        }
+        else if(playerID == 1)
+        {
+            playerModel = PhotonNetwork.Instantiate("Prefabs/" + player1AvatarPrefab.name, ARCamera.transform.position, ARCamera.transform.rotation);
+        }
+
+
+        if (playerModel != null && playerModel.GetComponent<PhotonView>().IsMine)
+        {
+            playerModel.GetComponent<MoveARCamera>().ARCamera = ARCamera.transform;
+            playerManager = playerModel.GetComponent<Player>();
+        }
+    }
 }

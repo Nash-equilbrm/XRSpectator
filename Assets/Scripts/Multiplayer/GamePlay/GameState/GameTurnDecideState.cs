@@ -11,6 +11,20 @@ public class GameTurnDecideState : MyStateMachine
         // if player press start button
         if (GameManager.Instance.PlayerReady)
         {
+
+            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+            if(playerObj == null)
+            {
+                GameManager.Instance.CreatePlayerAvatar(0);
+                GameManager.Instance.playerManager?.SetReady(true);
+            }
+            else
+            {
+                GameManager.Instance.CreatePlayerAvatar(1);
+                GameManager.Instance.playerManager?.SetReady(true);
+            }
+
+
             StateInitialized = true;
         }
 
