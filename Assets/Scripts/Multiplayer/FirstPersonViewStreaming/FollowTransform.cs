@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,8 +23,19 @@ public class FollowTransform : MonoBehaviour
     public bool copyRotation = true;
     public bool faceTransform = false;
 
+    private PhotonView m_photonView;
+    private void Start()
+    {
+        m_photonView = GetComponent<PhotonView>();
+    }
+
     private void Update()
     {
+        if(m_photonView != null && !m_photonView.IsMine)
+        {
+            return;
+        }
+
         if (follow)
         {
             Vector3 position = follow.position + offset;

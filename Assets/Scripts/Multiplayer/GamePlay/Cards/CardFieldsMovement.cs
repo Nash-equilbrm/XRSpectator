@@ -29,7 +29,7 @@ public class CardFieldsMovement : MonoBehaviour
 
     void Update()
     {
-        if (m_player)
+        if (m_photonView.IsMine && m_player)
         {
             transform.position = m_player.transform.position + m_offset;
         }

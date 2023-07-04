@@ -24,7 +24,10 @@ public class CardDisplayField : MonoBehaviour
 
     public void LiftUp()
     {
-        StartCoroutine(LiftUpCoRoutine());
+        if (m_photonView.IsMine)
+        {
+            StartCoroutine(LiftUpCoRoutine());
+        }
     }
     private IEnumerator LiftUpCoRoutine()
     {
@@ -47,7 +50,10 @@ public class CardDisplayField : MonoBehaviour
 
     public void LiftDown()
     {
-        StartCoroutine(LiftDownCoRoutine());
+        if (m_photonView.IsMine)
+        {
+            StartCoroutine(LiftDownCoRoutine());
+        }
     }
     private IEnumerator LiftDownCoRoutine()
     {
