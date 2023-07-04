@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,10 +13,7 @@ public class CardFieldsMovement : MonoBehaviour
     private void Start()
     {
         m_photonView = GetComponent<PhotonView>();
-        if (m_photonView.IsMine)
-        {
-            gameObject.transform.SetParent(null);
-        }
+        gameObject.transform.SetParent(null);
 
         if (m_player.PlayerID == 0)
         {
@@ -26,6 +24,8 @@ public class CardFieldsMovement : MonoBehaviour
             transform.eulerAngles = new Vector3(0, 180, 0);
         }
     }
+
+    
 
     void Update()
     {
@@ -60,6 +60,8 @@ public class CardFieldsMovement : MonoBehaviour
 
         transform.localRotation = targetRotation;
     }
+
+
 
 
 }

@@ -201,6 +201,7 @@ public partial class Monster : MonoBehaviour
     [PunRPC]
     public void SetMonsterReady_RPC(bool ready)
     {
+        Debug.Log("SetMonsterReady_RPC" + ready);
         if (ready)
         {
             gameObject.SetActive(true);
