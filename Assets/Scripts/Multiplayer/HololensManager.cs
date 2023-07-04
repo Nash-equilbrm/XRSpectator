@@ -124,6 +124,7 @@ public partial class GameManager
         {
             playerModel.GetComponent<MoveARCamera>().ARCamera = ARCamera.transform;
             playerManager = playerModel.GetComponent<Player>();
+            playerManager.SetPlayerID(playerID);
         }
     }
 }
