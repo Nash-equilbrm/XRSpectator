@@ -22,11 +22,13 @@ public class PlayField : MonoBehaviour
         FollowTransform followTransform = GetComponent<FollowTransform>();
         if (m_player.PlayerID == 0)
         {
+            Debug.Log("Init play field rotation for player 0");
             followTransform.offset.z = -1.2f;
             transform.eulerAngles = new Vector3(0, 0, 0);
         }
         else
         {
+            Debug.Log("Init play field rotation for player 1");
             followTransform.offset.z = 1.2f;
             transform.eulerAngles = new Vector3(0, 180, 0);
         }

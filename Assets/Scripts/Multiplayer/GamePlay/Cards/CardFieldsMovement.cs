@@ -10,6 +10,8 @@ public class CardFieldsMovement : MonoBehaviour
     public float m_rotateDuration;
     public Vector3 m_offset;
     public PhotonView m_photonView;
+
+    private float m_originYEuler = -1;
     private void Start()
     {
         m_photonView = GetComponent<PhotonView>();
@@ -17,12 +19,15 @@ public class CardFieldsMovement : MonoBehaviour
 
         if (m_player.PlayerID == 0)
         {
-            transform.eulerAngles = new Vector3(0, 0, 0);
+            Debug.Log("Init card fields rotation for player 0");
+            m_originYEuler = 0;
         }
-        else
+        else if (m_player.PlayerID == 1)
         {
-            transform.eulerAngles = new Vector3(0, 180, 0);
+            Debug.Log("Init card fields rotation for player 1");
+            m_originYEuler = 180;
         }
+        transform.eulerAngles = new Vector3(0, m_originYEuler, 0);
     }
 
     
@@ -32,8 +37,8 @@ public class CardFieldsMovement : MonoBehaviour
         if (m_photonView.IsMine && m_player)
         {
             transform.position = m_player.transform.position + m_offset;
+            transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
         }
-        transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
     }
 
 
@@ -47,7 +52,7 @@ public class CardFieldsMovement : MonoBehaviour
     {
         float elapsedTime = 0f;
         Quaternion startRotation = transform.localRotation;
-        Quaternion targetRotation = Quaternion.Euler(0f, eulerY, 0f);
+        Quaternion targetRotation = Quaternion.Euler(0f,m_originYEuler + eulerY, 0f);
 
         while (elapsedTime < m_rotateDuration)
         {
