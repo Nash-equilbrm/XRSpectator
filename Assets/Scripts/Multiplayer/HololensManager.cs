@@ -42,39 +42,48 @@ public partial class GameManager
 
     public void UpdateHololens()
     {
+        //if (!TrackedWithVuforia)
+        //{
+        //    if (m_trackMarkerCount >= m_trackMarkerDuration)
+        //    {
+        //        TurnOffVuforia();
+        //        ARCamera.GetComponent<TrackedPoseDriver>().enabled = true;
+        //        //firstPersonViewStreamCamera.SetActive(true);
+        //        //firstPersonViewStreamCamera.GetComponent<FirstViewStreaming>().StartStreaming();
+
+        //        m_trackedWithVuforia = true;
+        //    }
+        //    else
+        //    {
+        //        if (HololensMarkerTracked)
+        //        {
+        //            m_trackMarkerCount += Time.deltaTime;
+        //        }
+        //        else
+        //        {
+        //            m_trackMarkerCount = 0;
+        //        }
+        //    }
+        //}
+        //else
+        //{
+        //    // start gameplay for hololens user
+        //    UpdateGameplay();
+        //}
+
+
         if (!TrackedWithVuforia)
         {
-            if (m_trackMarkerCount >= m_trackMarkerDuration)
-            {
-                TurnOffVuforia();
-                ARCamera.GetComponent<TrackedPoseDriver>().enabled = true;
-                //firstPersonViewStreamCamera.SetActive(true);
-                //firstPersonViewStreamCamera.GetComponent<FirstViewStreaming>().StartStreaming();
-
-                m_trackedWithVuforia = true;
-            }
-            else
-            {
-                if (HololensMarkerTracked)
-                {
-                    m_trackMarkerCount += Time.deltaTime;
-                }
-                else
-                {
-                    m_trackMarkerCount = 0;
-                }
-            }
+            ARCamera.GetComponent<TrackedPoseDriver>().enabled = true;
+            m_trackedWithVuforia = true;
         }
         else
         {
-            // start gameplay for hololens user
             UpdateGameplay();
         }
-
-
     }
 
-   
+
     private void TurnOffVuforia()
     {
         Debug.Log("Turn off vuforia");

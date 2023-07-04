@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayField : MonoBehaviour
 {
-    public PhotonView photonView;
+    public PhotonView m_photonView;
     public Player m_player;
     public Transform monsterHolder;
     public TMPro.TextMeshPro text;
@@ -47,10 +47,10 @@ public class PlayField : MonoBehaviour
 
     public void SetNewCardDisplay(int viewID)
     {
-        if (photonView.IsMine)
+        if (m_photonView.IsMine)
         {
-            PhotonNetwork.RemoveBufferedRPCs(photonView.ViewID, "SetNewMonster_RPC");
-            photonView.RPC("SetNewMonster_RPC", RpcTarget.AllBuffered, viewID);
+            PhotonNetwork.RemoveBufferedRPCs(m_photonView.ViewID, "SetNewMonster_RPC");
+            m_photonView.RPC("SetNewMonster_RPC", RpcTarget.AllBuffered, viewID);
             PhotonNetwork.SendAllOutgoingCommands();
         }
     }
