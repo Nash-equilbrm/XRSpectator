@@ -26,16 +26,16 @@ public class PlayField : MonoBehaviour
 
     private void Update()
     {
-        if (!m_initRotation)
+        if (m_photonView.IsMine && !m_initRotation)
         {
-            if (m_player.PlayerID == 0)
+            if (GameManager.Instance.playerManager.PlayerID == 0)
             {
                 Debug.Log("Init play field rotation for player 0");
                 followTransform.offset.z = -1.2f;
                 transform.eulerAngles = new Vector3(0, 0, 0);
                 m_initRotation = true;
             }
-            else if (m_player.PlayerID == 1)
+            else if (GameManager.Instance.playerManager.PlayerID == 1)
             {
                 Debug.Log("Init play field rotation for player 1");
                 followTransform.offset.z = 1.2f;
