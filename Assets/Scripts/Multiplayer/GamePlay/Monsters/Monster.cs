@@ -214,6 +214,7 @@ public partial class Monster : MonoBehaviour
             transform.position = new Vector3(100, 100, 100);
             m_isMonsterReady = false;
             m_hasAttacked = false;
+            m_playField = null;
         }
     }
 

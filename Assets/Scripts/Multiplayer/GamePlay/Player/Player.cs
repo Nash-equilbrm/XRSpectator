@@ -69,6 +69,8 @@ public class Player : MonoBehaviourPunCallbacks
 
 
     public int HP { get => m_HP; }
+    public ParticleSystem DeathEffect { get => m_deathEffect; set => m_deathEffect = value; }
+
     private int m_HP = 1000;
 
 
@@ -392,8 +394,8 @@ public class Player : MonoBehaviourPunCallbacks
         GameObject effectObj = PhotonView.Find(viewID).gameObject;
         if (effectObj)
         {
-            m_deathEffect = effectObj.GetComponent<ParticleSystem>();
-            m_deathEffect.gameObject.SetActive(false);
+            DeathEffect = effectObj.GetComponent<ParticleSystem>();
+            DeathEffect.gameObject.SetActive(false);
         }
     }
 
@@ -410,9 +412,9 @@ public class Player : MonoBehaviourPunCallbacks
     [PunRPC]
     private void PlayDeathEffect_RPC(Vector3 position)
     {
-        m_deathEffect.transform.position = position;
-        m_deathEffect.gameObject.SetActive(true);
-        m_deathEffect.Play();
+        DeathEffect.transform.position = position;
+        DeathEffect.gameObject.SetActive(true);
+        DeathEffect.Play();
     }
 
 

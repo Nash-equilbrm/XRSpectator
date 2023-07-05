@@ -11,7 +11,7 @@ public class PlayField : MonoBehaviour
     public TMPro.TextMeshPro text;
 
     public CardDisplayField CurrentCardDisplay { get => m_currentCardDisplay;}
-    private CardDisplayField m_currentCardDisplay;
+    [SerializeField] private CardDisplayField m_currentCardDisplay;
 
 
     private void Start()
@@ -71,5 +71,8 @@ public class PlayField : MonoBehaviour
         }
 
     }
+
+
+
+
 }
- 
