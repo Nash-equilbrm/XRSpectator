@@ -30,7 +30,7 @@ public class CardFieldsMovement : MonoBehaviour
             if(m_player.Opponent != null)
             {
                 Vector3 opponentPosition = m_player.Opponent.transform.position;
-                transform.LookAt(new Vector3(opponentPosition.x, 0f, opponentPosition.z));
+                transform.LookAt(new Vector3(opponentPosition.x, transform.position.y, opponentPosition.z));
             }
             else
             {

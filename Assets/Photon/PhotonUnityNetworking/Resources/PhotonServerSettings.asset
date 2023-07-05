@@ -87,6 +87,7 @@ MonoBehaviour:
   - InitMonster_RPC
   - UpdateNewMonster_RPC
   - SetObjectActive_RPC
+  - SetNewCardDisplay_RPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
