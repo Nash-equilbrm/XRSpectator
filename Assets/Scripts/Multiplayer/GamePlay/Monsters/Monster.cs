@@ -201,14 +201,12 @@ public partial class Monster : MonoBehaviour
     {
         if (ready)
         {
-            Debug.Log("SetMonsterReady_RPC: true");
             gameObject.SetActive(true);
             m_isMonsterReady = true;
             m_hasAttacked = false;
         }
         else
         {
-            Debug.Log("SetMonsterReady_RPC: false");
             gameObject.SetActive(false);
             transform.SetParent(null);
             transform.position = new Vector3(100, 100, 100);
@@ -232,16 +230,19 @@ public partial class Monster : MonoBehaviour
     [PunRPC]
     public void DealDamage_RPC()
     {
-        if (m_currentTarget)
+        if (m_currentTarget && m_currentTarget.CurrentHP > 0)
         {
             m_currentTarget.TakeDamage(m_ATK);
-            if (m_attackEffect != null)
-            {
-                m_attackEffect?.gameObject.SetActive(true);
-                m_attackEffect?.Play();
-                Debug.Log("Attack particle remains when dealing: " + m_attackEffect.GetParticles(p));
-            }
-
+        }
+        else if (m_currentTarget.CurrentHP <= 0)
+        {
+            m_currentTarget = null;
+        }
+        if (m_attackEffect != null)
+        {
+            m_attackEffect?.gameObject.SetActive(true);
+            m_attackEffect?.Play();
+            //Debug.Log("Attack particle remains when dealing: " + m_attackEffect.GetParticles(p));
         }
     }
 }
