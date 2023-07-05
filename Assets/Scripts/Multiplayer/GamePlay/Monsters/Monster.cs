@@ -234,7 +234,7 @@ public partial class Monster : MonoBehaviour
         {
             m_currentTarget.TakeDamage(m_ATK);
         }
-        else if (m_currentTarget.CurrentHP <= 0)
+        else if (m_currentTarget && m_currentTarget.CurrentHP <= 0)
         {
             m_currentTarget = null;
         }
