@@ -85,7 +85,7 @@ public class PlayField : MonoBehaviour
         Vector3 monsterPos = transform.position;
 
         m_player.CurrentMonster.SetMonsterReady(false);
-        m_player.RemoveMonster(m_photonView.ViewID);
+        m_player.RemoveMonster(m_player.CurrentMonster.m_photonView.ViewID);
         m_player.PlayDeathEffect(monsterPos);
         while (m_player.DeathEffect.isPlaying)
         {
