@@ -19,10 +19,10 @@ public partial class Monster
     {
         Vector3 cardPos = m_playField.CurrentCardDisplay.transform.position;
         Vector3 monsterPos = transform.position;
-
+        
+        SetMonsterReady(false);
         m_playField.m_player.RemoveMonster(m_photonView.ViewID);
         m_playField.m_player.PlayDeathEffect(monsterPos);
-        SetMonsterReady(false);
         while (m_playField.m_player.DeathEffect.isPlaying)
         {
             yield return null;
@@ -37,6 +37,7 @@ public partial class Monster
             yield return null;
         }
 
+        m_playField = null;
     }
 
 

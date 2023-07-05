@@ -18,6 +18,7 @@ public class Player : MonoBehaviourPunCallbacks
 
 
     [SerializeField] private GameObject m_invalidSign = null;
+    public ParticleSystem DeathEffect { get => m_deathEffect; }
     [SerializeField] private ParticleSystem m_deathEffect = null;
 
     public PhotonView m_photonView;
@@ -69,7 +70,6 @@ public class Player : MonoBehaviourPunCallbacks
 
 
     public int HP { get => m_HP; }
-    public ParticleSystem DeathEffect { get => m_deathEffect; set => m_deathEffect = value; }
 
     private int m_HP = 1000;
 
@@ -394,8 +394,8 @@ public class Player : MonoBehaviourPunCallbacks
         GameObject effectObj = PhotonView.Find(viewID).gameObject;
         if (effectObj)
         {
-            DeathEffect = effectObj.GetComponent<ParticleSystem>();
-            DeathEffect.gameObject.SetActive(false);
+            m_deathEffect = effectObj.GetComponent<ParticleSystem>();
+            m_deathEffect.gameObject.SetActive(false);
         }
     }
 
