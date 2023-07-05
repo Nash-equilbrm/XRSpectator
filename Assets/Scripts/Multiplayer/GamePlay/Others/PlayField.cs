@@ -18,11 +18,7 @@ public class PlayField : MonoBehaviour
     {
         m_photonView = GetComponent<PhotonView>();
         transform.SetParent(null);
-        followTransform = GetComponent<FollowTransform>();
     }
-
-    private FollowTransform followTransform;
-    private bool m_initRotation = false;
 
     private void Update()
     {
@@ -102,5 +98,7 @@ public class PlayField : MonoBehaviour
         }
 
         m_player.CurrentMonster.PlayField = null;
+        m_player.CurrentMonster = null;
+
     }
 }

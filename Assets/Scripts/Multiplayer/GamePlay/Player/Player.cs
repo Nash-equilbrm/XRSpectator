@@ -51,7 +51,7 @@ public class Player : MonoBehaviourPunCallbacks
     public Player Opponent { get => m_opponent; set => m_opponent = value; }
     [SerializeField] private Player m_opponent;
 
-    public Monster CurrentMonster { get => m_currentMonster; }
+    public Monster CurrentMonster { get => m_currentMonster; set => m_currentMonster = value; }
     [SerializeField] private Monster m_currentMonster;
 
 
@@ -312,7 +312,6 @@ public class Player : MonoBehaviourPunCallbacks
     {
         if (m_myMonsters.ContainsKey(monsterViewID))
         {
-            if (m_currentMonster.m_photonView.ViewID == monsterViewID) m_currentMonster = null;
             m_myMonsters.Remove(monsterViewID);
             for(int i = 0; i < DebugMonsterList.Count; ++i)
             {
