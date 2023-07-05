@@ -58,8 +58,11 @@ public class PlayField : MonoBehaviour
             if (cardDisplay)
             {
                 m_currentCardDisplay = cardDisplay;
-                cardDisplay.Monster.PlayField = this;
                 cardDisplay.Monster.transform.SetParent(monsterHolder);
+                cardDisplay.Monster.transform.localPosition = Vector3.zero;
+                cardDisplay.Monster.transform.localRotation = Quaternion.identity;
+                cardDisplay.Monster.PlayField = this;
+
             }
             else
             {
