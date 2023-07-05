@@ -27,8 +27,8 @@ public class PlayerAttackState : MyStateMachine
 
         if(m_player.CurrentMonster != null)
         {
-            Monster monster = m_player.CurrentMonster.GetComponent<Monster>();
-            Monster target = m_player.Opponent.CurrentMonster.GetComponent<Monster>();
+            Monster monster = m_player.CurrentMonster?.GetComponent<Monster>();
+            Monster target = m_player.Opponent.CurrentMonster?.GetComponent<Monster>();
 
             if (monster)
             {
