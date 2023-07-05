@@ -10,35 +10,7 @@ public partial class Monster
     [SerializeField] private int m_currentHP;
 
 
-    public void OnMonsterDestroy()
-    {
-        StartCoroutine(OnMonsterDestroyCoroutine());
-    }
-
-    private IEnumerator OnMonsterDestroyCoroutine()
-    {
-        Vector3 cardPos = m_playField.CurrentCardDisplay.transform.position;
-        Vector3 monsterPos = transform.position;
-        
-        SetMonsterReady(false);
-        m_playField.m_player.RemoveMonster(m_photonView.ViewID);
-        m_playField.m_player.PlayDeathEffect(monsterPos);
-        while (m_playField.m_player.DeathEffect.isPlaying)
-        {
-            yield return null;
-        }
-
-        m_playField.CurrentCardDisplay.gameObject.SetActive(false);
-        m_playField.SetNewCardDisplay(-1);
-
-        m_playField.m_player.PlayDeathEffect(cardPos);
-        while (m_playField.m_player.DeathEffect.isPlaying)
-        {
-            yield return null;
-        }
-
-        m_playField = null;
-    }
+   
 
 
     // ==================== PUNRPC ====================
@@ -59,7 +31,7 @@ public partial class Monster
         m_currentHP -= damage;
         if (m_currentHP <= 0)
         {
-            OnMonsterDestroy();
+            m_playField.OnMonsterDestroy();
         }
         else if (m_takeDamageEffect != null)
         {

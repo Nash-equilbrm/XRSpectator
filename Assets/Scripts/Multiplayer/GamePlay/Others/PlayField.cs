@@ -74,5 +74,33 @@ public class PlayField : MonoBehaviour
 
 
 
+    public void OnMonsterDestroy()
+    {
+        StartCoroutine(OnMonsterDestroyCoroutine());
+    }
 
+    private IEnumerator OnMonsterDestroyCoroutine()
+    {
+        Vector3 cardPos = CurrentCardDisplay.transform.position;
+        Vector3 monsterPos = transform.position;
+
+        m_player.CurrentMonster.SetMonsterReady(false);
+        m_player.RemoveMonster(m_photonView.ViewID);
+        m_player.PlayDeathEffect(monsterPos);
+        while (m_player.DeathEffect.isPlaying)
+        {
+            yield return null;
+        }
+
+        CurrentCardDisplay.gameObject.SetActive(false);
+        SetNewCardDisplay(-1);
+
+        m_player.PlayDeathEffect(cardPos);
+        while (m_player.DeathEffect.isPlaying)
+        {
+            yield return null;
+        }
+
+        m_player.CurrentMonster.PlayField = null;
+    }
 }
