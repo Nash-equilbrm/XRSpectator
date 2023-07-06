@@ -1277,6 +1277,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: StatusRing
       objectReference: {fileID: 0}
+    - target: {fileID: 1836011362871873880, guid: 7a42e01fb4d8f20469b9a13dd87d8fde,
+        type: 3}
+      propertyPath: follow
+      value: 
+      objectReference: {fileID: 8885516798237120136}
     - target: {fileID: 3580742661139841955, guid: 7a42e01fb4d8f20469b9a13dd87d8fde,
         type: 3}
       propertyPath: m_RootOrder
