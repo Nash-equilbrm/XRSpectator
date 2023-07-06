@@ -19,7 +19,7 @@ public class PlayerAttackState : MyStateMachine
         Debug.Log("ATTACK");
         m_player.CurrentStateName = name;
 
-        if (!m_player.IsMyTurn || m_player.MyMonsters.Count == 0)
+        if (!m_player.IsMyTurn || m_player.MyMonsters.Count == 0 || !m_player.CanAttack)
         {
             ExitState = true;
             return;

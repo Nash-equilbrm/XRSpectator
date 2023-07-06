@@ -112,7 +112,7 @@ public partial class GameManager
 
     public void OnAttackPressed()
     {
-        if(playerManager != null && playerManager.CanAttack)
+        if(playerManager != null)
         {
             playerManager.DoAttack(true);
         }
