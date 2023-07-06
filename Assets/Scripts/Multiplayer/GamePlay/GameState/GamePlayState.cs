@@ -44,37 +44,21 @@ public class GamePlayState : MyStateMachine
     {
         Debug.Log(GameManager.Instance.playerManager.PlayerID + " Game play state Exit");
         // show result panels
-        if (PhotonNetwork.IsMasterClient)
+        if (GameManager.Instance.GameResult == GameResultEnum.WIN)
         {
             GameObject gameResultPanel = PhotonNetwork.Instantiate("Prefabs/Menus/" + GameManager.Instance.gameResultPrefab.name, new Vector3(0, 1.5f, 0), Quaternion.identity);
             Vector3 rotation = gameResultPanel.transform.eulerAngles;
 
-            if (GameManager.Instance.playerManager.PlayerID == 1)
+            if (GameManager.Instance.playerManager.PlayerID == 0)
             {
-                if (GameManager.Instance.GameResult == GameResultEnum.WIN)
-                {
-                    rotation.y = 0;
-                }
-                else if (GameManager.Instance.GameResult == GameResultEnum.LOSE)
-                {
-                    rotation.y = 180;
-                }
-
-                gameResultPanel.transform.eulerAngles = rotation;
+                rotation.y = 0;
             }
             else
             {
-                if (GameManager.Instance.GameResult == GameResultEnum.WIN)
-                {
-                    rotation.y = 180;
-                }
-                else if (GameManager.Instance.GameResult == GameResultEnum.LOSE)
-                {
-                    rotation.y = 0;
-                }
-
-                gameResultPanel.transform.eulerAngles = rotation;
+                rotation.y = 180;
             }
+            gameResultPanel.transform.eulerAngles = rotation;
+
         }
 
         GameManager.Instance.SwitchState(GameStateEnum.END_GAME);

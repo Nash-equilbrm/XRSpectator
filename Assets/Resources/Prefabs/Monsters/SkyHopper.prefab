@@ -153,7 +153,6 @@ MonoBehaviour:
   m_collider: {fileID: 8875323788177300226}
   m_playField: {fileID: 0}
   m_isMonsterReady: 0
-  m_hasAttacked: 0
   m_attackEffect: {fileID: 7074296714978097871}
   m_takeDamageEffect: {fileID: 1922019707507704939}
   m_currentHP: 0
