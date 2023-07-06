@@ -275,6 +275,7 @@ MonoBehaviour:
   m_cardCollectionIds: 00000000010000000200000003000000
   m_isReady: 0
   m_onAttack: 0
+  m_canAttack: 1
   m_isMyTurn: 0
   m_opponent: {fileID: 0}
   m_currentMonster: {fileID: 0}

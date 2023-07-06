@@ -22,7 +22,7 @@ public class PlayField : MonoBehaviour
 
     private void Update()
     {
-        transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+        transform.eulerAngles = new Vector3(0, (m_player.PlayerID == 0)? 0: 180, 0);
 
         if (CurrentCardDisplay != null && CurrentCardDisplay.Monster != null)
         {
