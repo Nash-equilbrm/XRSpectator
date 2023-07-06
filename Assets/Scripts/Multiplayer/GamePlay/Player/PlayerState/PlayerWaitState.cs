@@ -27,6 +27,7 @@ public class PlayerWaitState : MyStateMachine
 
     protected override void Exit()
     {
+        // reset for player turn
         m_player.SwitchState(PlayerStateEnum.DISPLAY_MODEL);
     }
 

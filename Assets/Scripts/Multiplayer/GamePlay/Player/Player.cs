@@ -44,6 +44,9 @@ public class Player : MonoBehaviourPunCallbacks
     public bool OnAttack { get => m_onAttack; }
     [SerializeField] private bool m_onAttack = false;
 
+    public bool CanAttack { get => m_canAttack; }
+    [SerializeField] private bool m_canAttack = true;
+
     public bool IsMyTurn { get => m_isMyTurn; }
     [SerializeField] private bool m_isMyTurn = false;
 
@@ -195,6 +198,23 @@ public class Player : MonoBehaviourPunCallbacks
     {
         Debug.Log(m_playerID + " SetReady: " + ready);
         m_isReady = ready;
+    }
+
+
+    public void SetCanAttack(bool canAttack)
+    {
+        if (m_photonView.IsMine)
+        {
+            PhotonNetwork.RemoveBufferedRPCs(m_photonView.ViewID, "SetCanAttack_RPC");
+            m_photonView.RPC("SetCanAttack_RPC", RpcTarget.AllBuffered, canAttack);
+            PhotonNetwork.SendAllOutgoingCommands();
+        }
+    }
+
+    [PunRPC]
+    public void SetCanAttack_RPC(bool canAttack)
+    {
+        m_canAttack = canAttack;
     }
 
 

@@ -55,10 +55,12 @@ public class PlayerAttackState : MyStateMachine
     {
         if (!m_player.IsMyTurn)
         {
+            m_player.SetCanAttack(true);
             m_player.EndMyTurn();
             m_player.SwitchState(PlayerStateEnum.WAIT);
         }
         else {
+            m_player.SetCanAttack(false);
             m_player.SwitchState(PlayerStateEnum.DISPLAY_MODEL);
         }
         m_player.DoAttack(false);

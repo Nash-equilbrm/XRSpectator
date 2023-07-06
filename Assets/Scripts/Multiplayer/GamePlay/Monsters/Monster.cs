@@ -27,8 +27,6 @@ public partial class Monster : MonoBehaviour
     private float m_attackDuration;
     private float m_attackTimer;
 
-    public bool HasAttacked { get => m_hasAttacked; }
-    [SerializeField] private bool m_hasAttacked = false;
 
     private void Start()
     {
@@ -87,7 +85,6 @@ public partial class Monster : MonoBehaviour
         m_ATK = ATK;
         m_attackDuration = attackDuration;
         m_attackTimer = m_attackDuration;
-        m_hasAttacked = false;
         m_isStatInit = true;
     }
 
@@ -106,7 +103,6 @@ public partial class Monster : MonoBehaviour
     private void ResetMonsterAttack_RPC()
     {
         Debug.Log("Reset attack");
-        m_hasAttacked = false;
     }
 
 
@@ -136,7 +132,6 @@ public partial class Monster : MonoBehaviour
                 //targetMonster.TakeDamage(m_ATK);
                 m_currentTarget = targetMonster;
                 m_onAttack = true;
-                m_hasAttacked = true;
             }
             
         }
@@ -203,7 +198,6 @@ public partial class Monster : MonoBehaviour
         {
             gameObject.SetActive(true);
             m_isMonsterReady = true;
-            m_hasAttacked = false;
         }
         else
         {
@@ -211,7 +205,6 @@ public partial class Monster : MonoBehaviour
             transform.SetParent(null);
             transform.position = new Vector3(100, 100, 100);
             m_isMonsterReady = false;
-            m_hasAttacked = false;
         }
     }
 

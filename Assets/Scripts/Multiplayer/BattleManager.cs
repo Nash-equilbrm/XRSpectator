@@ -38,20 +38,20 @@ public partial class GameManager
             GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
             if (playerObj == null)
             {
-                CreatePlayerAvatar(0);
-                playerManager?.SetReady(true);
+                playerManager = CreatePlayerAvatar(0);
             }
             else
             {
-                CreatePlayerAvatar(1);
-                playerManager?.SetReady(true);
+                playerManager = CreatePlayerAvatar(1);
             }
+            playerManager?.SetReady(true);
+
 
             guiObj.SetActive(true);
             FollowTransform followTransform = guiObj.GetComponent<FollowTransform>();
             if (followTransform)
             {
-                followTransform.follow = GameManager.Instance.playerManager.transform;
+                followTransform.follow = playerManager.transform;
             }
 
 
@@ -112,7 +112,7 @@ public partial class GameManager
 
     public void OnAttackPressed()
     {
-        if(playerManager != null)
+        if(playerManager != null && playerManager.CanAttack)
         {
             playerManager.DoAttack(true);
         }

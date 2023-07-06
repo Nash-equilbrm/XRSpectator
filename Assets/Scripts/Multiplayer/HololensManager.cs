@@ -110,7 +110,7 @@ public partial class GameManager
 
 
 
-    public void CreatePlayerAvatar(int playerID)
+    public Player CreatePlayerAvatar(int playerID)
     {
         GameObject playerModel = null;
         if (playerID == 0)
@@ -126,8 +126,10 @@ public partial class GameManager
         if (playerModel != null && playerModel.GetComponent<PhotonView>().IsMine)
         {
             playerModel.GetComponent<MoveARCamera>().ARCamera = ARCamera.transform;
-            playerManager = playerModel.GetComponent<Player>();
+            Player playerManager = playerModel.GetComponent<Player>();
             playerManager.SetPlayerID(playerID);
+
+            return playerManager;
         }
     }
 }
