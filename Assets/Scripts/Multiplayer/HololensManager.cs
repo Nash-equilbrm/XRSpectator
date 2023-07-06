@@ -131,5 +131,7 @@ public partial class GameManager
 
             return playerManager;
         }
+        Debug.Log("Error create player");
+        return null;
     }
 }

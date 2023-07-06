@@ -36,6 +36,7 @@ public class PlayerAttackState : MyStateMachine
                 {
                     Debug.Log(monster.name + " Attack " + target.name);
                     monster.StartAttack(target.m_photonView.ViewID);
+                    m_player.SetCanAttack(false); // can only attack once a turn
                     ExitState = true;
                 }
                 else
@@ -60,7 +61,6 @@ public class PlayerAttackState : MyStateMachine
             m_player.SwitchState(PlayerStateEnum.WAIT);
         }
         else {
-            m_player.SetCanAttack(false);
             m_player.SwitchState(PlayerStateEnum.DISPLAY_MODEL);
         }
         m_player.DoAttack(false);
