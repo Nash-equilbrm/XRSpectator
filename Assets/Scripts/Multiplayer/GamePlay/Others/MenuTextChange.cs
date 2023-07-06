@@ -26,7 +26,6 @@ public class MenuTextChange : MonoBehaviour
     private MenuText youWinText = new MenuText("YOU WIN!", new Color(0, 250, 237));
     private MenuText youLostText = new MenuText("YOU LOSE!", new Color(225, 0, 250));
     private MenuText attackText = new MenuText("Attack your opponent's monster!", new Color(250, 0, 109));
-    private MenuText oneAttackPerRoundText = new MenuText("You can only attack once per round!", new Color(250, 0, 109));
     private MenuText chooseYourMonsterText = new MenuText("Choose your monster!", new Color(0, 250, 250));
     private MenuText waitForYourTurn = new MenuText("Wait for you turn!", Color.white);
 
@@ -51,14 +50,9 @@ public class MenuTextChange : MonoBehaviour
         }
         else
         {
-            if (m_player.IsMyTurn && m_player.OnAttack && m_player.CanAttack)
+            if (m_player.IsMyTurn && m_player.CurrentMonster.OnAttack && m_player.CanAttack)
             {
                 m_currentText = attackText;
-            }
-            else if (m_player.IsMyTurn && m_player.OnAttack && !m_player.CanAttack)
-            {
-                m_currentText = oneAttackPerRoundText;
-                StartCoroutine(WaitForSeconds(1.7f));
             }
             else if (m_player.IsMyTurn && !m_player.OnAttack)
             {
