@@ -50,7 +50,7 @@ public class MenuTextChange : MonoBehaviour
         }
         else
         {
-            if (m_player.IsMyTurn && m_player.CurrentMonster.OnAttack && m_player.CanAttack)
+            if (m_player.IsMyTurn && m_player.CurrentMonster != null && m_player.CurrentMonster.OnAttack && m_player.CanAttack)
             {
                 m_currentText = attackText;
             }
