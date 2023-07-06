@@ -34,8 +34,9 @@ public class MenuTextChange : MonoBehaviour
 
     private void Update()
     {
-        if (!m_player.IsReady)
+        if (!m_player)
         {
+            m_player = GameManager.Instance.playerManager;
             return;
         }
 
