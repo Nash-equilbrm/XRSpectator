@@ -25,7 +25,7 @@ public class PlayerReadyRing : MonoBehaviour
                 m_notReadyRing.SetActive(false);
                 m_attackRing.SetActive(true);
             }
-            else if(m_player.IsMyTurn && m_player.CurrentMonster != null && !m_player.CurrentMonster.OnAttack)
+            else if(m_player.IsMyTurn)
             {
                 m_readyRing.SetActive(true);
                 m_notReadyRing.SetActive(false);
