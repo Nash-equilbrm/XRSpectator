@@ -5,7 +5,11 @@ using UnityEngine;
 public class PlayerReadyRing : MonoBehaviour
 {
     public Player m_player;
-    public Renderer m_renderer;
+    public GameObject m_readyRing;
+    public GameObject m_notReadyRing;
+    public GameObject m_attackRing;
+
+
 
     private void Start()
     {
@@ -13,21 +17,28 @@ public class PlayerReadyRing : MonoBehaviour
     }
     void Update()
     {
-        if (!m_player.IsReady)
+        if (m_player.IsReady)
         {
-            return;
+            if (m_player.IsMyTurn && m_player.OnAttack)
+            {
+                m_readyRing.SetActive(false);
+                m_notReadyRing.SetActive(false);
+                m_attackRing.SetActive(true);
+            }
+            else if(m_player.IsMyTurn && !m_player.OnAttack)
+            {
+                m_readyRing.SetActive(true);
+                m_notReadyRing.SetActive(false);
+                m_attackRing.SetActive(false);
+            }
+            else if (!m_player.IsMyTurn)
+            {
+                m_readyRing.SetActive(false);
+                m_notReadyRing.SetActive(true);
+                m_attackRing.SetActive(false);
+            }
         }
 
-        if (m_renderer)
-        {
-            if(m_player.IsMyTurn)
-            {
-                m_renderer.material.SetColor("_Color", Color.green);
-            }
-            else
-            {
-                m_renderer.material.SetColor("_Color", Color.red);
-            }
-        }
+        
     }
 }

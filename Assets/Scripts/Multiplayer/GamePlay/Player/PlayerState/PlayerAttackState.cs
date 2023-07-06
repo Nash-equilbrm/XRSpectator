@@ -68,9 +68,4 @@ public class PlayerAttackState : MyStateMachine
     {   
         StateInitialized = true;
     }
-
-    private GameObject m_selectedObj = null;
-    private GameObject m_prevHitObj = null;
-    
-    
 }
