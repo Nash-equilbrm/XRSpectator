@@ -139,7 +139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &557797281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,8 +162,8 @@ MonoBehaviour:
   AsyncMode: 1
   GZipMode: 1
   PanoramaMode: 0
-  Quality: 40
-  StreamFPS: 20
+  Quality: 100
+  StreamFPS: 60
   ignoreSimilarTexture: 1
   similarByteSizeThreshold: 8
   CapturedTexture: {fileID: 0}
@@ -193,7 +193,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  label: 1002
+  label: 1001
   dataLength: 0
 --- !u!4 &557797282
 Transform:
@@ -1031,7 +1031,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1217391567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1105,7 +1105,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 1000
-  field of view: 60
+  field of view: 35
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -1705,7 +1705,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1806795078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1721,7 +1721,7 @@ MonoBehaviour:
   AutoInit: 1
   NetworkType: 1
   Settings:
-    IP: 10.9.8.73
+    IP: 127.0.0.1
     port: 3000
     sslEnabled: 0
     sslProtocols: 240
