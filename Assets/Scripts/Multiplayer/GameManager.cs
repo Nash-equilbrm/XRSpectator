@@ -7,7 +7,6 @@ using System.Collections;
 using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.XR.Management;
-using Vuforia;
 
 public partial class GameManager : MonoBehaviourPunCallbacks
 {
@@ -18,14 +17,14 @@ public partial class GameManager : MonoBehaviourPunCallbacks
     public Player playerManager;
     public GameObject player0AvatarPrefab;
     public GameObject player1AvatarPrefab;
-    public GameObject pleaseLookAtMarkerTxt;
+    // public GameObject pleaseLookAtMarkerTxt;
 
 
     [Header("Hololens")]
-    public GameObject ARCamera;
-    public Transform imageTarget;
-    public GameObject firstPersonViewStreamCamera;
-  
+    // public GameObject ARCamera;
+    // public Transform imageTarget;
+    // public GameObject firstPersonViewStreamCamera;
+
 
     [Header("ZedCamera")]
     public Transform zedCameraTransform;
@@ -40,18 +39,11 @@ public partial class GameManager : MonoBehaviourPunCallbacks
         if (m_userRoleInitialized)
         {
             // update for zed users (audiences), keep tracking marker every frames
-            if (isAudience)
-            {
-                UpdateZed();
-            }
-            else 
-            {
-                // update for hololens user to track marker, stop tracking after x(secs) and go to gameplay scene
-                UpdateHololens();
-            }
+            UpdateZed();
+
         }
     }
 
 
-   
+
 }

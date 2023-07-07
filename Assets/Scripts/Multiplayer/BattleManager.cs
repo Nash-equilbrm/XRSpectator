@@ -10,8 +10,8 @@ public partial class GameManager
     public GameObject turnDecideCoinPrefab;
     public GameObject invalidSignPrefab;
     public GameObject deathEffectPrefab;
-    public GameObject guiObj;
-    public GameObject startGameBtn;
+    // public GameObject guiObj;
+    // public GameObject startGameBtn;
 
     public GameResultEnum GameResult { get => gameResult; set => gameResult = value; }
 
@@ -47,12 +47,12 @@ public partial class GameManager
             playerManager?.SetReady(true);
 
 
-            guiObj.SetActive(true);
-            FollowTransform followTransform = guiObj.GetComponent<FollowTransform>();
-            if (followTransform)
-            {
-                followTransform.follow = playerManager.transform;
-            }
+            // guiObj.SetActive(true);
+            // FollowTransform followTransform = guiObj.GetComponent<FollowTransform>();
+            // if (followTransform)
+            // {
+            //     followTransform.follow = playerManager.transform;
+            // }
 
 
             gameplayInit = true;
@@ -133,7 +133,7 @@ public partial class GameManager
         playerReady = true;
         //playerManager?.SetReady(true);
 
-        startGameBtn.SetActive(false);
+        // startGameBtn.SetActive(false);
     }
 
 
