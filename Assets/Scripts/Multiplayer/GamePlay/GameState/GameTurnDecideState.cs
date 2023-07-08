@@ -18,7 +18,7 @@ public class GameTurnDecideState : MyStateMachine
     protected override void DoBehavior()
     {
         Debug.Log("Game turn decide state DoBehavior");
-        if (PhotonNetwork.IsMasterClient)
+        if (GameManager.Instance.playerManager && GameManager.Instance.playerManager.PlayerID == 0)
         {
             InitPlayerTurn(true);
         }
