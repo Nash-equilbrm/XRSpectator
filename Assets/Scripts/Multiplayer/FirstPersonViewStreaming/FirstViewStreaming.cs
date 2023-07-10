@@ -26,8 +26,9 @@ public partial class GameManager
         firstPersonViewStreamCamera.fieldOfView = m_ARCamera.fieldOfView;
         firstPersonViewStreamCamera.clearFlags = CameraClearFlags.SolidColor;
 
+        WebCamTexture webcamTexture = new WebCamTexture(500, 282, 60);
+        //WebCamTexture webcamTexture = new WebCamTexture();
 
-        WebCamTexture webcamTexture = new WebCamTexture();
         Renderer videoBackgroundRenderer = quadCapture.GetComponent<Renderer>();
         videoBackgroundRenderer.enabled = true;
         videoBackgroundRenderer.material.mainTexture = webcamTexture;

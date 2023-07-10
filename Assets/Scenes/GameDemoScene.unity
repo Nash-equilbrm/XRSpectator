@@ -162,8 +162,8 @@ MonoBehaviour:
   AsyncMode: 1
   GZipMode: 1
   PanoramaMode: 0
-  Quality: 20
-  StreamFPS: 10
+  Quality: 100
+  StreamFPS: 60
   ignoreSimilarTexture: 1
   similarByteSizeThreshold: 8
   CapturedTexture: {fileID: 0}
@@ -193,7 +193,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  label: 1001
+  label: 1002
   dataLength: 0
 --- !u!4 &557797282
 Transform:
@@ -202,13 +202,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 557797280}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.484, y: 0.191, z: -0.148}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.2148473, y: -1.2920403, z: -0.31763327}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_Father: {fileID: 953958179}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &577880634
 GameObject:
@@ -254,6 +254,7 @@ MonoBehaviour:
   m_ARCamera: {fileID: 1926886337}
   ViewQuadCapture: {fileID: 4789847426926293748, guid: e9e49f76588bd9d45bc8fb30716dcbe1,
     type: 3}
+  firstPersonStreamingSettings: {fileID: 953958178}
   isAudience: 0
   playerManager: {fileID: 0}
   player0AvatarPrefab: {fileID: 9001161893590927571, guid: b75e379a5cc679746946becc17b610f8,
@@ -422,6 +423,39 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1 &953958178
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 953958179}
+  m_Layer: 0
+  m_Name: =====FirstPersonViewStreaming=====
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &953958179
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953958178}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.2691527, y: 1.4830403, z: 0.16963327}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 557797282}
+  - {fileID: 1806795079}
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &955112793
 GameObject:
   m_ObjectHideFlags: 0
@@ -679,7 +713,7 @@ PrefabInstance:
     - target: {fileID: 327298584257884115, guid: d55476ba18475c747862b94dc08c6658,
         type: 3}
       propertyPath: m_RootOrder
-      value: 13
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 327298584257884115, guid: d55476ba18475c747862b94dc08c6658,
         type: 3}
@@ -1034,7 +1068,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1217391567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1731,7 +1765,7 @@ MonoBehaviour:
     reconnectDelay: 5
     ackExpirationTime: 1800
     pingInterval: 25
-    pingTimeout: 60
+    pingTimeout: 0
     socketID: 
     portRequired: 1
     socketIORequired: 1
@@ -1758,13 +1792,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1806795077}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.09818765, y: 0.080543935, z: -0.2589469}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.17096505, y: -1.4024963, z: -0.42858016}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_Father: {fileID: 953958179}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1814992600 stripped
 GameObject:
