@@ -88,15 +88,15 @@ public class PlayField : MonoBehaviour
             yield return null;
         }
 
-        CurrentCardDisplay.gameObject.SetActive(false);
-        SetNewCardDisplay(-1);
+       
 
         m_player.PlayDeathEffect(cardPos);
         while (m_player.DeathEffect.isPlaying)
         {
             yield return null;
         }
-
+        CurrentCardDisplay.gameObject.SetActive(false);
+        SetNewCardDisplay(-1);
         m_player.CurrentMonster.PlayField = null;
         m_player.CurrentMonster = null;
 
