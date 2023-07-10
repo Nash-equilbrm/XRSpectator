@@ -81,6 +81,8 @@ public partial class GameManager
 
     public override void OnJoinedRoom()
     {
+        UnityEngine.XR.XRSettings.renderViewportScale = 0.7f;
+
         if (isAudience)
         {
             InitZED();

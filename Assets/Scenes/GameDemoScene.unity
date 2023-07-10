@@ -162,8 +162,8 @@ MonoBehaviour:
   AsyncMode: 1
   GZipMode: 1
   PanoramaMode: 0
-  Quality: 100
-  StreamFPS: 60
+  Quality: 20
+  StreamFPS: 10
   ignoreSimilarTexture: 1
   similarByteSizeThreshold: 8
   CapturedTexture: {fileID: 0}
