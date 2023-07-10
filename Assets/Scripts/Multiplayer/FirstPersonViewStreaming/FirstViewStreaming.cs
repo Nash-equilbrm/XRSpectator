@@ -7,17 +7,12 @@ public partial class GameManager
     [Header("First person view Streaming")]
     public Camera m_ARCamera;
     public GameObject ViewQuadCapture;
-    //public RenderTexture m_RenderTexture;
-    //public Material m_FirstPersonStreamMat;
+    public GameObject firstPersonStreamingSettings;
 
     public void StartStreaming()
     {
-        // GameObject videoBackground = m_ARCamera.transform.Find("VideoBackground").gameObject;
-        // if (videoBackground)
-        // {
-        // Vector3 videoBackgroundEuler = videoBackground.transform.localEulerAngles;
-        // videoBackgroundEuler.x *= -1;
-        // videoBackgroundEuler.z *= -1;
+        firstPersonStreamingSettings.SetActive(true);
+        firstPersonViewStreamCamera.gameObject.SetActive(true);
 
         //Create Quad
         GameObject quadCapture = GameObject.Instantiate(ViewQuadCapture);
