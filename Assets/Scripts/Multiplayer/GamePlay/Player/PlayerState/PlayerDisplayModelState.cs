@@ -97,7 +97,7 @@ public class PlayerDisplayModelState : MyStateMachine
                 m_prevHit = m_selectedPlayField;
             }
 
-            if (m_selectedPlayField != m_prevHit && m_prevHit != null && m_prevHit.CompareTag("CardDisplayField"))
+            if (m_selectedPlayField != m_prevHit && m_prevHit != null && m_prevHit.CompareTag("CardDisplayField") && m_player.MyCardDisplayFields.Contains(m_prevHit))
             {
                 CardDisplayField cardDisplayField = m_prevHit.GetComponent<CardDisplayField>();
                 if (cardDisplayField)
