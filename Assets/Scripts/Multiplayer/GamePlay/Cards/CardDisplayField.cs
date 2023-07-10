@@ -49,6 +49,8 @@ public class CardDisplayField : MonoBehaviour
         }
 
         parent.localRotation = targetRotation;
+        m_monsterImageBack.gameObject.SetActive(true);
+
     }
 
     public void LiftDown()

@@ -76,7 +76,6 @@ public class PlayerInitState : MyStateMachine
             m_player.cardFields[i].SetObjectActive(true);
             m_player.cardFields[i].ChangeImage(config.configID);
             m_player.cardFields[i].SetNewMonster(monsterObj.GetPhotonView().ViewID);
-            m_player.cardFields[i].m_monsterImageBack.gameObject.SetActive(true);
 
 
 
