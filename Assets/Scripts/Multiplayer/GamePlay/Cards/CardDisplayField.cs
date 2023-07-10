@@ -140,7 +140,6 @@ public class CardDisplayField : MonoBehaviour
     public void ChangeImage_RPC(int id)
     {
         m_monsterImage.sprite = m_player.cardConfigs[id].avatarImg;
-        m_monsterImageBack.gameObject.SetActive(true);
         m_monsterImageBack.sprite = m_player.cardConfigs[id].avatarImg;
 
     }

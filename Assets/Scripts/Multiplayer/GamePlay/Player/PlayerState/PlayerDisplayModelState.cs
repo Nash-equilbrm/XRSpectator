@@ -43,8 +43,6 @@ public class PlayerDisplayModelState : MyStateMachine
                     m_timer = m_chooseSlotDuration;
                     
                     m_selectedPlayField.GetComponent<CardDisplayField>().ShowInfo(true);
-                    if(m_prevHit != null) m_prevHit.GetComponent<CardDisplayField>().ShowInfo(false);
-
                 }
 
 
@@ -95,12 +93,13 @@ public class PlayerDisplayModelState : MyStateMachine
 
                 m_prevHit = m_selectedPlayField;
             }
-            else
+
+            if (m_selectedPlayField != m_prevHit && m_prevHit != null && m_prevHit.CompareTag("CardDisplayField"))
             {
-                m_player.ShowInvalidSign(Vector3.zero, Quaternion.identity, false);
+                CardDisplayField cardDisplayField = m_prevHit.GetComponent<CardDisplayField>();
+                if (cardDisplayField)
+                    cardDisplayField.ShowInfo(false);
             }
-
-
         }
 
     }
