@@ -12,13 +12,14 @@ public partial class GameManager
 
     private bool isFound = false;
     private bool overlayMode = true;
+    private bool firstViewSwap = true;
 
     void UpdateFirstPersonView()
     {
         if (!isFound)
         {
             player = GameObject.FindGameObjectsWithTag("Player");
-            if (player != null && player.Length == 1)
+            if (player != null && player.Length == 2)
             {
                 isFound = true;
             }
@@ -26,12 +27,24 @@ public partial class GameManager
 
         if (isFound && overlayMode)
         {
-            QuadObj.transform.SetParent(null);
-            QuadObj.transform.position = player[0].transform.position + new Vector3(0, firstPersonViewOffset, 0);
-            QuadObj.transform.LookAt(leftEye);
+            if (firstViewSwap)
+            {
+                QuadObj.transform.SetParent(null);
+                QuadObj.transform.position = player[0].transform.position + new Vector3(0, firstPersonViewOffset, 0);
+                QuadObj.transform.LookAt(leftEye);
 
-            // QuadObj2.transform.position = player[1].transform.position + new Vector3(0, firstPersonViewOffset, 0);
-            // QuadObj2.transform.LookAt(leftEye);
+                QuadObj2.transform.position = player[1].transform.position + new Vector3(0, firstPersonViewOffset, 0);
+                QuadObj2.transform.LookAt(leftEye);
+            }
+            else
+            {
+                QuadObj.transform.SetParent(null);
+                QuadObj.transform.position = player[1].transform.position + new Vector3(0, firstPersonViewOffset, 0);
+                QuadObj.transform.LookAt(leftEye);
+
+                QuadObj2.transform.position = player[0].transform.position + new Vector3(0, firstPersonViewOffset, 0);
+                QuadObj2.transform.LookAt(leftEye);
+            }
         }
 
         if (isFound && !overlayMode)
@@ -39,8 +52,9 @@ public partial class GameManager
             QuadObj.transform.SetParent(leftEye);
             QuadObj.transform.localPosition = new Vector3(0, 0, 1);
             QuadObj.transform.localRotation = Quaternion.identity;
-            // QuadObj2.transform.SetParent(leftEye);
-            // QuadObj2.transform.localPosition = new Vector3(0, 0, 0);
+            QuadObj2.transform.SetParent(leftEye);
+            QuadObj2.transform.localPosition = new Vector3(0, 0, 0);
         }
+
     }
 }

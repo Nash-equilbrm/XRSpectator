@@ -79,8 +79,36 @@ public partial class GameManager
         Application.Quit();
     }
 
+
+    public string m_serverIP;
+    public FMSocketIOManager sockerManager;
     public override void OnJoinedRoom()
     {
+        if (isAudience)
+        {
+            print("SET Server IP");
+            PhotonNetwork.CurrentRoom.SetCustomProperties(
+                 new ExitGames.Client.Photon.Hashtable
+                 {
+                    { "SERVERIP", m_serverIP }
+                 }
+
+             );
+
+        }
+        else
+        {
+            if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("SERVERIP", out var SERVERIP))
+            {
+                sockerManager.Action_SetIP((string)SERVERIP);
+            }
+
+
+            // Application.Quit();
+        }
+
+
+
         if (isAudience)
         {
             InitZED();

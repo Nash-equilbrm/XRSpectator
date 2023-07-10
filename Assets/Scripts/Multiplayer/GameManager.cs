@@ -43,8 +43,15 @@ public partial class GameManager : MonoBehaviourPunCallbacks
             {
                 overlayMode = !overlayMode;
             }
+
+            // change player 1st view
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                firstViewSwap = !firstViewSwap;
+            }
             UpdateZed();
             UpdateFirstPersonView();
+
 
         }
     }

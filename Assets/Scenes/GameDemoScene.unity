@@ -442,6 +442,8 @@ MonoBehaviour:
     type: 3}
   ArUcoDetectManager: {fileID: 4357363166054174503, guid: 75d4999de80d0ae47afc9c42c9f4e4ea,
     type: 3}
+  m_serverIP: 10.9.8.98
+  sockerManager: {fileID: 49708339}
   leftEye: {fileID: 0}
   retrackMarkerInterval: 2
 --- !u!4 &577880636
@@ -963,7 +965,7 @@ PrefabInstance:
     - target: {fileID: 480628852359411123, guid: 11a925a6505a44e489824cea9a691b51,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 496579135099207251, guid: 11a925a6505a44e489824cea9a691b51,
         type: 3}
@@ -1172,6 +1174,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7a096be23d5f4c46b0b0684d81c54db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  markerID: 0
+  disableWhenNotSeen: 1
+  missedFramesUntilDisabled: 3
+  smoothedFrames: 4
 --- !u!4 &1676044242
 Transform:
   m_ObjectHideFlags: 0
