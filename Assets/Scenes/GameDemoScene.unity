@@ -251,6 +251,9 @@ MonoBehaviour:
   startGameBtn: {fileID: 1209471143}
   gameResult: 3
   playerReady: 0
+  m_ARCamera: {fileID: 1926886337}
+  ViewQuadCapture: {fileID: 4789847426926293748, guid: e9e49f76588bd9d45bc8fb30716dcbe1,
+    type: 3}
   isAudience: 0
   playerManager: {fileID: 0}
   player0AvatarPrefab: {fileID: 9001161893590927571, guid: b75e379a5cc679746946becc17b610f8,
@@ -260,7 +263,7 @@ MonoBehaviour:
   pleaseLookAtMarkerTxt: {fileID: 679409619}
   ARCamera: {fileID: 1926886328}
   imageTarget: {fileID: 992106509}
-  firstPersonViewStreamCamera: {fileID: 1217391566}
+  firstPersonViewStreamCamera: {fileID: 1217391570}
   zedCameraTransform: {fileID: 1905566056}
   marker: {fileID: 1676044240}
   zedRigStereo: {fileID: 480628852359411123, guid: 11a925a6505a44e489824cea9a691b51,
@@ -1721,7 +1724,7 @@ MonoBehaviour:
   AutoInit: 1
   NetworkType: 1
   Settings:
-    IP: 127.0.0.1
+    IP: 10.9.8.98
     port: 3000
     sslEnabled: 0
     sslProtocols: 240
@@ -2163,7 +2166,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 1073807415
+    m_Bits: 1073741879
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

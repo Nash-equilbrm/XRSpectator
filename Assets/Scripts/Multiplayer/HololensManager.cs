@@ -22,18 +22,6 @@ public partial class GameManager
         ARCamera.transform.localPosition = Vector3.zero;
         ARCamera.GetComponent<Camera>().clearFlags = CameraClearFlags.SolidColor;
 
-
-
-
-        //GameObject playerModel = PhotonNetwork.Instantiate("Prefabs/" + player0AvatarPrefab.name, ARCamera.transform.position, ARCamera.transform.rotation);
-
-
-        //if (playerModel.GetComponent<PhotonView>().IsMine)
-        //{
-        //    playerModel.GetComponent<MoveARCamera>().ARCamera = ARCamera.transform;
-        //    playerManager = playerModel.GetComponent<Player>();
-        //}
-
         m_userRoleInitialized = true;
     }
 
@@ -50,7 +38,7 @@ public partial class GameManager
                 ARCamera.GetComponent<TrackedPoseDriver>().enabled = true;
                 //firstPersonViewStreamCamera.SetActive(true);
                 //firstPersonViewStreamCamera.GetComponent<FirstViewStreaming>().StartStreaming();
-
+                StartStreaming();
                 m_trackedWithVuforia = true;
             }
             else

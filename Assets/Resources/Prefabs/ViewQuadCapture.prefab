@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6224070025411206044}
   - component: {fileID: 7180385864132924090}
   - component: {fileID: 4134353206946514589}
-  m_Layer: 3
+  m_Layer: 16
   m_Name: ViewQuadCapture
   m_TagString: Untagged
   m_Icon: {fileID: 0}

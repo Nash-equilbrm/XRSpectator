@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FirstViewStreaming : MonoBehaviour
+public partial class GameManager
 {
+    [Header("First person view Streaming")]
     public Camera m_ARCamera;
     public GameObject ViewQuadCapture;
     //public RenderTexture m_RenderTexture;
@@ -19,16 +20,16 @@ public class FirstViewStreaming : MonoBehaviour
         // videoBackgroundEuler.z *= -1;
 
         //Create Quad
-        GameObject quadCapture = Instantiate(ViewQuadCapture);
+        GameObject quadCapture = GameObject.Instantiate(ViewQuadCapture);
         quadCapture.transform.parent = m_ARCamera.transform;
         quadCapture.transform.localScale = new Vector3(4, 2.5f, -1);
         quadCapture.transform.localPosition = new Vector3(0, 0, 4);
         // videoBackground.transform.localEulerAngles = videoBackgroundEuler;
         quadCapture.transform.localEulerAngles = new Vector3(-2, 0, 0);
 
-        Camera streamCamera = GetComponent<Camera>();
-        streamCamera.fieldOfView = m_ARCamera.fieldOfView;
-        streamCamera.clearFlags = CameraClearFlags.SolidColor;
+        firstPersonViewStreamCamera.GetComponent<Camera>();
+        firstPersonViewStreamCamera.fieldOfView = m_ARCamera.fieldOfView;
+        firstPersonViewStreamCamera.clearFlags = CameraClearFlags.SolidColor;
 
 
         WebCamTexture webcamTexture = new WebCamTexture();
