@@ -41,8 +41,11 @@ public class PlayerDisplayModelState : MyStateMachine
                 {
                     // reset timer
                     m_timer = m_chooseSlotDuration;
-                    
-                    m_selectedPlayField.GetComponent<CardDisplayField>().ShowInfo(true);
+
+                    if (m_player.MyCardDisplayFields.Contains(m_selectedPlayField))
+                    {
+                        m_selectedPlayField.GetComponent<CardDisplayField>().ShowInfo(true);
+                    }
                 }
 
 
@@ -94,7 +97,7 @@ public class PlayerDisplayModelState : MyStateMachine
                 m_prevHit = m_selectedPlayField;
             }
 
-            if (m_selectedPlayField != m_prevHit && m_prevHit != null && m_prevHit.CompareTag("CardDisplayField") && m_player.MyCardDisplayFields.Contains(m_prevHit))
+            if (m_selectedPlayField != m_prevHit && m_prevHit != null && m_prevHit.CompareTag("CardDisplayField"))
             {
                 CardDisplayField cardDisplayField = m_prevHit.GetComponent<CardDisplayField>();
                 if (cardDisplayField)
