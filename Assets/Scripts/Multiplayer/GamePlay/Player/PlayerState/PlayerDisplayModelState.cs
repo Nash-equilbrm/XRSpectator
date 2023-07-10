@@ -41,23 +41,9 @@ public class PlayerDisplayModelState : MyStateMachine
                 {
                     // reset timer
                     m_timer = m_chooseSlotDuration;
-
-                    // delete invalid sign or model if remove pointer from previous pointed playfield
-                    if (m_prevHit != null)
-                    {
-                        //m_player.GetChosenMonsterObject()?.SetActive(false);
-                        m_player.ShowInvalidSign(Vector3.zero, Quaternion.identity, false);
-                    }
-
-
-                    // set new model
-                    Vector3 position = m_selectedPlayField.transform.position;
-                    Vector3 rotation = new Vector3(0, m_selectedPlayField.transform.eulerAngles.y, 0);
-                    // show creatures in card
-                    if (!m_player.MyCardDisplayFields.Contains(m_selectedPlayField))
-                    {
-                        m_player.ShowInvalidSign(position, Quaternion.Euler(rotation), true);
-                    }
+                    
+                    m_selectedPlayField.GetComponent<CardDisplayField>().ShowInfo(true);
+                    if(m_prevHit != null) m_prevHit.GetComponent<CardDisplayField>().ShowInfo(false);
 
                 }
 
@@ -76,22 +62,18 @@ public class PlayerDisplayModelState : MyStateMachine
                             // display the monster and put it on Ready to use
                             if (m_player.m_playField.CurrentCardDisplay != null && monster.m_photonView.ViewID != m_player.m_playField.CurrentCardDisplay.Monster.m_photonView.ViewID)
                             {
-                                Debug.Log("Remove old card display");
                                 m_player.m_playField.CurrentCardDisplay.Monster.SetMonsterReady(false);
                             }
-                            Debug.Log("Set new card display");
                             m_player.m_playField.SetNewCardDisplay(cardDisplayField.m_photonView.ViewID);
 
 
                             // set the image for the card display and lift up
+                            cardDisplayField.ShowInfo(false);
                             cardDisplayField.LiftUp();
 
-                            Debug.Log("Set new monster ready");
                             monster.SetMonsterReady(true);
-                            //monster.gameObject.transform.position = m_player.m_playField.transform.position;
-                            //monster.gameObject.transform.rotation = m_player.m_playField.transform.rotation;
 
-                            Debug.Log("Player " + m_player.PlayerID + "set new monster " + monster.m_photonView.ViewID);
+
                             m_player.UpdateNewMonster();
 
                             float yAngle = (cardDisplayField.transform.parent.parent.localEulerAngles.y != 0) ? -cardDisplayField.transform.parent.parent.localEulerAngles.y : cardDisplayField.transform.parent.parent.localEulerAngles.z;
@@ -101,7 +83,6 @@ public class PlayerDisplayModelState : MyStateMachine
                             m_timer = m_chooseSlotDuration;
                             m_selectedPlayField = null;
                             m_prevHit = null;
-                            //ExitState = true;
                             return;
 
                         }

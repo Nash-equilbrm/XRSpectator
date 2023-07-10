@@ -14,6 +14,9 @@ public class CardDisplayField : MonoBehaviour
 
     public float m_liftDuration;
 
+    public GameObject m_cardInfoPanel;
+    public GameObject m_cardInfoPanelPrefab;
+
     public Monster Monster { get => m_Monster; }
     [SerializeField] private Monster m_Monster = null;
 
@@ -74,9 +77,27 @@ public class CardDisplayField : MonoBehaviour
         parent.localRotation = targetRotation;
     }
 
-    public void OnChooseNewMonster()
-    {
 
+    public void ShowInfo(bool show)
+    {
+        if (show)
+        {
+            if(m_cardInfoPanel == null)
+            {
+                m_cardInfoPanel = GameObject.Instantiate(m_cardInfoPanelPrefab);
+                FollowTransform followTransform = m_cardInfoPanel.GetComponent<FollowTransform>();
+                followTransform.follow = transform;
+
+                CardInfoPanel infoPanel = m_cardInfoPanel.GetComponent<CardInfoPanel>();
+                infoPanel.InitPanel(m_player.cardConfigs[Monster.MonsterID]);
+            }
+
+            m_cardInfoPanel?.SetActive(true);
+        }
+        else
+        {
+            m_cardInfoPanel?.SetActive(false);
+        }
     }
 
 
@@ -119,8 +140,8 @@ public class CardDisplayField : MonoBehaviour
     public void ChangeImage_RPC(int id)
     {
         m_monsterImage.sprite = m_player.cardConfigs[id].avatarImg;
-        //m_monsterImageBack.gameObject.SetActive(true);
-        //m_monsterImageBack.sprite = m_player.cardConfigs[id].avatarImg;
+        m_monsterImageBack.gameObject.SetActive(true);
+        m_monsterImageBack.sprite = m_player.cardConfigs[id].avatarImg;
 
     }
 
