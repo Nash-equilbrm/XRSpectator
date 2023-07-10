@@ -39,7 +39,12 @@ public partial class GameManager : MonoBehaviourPunCallbacks
         if (m_userRoleInitialized)
         {
             // update for zed users (audiences), keep tracking marker every frames
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                overlayMode = !overlayMode;
+            }
             UpdateZed();
+            UpdateFirstPersonView();
 
         }
     }
