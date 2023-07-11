@@ -11,6 +11,14 @@ public class GameTurnDecideState : MyStateMachine
         // if player press start button
         if (GameManager.Instance.PlayerReady)
         {
+            if (GameManager.Instance.playerManager && GameManager.Instance.playerManager.PlayerID == 0)
+            {
+                InitPlayerTurn(true);
+            }
+            else
+            {
+                InitPlayerTurn(false);
+            }
             StateInitialized = true;
         }
 
@@ -18,15 +26,10 @@ public class GameTurnDecideState : MyStateMachine
     protected override void DoBehavior()
     {
         Debug.Log("Game turn decide state DoBehavior");
-        if (GameManager.Instance.playerManager && GameManager.Instance.playerManager.PlayerID == 0)
+        if(GameManager.Instance.playerManager != null && GameManager.Instance.playerManager.CardCollection.Count > 0)
         {
-            InitPlayerTurn(true);
+            ExitState = true;
         }
-        else
-        {
-            InitPlayerTurn(false);
-        }
-        ExitState = true;
     }
     protected override void Exit()
     {
