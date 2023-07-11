@@ -286,7 +286,7 @@ PrefabInstance:
     - target: {fileID: 2339238807818718198, guid: d19a4c521a4dbcc46baa485eb04b156a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 2339238807818718198, guid: d19a4c521a4dbcc46baa485eb04b156a,
         type: 3}
@@ -386,7 +386,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   follow: {fileID: 8885516798237120136}
-  offset: {x: -0.6, y: 0, z: 2.4}
+  offset: {x: -1, y: 0, z: 2.4}
   lockX: 0
   lockXAt: 0
   lockY: 1
