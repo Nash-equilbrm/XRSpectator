@@ -473,6 +473,27 @@ public class Player : MonoBehaviourPunCallbacks
         m_currentMonster = m_playField.CurrentCardDisplay.Monster;
     }
 
+
+    public void GetCardCollection(int[] cardIDS)
+    {
+        if (m_photonView.IsMine)
+        {
+            PhotonNetwork.RemoveBufferedRPCs(m_photonView.ViewID, "GetCardCollection_RPC");
+            m_photonView.RPC("GetCardCollection_RPC", RpcTarget.AllBuffered, cardIDS as object);
+            PhotonNetwork.SendAllOutgoingCommands();
+        }
+    }
+
+    [PunRPC]
+    private void GetCardCollection_RPC(int[] cardIDs)
+    {
+        m_cardCollectionIds.Clear();
+        for(int i = 0; i < cardIDs.Length; ++i)
+        {
+            m_cardCollectionIds.Add(cardIDs[i]);
+        }
+    }
+
 }
 
     
