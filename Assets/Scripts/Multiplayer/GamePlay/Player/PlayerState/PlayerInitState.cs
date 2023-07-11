@@ -16,7 +16,7 @@ public class PlayerInitState : MyStateMachine
         Debug.Log("INIT");
         m_player.FindOpponent();
 
-        if (m_player.Opponent != null)
+        if (m_player.Opponent != null && m_player.Opponent.IsReady)
         {
             if (m_player.PlayerID == 0)
             {
@@ -25,7 +25,12 @@ public class PlayerInitState : MyStateMachine
                 m_player.Opponent.GetCardCollection(randomCardIDs.GetRange(m_player.cardConfigs.Length / 2, m_player.cardConfigs.Length / 2).ToArray());
             }
 
-            ExitState = true;
+            if(m_player.CardCollection.Count > 0 && m_player.Opponent.CardCollection.Count > 0)
+            {
+                InitCardAndMonster();
+                ExitState = true;
+            }
+
         }
      
 
@@ -46,7 +51,6 @@ public class PlayerInitState : MyStateMachine
         {
             if (m_player.m_photonView.IsMine)
             {
-                InitCardAndMonster();
                 StateInitialized = true;
             }
         }
