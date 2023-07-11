@@ -283,7 +283,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  label: 1002
+  label: 1001
   dataLength: 0
 --- !u!4 &557797282
 Transform:
@@ -1580,6 +1580,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7a096be23d5f4c46b0b0684d81c54db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  markerID: 0
+  disableWhenNotSeen: 1
+  missedFramesUntilDisabled: 3
+  hiddenFramesCount: 0
+  smoothedFrames: 4
 --- !u!4 &1676044242
 Transform:
   m_ObjectHideFlags: 0
