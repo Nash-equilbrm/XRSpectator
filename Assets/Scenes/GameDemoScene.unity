@@ -193,7 +193,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  label: 1002
+  label: 1001
   dataLength: 0
 --- !u!4 &557797282
 Transform:
@@ -242,8 +242,6 @@ MonoBehaviour:
   gameResultPrefab: {fileID: 1541617848298344139, guid: 6aa319e2b8467834fa3675578b32837a,
     type: 3}
   turnDecideCoinPrefab: {fileID: 2746561352560966897, guid: f5dd265173a366d4b9f99e0dd4b8a397,
-    type: 3}
-  invalidSignPrefab: {fileID: 786864677051450278, guid: 6821f3a7afba45b49961c9b111fdd708,
     type: 3}
   deathEffectPrefab: {fileID: 8832281896446443766, guid: 6d0db5d4ce944f8438b809585d491238,
     type: 3}
