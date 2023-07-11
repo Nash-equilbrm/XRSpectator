@@ -83,13 +83,14 @@ public class PlayField : MonoBehaviour
         m_player.CurrentMonster.SetMonsterReady(false);
         m_player.RemoveMonster(m_player.CurrentMonster.m_photonView.ViewID);
         m_player.PlayDeathEffect(monsterPos);
+        GameManager.Instance.m_monsterDestroySFX.Play();
         while (m_player.DeathEffect.isPlaying)
         {
             yield return null;
         }
 
-       
 
+        GameManager.Instance.m_monsterDestroySFX.Play();
         m_player.PlayDeathEffect(cardPos);
         while (m_player.DeathEffect.isPlaying)
         {

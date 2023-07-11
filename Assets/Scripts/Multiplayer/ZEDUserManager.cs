@@ -7,6 +7,13 @@ public partial class GameManager
 
     public float retrackMarkerInterval = 10f;
     private float m_retrackTimer = 0f;
+
+
+
+
+    [Header("Sound effects")]
+    public AudioSource m_monsterDestroySFX;
+
     private void InitZED()
     {
         //ARCamera.GetComponent<VuforiaBehaviour>().enabled = false;

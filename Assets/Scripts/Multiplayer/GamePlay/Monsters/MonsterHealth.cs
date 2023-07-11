@@ -8,9 +8,11 @@ public partial class Monster
     private int m_HP;
     public int CurrentHP { get => m_currentHP; }
     [SerializeField] private int m_currentHP;
+    public AudioSource m_monsterAttackAudioSource;
+    public AudioSource m_monsterHurtAudioSource;
 
 
-   
+
 
 
     // ==================== PUNRPC ====================
@@ -35,6 +37,10 @@ public partial class Monster
         }
         else if (m_takeDamageEffect != null)
         {
+            if(m_monsterHurtAudioSource != null)
+            {
+                m_monsterHurtAudioSource.Play();
+            }
             m_takeDamageEffect?.gameObject.SetActive(true);
             m_takeDamageEffect?.Play();
         }

@@ -233,6 +233,10 @@ public partial class Monster : MonoBehaviour
         {
             m_currentTarget = null;
         }
+        if(m_monsterAttackAudioSource != null)
+        {
+            m_monsterAttackAudioSource.Play();
+        }
         if (m_attackEffect != null)
         {
             m_attackEffect?.gameObject.SetActive(true);
