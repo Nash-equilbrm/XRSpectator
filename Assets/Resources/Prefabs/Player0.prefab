@@ -220,7 +220,7 @@ MonoBehaviour:
     type: 3}
   m_photonView: {fileID: 2971360194156331780}
   cardDisplayMovementControll: {fileID: 2504402708299129666}
-  m_cardCollectionIds: 0000000001000000
+  m_cardCollectionIds: 
   m_isReady: 0
   m_onAttack: 0
   m_canAttack: 1

@@ -16,7 +16,7 @@ public class PlayerInitState : MyStateMachine
         Debug.Log("INIT");
         m_player.FindOpponent();
 
-        if (m_player.Opponent != null && m_player.Opponent.IsReady)
+        if (m_player.Opponent != null)
         {
             if (m_player.PlayerID == 0)
             {

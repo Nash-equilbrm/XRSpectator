@@ -476,12 +476,9 @@ public class Player : MonoBehaviourPunCallbacks
 
     public void GetCardCollection(int[] cardIDS)
     {
-        if (m_photonView.IsMine)
-        {
-            PhotonNetwork.RemoveBufferedRPCs(m_photonView.ViewID, "GetCardCollection_RPC");
-            m_photonView.RPC("GetCardCollection_RPC", RpcTarget.AllBuffered, cardIDS as object);
-            PhotonNetwork.SendAllOutgoingCommands();
-        }
+        PhotonNetwork.RemoveBufferedRPCs(m_photonView.ViewID, "GetCardCollection_RPC");
+        m_photonView.RPC("GetCardCollection_RPC", RpcTarget.AllBuffered, cardIDS as object);
+        PhotonNetwork.SendAllOutgoingCommands();
     }
 
     [PunRPC]
