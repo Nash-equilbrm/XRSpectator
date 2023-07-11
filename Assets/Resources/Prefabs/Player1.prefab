@@ -286,7 +286,7 @@ PrefabInstance:
     - target: {fileID: 2339238807818718198, guid: d19a4c521a4dbcc46baa485eb04b156a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 2339238807818718198, guid: d19a4c521a4dbcc46baa485eb04b156a,
         type: 3}
@@ -343,6 +343,11 @@ PrefabInstance:
       propertyPath: m_photonView
       value: 
       objectReference: {fileID: 5074956597222198146}
+    - target: {fileID: 5727092015015782219, guid: d19a4c521a4dbcc46baa485eb04b156a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6145202190392547743, guid: d19a4c521a4dbcc46baa485eb04b156a,
         type: 3}
       propertyPath: sceneViewId
@@ -381,7 +386,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   follow: {fileID: 8885516798237120136}
-  offset: {x: 0, y: 0, z: 2.4}
+  offset: {x: -0.6, y: 0, z: 2.4}
   lockX: 0
   lockXAt: 0
   lockY: 1
