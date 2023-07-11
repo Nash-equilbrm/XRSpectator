@@ -8,7 +8,6 @@ public partial class GameManager
     [Header("Gameplay")]
     public GameObject gameResultPrefab;
     public GameObject turnDecideCoinPrefab;
-    public GameObject invalidSignPrefab;
     public GameObject deathEffectPrefab;
     public GameObject guiObj;
     public GameObject startGameBtn;
