@@ -16,6 +16,6 @@ MonoBehaviour:
   monsterName: Raphael
   model: {fileID: 2804740062700550000, guid: 0ee86b05664ede743ba648530659bcd5, type: 3}
   avatarImg: {fileID: 21300000, guid: b8716c21755b94345a5bbd91d1f75f17, type: 3}
-  HP: 13
-  ATK: 50
+  HP: 70
+  ATK: 40
   attackDuration: 2

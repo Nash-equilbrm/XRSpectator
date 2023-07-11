@@ -657,8 +657,8 @@ MonoBehaviour:
   mDataSetPath: 
   mAspectRatio: 1
   mImageTargetType: 3
-  mWidth: 0.42
-  mHeight: 0.42
+  mWidth: 0.584
+  mHeight: 0.584
   mRuntimeTexture: {fileID: 2800000, guid: 1b21fbeee25537b4dade473b924de5c0, type: 3}
   mMotionHint: 1
   mTrackingOptimization: 0
@@ -1081,9 +1081,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 851b15d4450c99d40a8ef0c1dbff6b8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ARCamera: {fileID: 1926886337}
-  ViewQuadCapture: {fileID: 4789847426926293748, guid: e9e49f76588bd9d45bc8fb30716dcbe1,
-    type: 3}
 --- !u!114 &1217391568
 MonoBehaviour:
   m_ObjectHideFlags: 0

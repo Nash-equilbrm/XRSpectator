@@ -16,6 +16,6 @@ MonoBehaviour:
   monsterName: 4 A.M
   model: {fileID: 7889009798393746964, guid: 454b737f40412fe4696ba0b7ac1592a9, type: 3}
   avatarImg: {fileID: 21300000, guid: 604070f6d48c666498726c86379f0477, type: 3}
-  HP: 13
-  ATK: 30
+  HP: 80
+  ATK: 20
   attackDuration: 5.22

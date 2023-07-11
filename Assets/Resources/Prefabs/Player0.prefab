@@ -214,8 +214,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cc677a2812778994bb19734b5bb3fcb2, type: 2}
   - {fileID: 11400000, guid: a0da0fcd1fd6db8468dced7f16b35420, type: 2}
   m_playerID: 0
-  m_invalidSign: {fileID: 786864677051450278, guid: 6821f3a7afba45b49961c9b111fdd708,
-    type: 3}
   m_deathEffect: {fileID: 8832281896446443764, guid: 6d0db5d4ce944f8438b809585d491238,
     type: 3}
   m_photonView: {fileID: 2971360194156331780}

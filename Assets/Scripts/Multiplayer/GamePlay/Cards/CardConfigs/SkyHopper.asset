@@ -16,6 +16,6 @@ MonoBehaviour:
   monsterName: SkyHopper
   model: {fileID: 973635595322334940, guid: 916db530b5c8822489c56e40f5a2d091, type: 3}
   avatarImg: {fileID: 21300000, guid: 4a5a0726b8913c14f8364966045e0dda, type: 3}
-  HP: 13
+  HP: 120
   ATK: 30
   attackDuration: 3.5
