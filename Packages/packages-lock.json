@@ -52,14 +52,6 @@
         "com.microsoft.mixedreality.toolkit.foundation": "2.8.3"
       }
     },
-    "com.ptc.vuforia.engine": {
-      "version": "file:com.ptc.vuforia.engine-10.15.4.tgz",
-      "depth": 0,
-      "source": "local-tarball",
-      "dependencies": {
-        "com.unity.ugui": "1.0.0"
-      }
-    },
     "com.unity.burst": {
       "version": "1.7.3",
       "depth": 1,

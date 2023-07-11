@@ -5,12 +5,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SpatialTracking;
-using Vuforia;
 
 public partial class GameManager
 {
-    private float m_trackMarkerDuration = 3f;
-    private float m_trackMarkerCount = 0f;
     public bool HololensMarkerTracked { get => m_hololensMarkerTracked; set => m_hololensMarkerTracked = value; }
     private bool m_hololensMarkerTracked = false;
 
@@ -30,36 +27,36 @@ public partial class GameManager
 
     public void UpdateHololens()
     {
-        if (!TrackedWithVuforia)
-        {
-            if (m_trackMarkerCount >= m_trackMarkerDuration)
-            {
-                TurnOffVuforia();
-                ARCamera.GetComponent<TrackedPoseDriver>().enabled = true;
+        //if (!TrackedWithVuforia)
+        //{
+        //    if (m_trackMarkerCount >= m_trackMarkerDuration)
+        //    {
+        //        TurnOffVuforia();
+        //        ARCamera.GetComponent<TrackedPoseDriver>().enabled = true;
                
-                //StartStreaming();
+        //        //StartStreaming();
                
-                m_trackedWithVuforia = true;
-            }
-            else
-            {
-                if (HololensMarkerTracked)
-                {
-                    m_trackMarkerCount += Time.deltaTime;
-                }
-                else
-                {
-                    m_trackMarkerCount = 0;
-                }
-            }
-        }
-        else
-        {
-            // start gameplay for hololens user
+        //        m_trackedWithVuforia = true;
+        //    }
+        //    else
+        //    {
+        //        if (HololensMarkerTracked)
+        //        {
+        //            m_trackMarkerCount += Time.deltaTime;
+        //        }
+        //        else
+        //        {
+        //            m_trackMarkerCount = 0;
+        //        }
+        //    }
+        //}
+        //else
+        //{
+        //    // start gameplay for hololens user
 
-            pleaseLookAtMarkerTxt.SetActive(false);
-            UpdateGameplay();
-        }
+        //    pleaseLookAtMarkerTxt.SetActive(false);
+        //    UpdateGameplay();
+        //}
 
 
         //if (!TrackedWithVuforia)
@@ -77,21 +74,21 @@ public partial class GameManager
 
     private void TurnOffVuforia()
     {
-        Debug.Log("Turn off vuforia");
-        ARCamera.GetComponent<VuforiaBehaviour>().enabled = false;
+        //Debug.Log("Turn off vuforia");
+        //ARCamera.GetComponent<VuforiaBehaviour>().enabled = false;
 
-        ARCamera.transform.SetParent(imageTarget);
-        imageTarget.transform.position = Vector3.zero;
-        imageTarget.transform.rotation = Quaternion.identity;
+        //ARCamera.transform.SetParent(imageTarget);
+        //imageTarget.transform.position = Vector3.zero;
+        //imageTarget.transform.rotation = Quaternion.identity;
 
 
 
-        m_ARPlaySpace.position = ARCamera.transform.position;
-        m_ARPlaySpace.rotation = ARCamera.transform.rotation;
+        //m_ARPlaySpace.position = ARCamera.transform.position;
+        //m_ARPlaySpace.rotation = ARCamera.transform.rotation;
 
-        ARCamera.transform.SetParent(m_ARPlaySpace);
-        ARCamera.transform.localPosition = Vector3.zero;
-        ARCamera.transform.localRotation = Quaternion.identity;
+        //ARCamera.transform.SetParent(m_ARPlaySpace);
+        //ARCamera.transform.localPosition = Vector3.zero;
+        //ARCamera.transform.localRotation = Quaternion.identity;
 
       
     }

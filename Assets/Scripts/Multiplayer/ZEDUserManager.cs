@@ -1,6 +1,5 @@
 using Microsoft.MixedReality.Toolkit;
 using UnityEngine;
-using Vuforia;
 
 public partial class GameManager
 {
@@ -10,13 +9,13 @@ public partial class GameManager
     private float m_retrackTimer = 0f;
     private void InitZED()
     {
-        ARCamera.GetComponent<VuforiaBehaviour>().enabled = false;
-        MixedRealityToolkit.Instance.enabled = false;
-        ARCamera.SetActive(false);
+        //ARCamera.GetComponent<VuforiaBehaviour>().enabled = false;
+        //MixedRealityToolkit.Instance.enabled = false;
+        //ARCamera.SetActive(false);
 
-        //zedRigStereo.SetActive(true);
-        GameObject zedManager = Instantiate(zedRigStereo);
-        leftEye = zedManager.transform.Find("Camera_eyes").Find("Left_eye");
+        zedRigStereo.SetActive(true);
+        //GameObject zedRigStereo = Instantiate(zedRigStereo);
+        leftEye = zedRigStereo.transform.Find("Camera_eyes").Find("Left_eye");
         leftEye.gameObject.tag = "MainCamera";
 
         Instantiate(zedCaptureToOpenCV);
@@ -31,7 +30,6 @@ public partial class GameManager
         if(m_retrackTimer >= retrackMarkerInterval){
             if (marker.activeSelf)
             {
-                pleaseLookAtMarkerTxt.SetActive(false);
                 zedCameraTransform.position = leftEye.transform.position;
                 zedCameraTransform.rotation = leftEye.transform.rotation;
                 zedCameraTransform.SetParent(marker.transform);
@@ -44,7 +42,6 @@ public partial class GameManager
                 m_retrackTimer = 0f;
             }
             else{
-                pleaseLookAtMarkerTxt.SetActive(true);
                 m_retrackTimer = retrackMarkerInterval;
             }
 

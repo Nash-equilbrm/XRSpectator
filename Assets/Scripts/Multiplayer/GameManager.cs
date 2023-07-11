@@ -7,8 +7,6 @@ using System.Collections;
 using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.XR.Management;
-using Vuforia;
-
 public partial class GameManager : MonoBehaviourPunCallbacks
 {
     public static GameManager Instance = null;
@@ -25,7 +23,7 @@ public partial class GameManager : MonoBehaviourPunCallbacks
     public GameObject ARCamera;
     public Transform imageTarget;
     public Camera firstPersonViewStreamCamera;
-  
+
 
     [Header("ZedCamera")]
     public Transform zedCameraTransform;
@@ -33,7 +31,6 @@ public partial class GameManager : MonoBehaviourPunCallbacks
     public GameObject zedRigStereo;
     public GameObject zedCaptureToOpenCV;
     public GameObject ArUcoDetectManager;
-
     private bool m_userRoleInitialized = false;
     private void Update()
     {
@@ -42,9 +39,24 @@ public partial class GameManager : MonoBehaviourPunCallbacks
             // update for zed users (audiences), keep tracking marker every frames
             if (isAudience)
             {
+                if (Input.GetKeyDown(KeyCode.A))
+                {
+                    overlayMode = !overlayMode;
+                }
+
+                // change player 1st view
+                if (Input.GetKeyDown(KeyCode.S))
+                {
+                    firstViewSwap = !firstViewSwap;
+                }
+                if (Input.GetKeyDown(KeyCode.R))
+                {
+                    ResetSocketServer();
+                }
                 UpdateZed();
+                UpdateFirstPersonView();
             }
-            else 
+            else
             {
                 // update for hololens user to track marker, stop tracking after x(secs) and go to gameplay scene
                 UpdateHololens();
@@ -53,5 +65,5 @@ public partial class GameManager : MonoBehaviourPunCallbacks
     }
 
 
-   
+
 }

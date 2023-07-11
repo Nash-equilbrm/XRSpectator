@@ -81,7 +81,7 @@ public partial class GameManager
 
 
     public string m_serverIP;
-    public FMSocketIOManager sockerManager;
+    public FMSocketIOManager socketManager;
     public override void OnJoinedRoom()
     {
         if (isAudience)
@@ -94,15 +94,16 @@ public partial class GameManager
 
             );
 
+
         }
         else
         {
             if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("SERVERIP", out var SERVERIP))
             {
                 m_serverIP = (string)SERVERIP;
-                sockerManager.Action_SetIP(m_serverIP);
             }
         }
+        socketManager.Action_SetIP(m_serverIP);
 
 
 
