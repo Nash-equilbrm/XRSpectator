@@ -550,6 +550,11 @@ PrefabInstance:
       objectReference: {fileID: 7133357693053756016}
     - target: {fileID: 4129956145093820006, guid: f43f336a03c88e04187c807064ad9e92,
         type: 3}
+      propertyPath: m_offset.y
+      value: -0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4129956145093820006, guid: f43f336a03c88e04187c807064ad9e92,
+        type: 3}
       propertyPath: m_playerTransform
       value: 
       objectReference: {fileID: 8885516798237120136}
