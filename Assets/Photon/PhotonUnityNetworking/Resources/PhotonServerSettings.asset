@@ -89,6 +89,7 @@ MonoBehaviour:
   - SetObjectActive_RPC
   - SetNewCardDisplay_RPC
   - SetCanAttack_RPC
+  - GetCardCollection_RPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
