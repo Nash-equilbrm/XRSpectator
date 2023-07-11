@@ -57,7 +57,7 @@ public partial class GameManager
         {
             // start gameplay for hololens user
 
-            pleaseLookAtMarkerTxt.SetActive(false);
+            //pleaseLookAtMarkerTxt.SetActive(false);
             UpdateGameplay();
         }
 

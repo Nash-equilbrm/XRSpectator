@@ -31,7 +31,7 @@ public partial class GameManager
         if(m_retrackTimer >= retrackMarkerInterval){
             if (marker.activeSelf)
             {
-                pleaseLookAtMarkerTxt.SetActive(false);
+                //pleaseLookAtMarkerTxt.SetActive(false);
                 zedCameraTransform.position = leftEye.transform.position;
                 zedCameraTransform.rotation = leftEye.transform.rotation;
                 zedCameraTransform.SetParent(marker.transform);
@@ -44,7 +44,7 @@ public partial class GameManager
                 m_retrackTimer = 0f;
             }
             else{
-                pleaseLookAtMarkerTxt.SetActive(true);
+                //pleaseLookAtMarkerTxt.SetActive(true);
                 m_retrackTimer = retrackMarkerInterval;
             }
 

@@ -18,7 +18,7 @@ public partial class GameManager : MonoBehaviourPunCallbacks
     public Player playerManager;
     public GameObject player0AvatarPrefab;
     public GameObject player1AvatarPrefab;
-    public GameObject pleaseLookAtMarkerTxt;
+    //public GameObject pleaseLookAtMarkerTxt;
 
 
     [Header("Hololens")]
