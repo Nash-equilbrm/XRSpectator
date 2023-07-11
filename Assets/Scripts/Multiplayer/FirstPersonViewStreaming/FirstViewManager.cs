@@ -11,8 +11,10 @@ public partial class GameManager
     public float firstPersonViewOffset;
 
     private bool isFound = false;
-    private bool overlayMode = true;
+    private bool overlayMode = false;
     private bool firstViewSwap = true;
+
+    public GameObject overlayView;
 
     void UpdateFirstPersonView()
     {
@@ -25,11 +27,12 @@ public partial class GameManager
             }
         }
 
-        if (isFound && overlayMode)
+        if (isFound && !overlayMode)
         {
+            overlayView.SetActive(false);
+
             if (firstViewSwap)
             {
-                QuadObj.transform.SetParent(null);
                 QuadObj.transform.position = player[0].transform.position + new Vector3(0, firstPersonViewOffset, 0);
                 QuadObj.transform.LookAt(leftEye);
 
@@ -38,7 +41,6 @@ public partial class GameManager
             }
             else
             {
-                QuadObj.transform.SetParent(null);
                 QuadObj.transform.position = player[1].transform.position + new Vector3(0, firstPersonViewOffset, 0);
                 QuadObj.transform.LookAt(leftEye);
 
@@ -47,13 +49,9 @@ public partial class GameManager
             }
         }
 
-        if (isFound && !overlayMode)
+        if (isFound && overlayMode)
         {
-            QuadObj.transform.SetParent(leftEye);
-            QuadObj.transform.localPosition = new Vector3(0, 0, 1);
-            QuadObj.transform.localRotation = Quaternion.identity;
-            QuadObj2.transform.SetParent(leftEye);
-            QuadObj2.transform.localPosition = new Vector3(0, 0, 0);
+            overlayView.SetActive(true);
         }
 
     }
