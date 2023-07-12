@@ -6176,7 +6176,7 @@ GameObject:
   - component: {fileID: 4176841875178535008}
   m_Layer: 0
   m_Name: Razorshell
-  m_TagString: Creature
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -447,6 +447,24 @@ public class Player : MonoBehaviourPunCallbacks
         }
     }
 
+
+    public void TurnOnWebCamTexture(bool turnOn){
+        PhotonNetwork.RemoveBufferedRPCs(m_photonView.ViewID, "TurnOnWebCamTexture_RPC");
+        m_photonView.RPC("TurnOnWebCamTexture_RPC", RpcTarget.AllBuffered, turnOn);
+        PhotonNetwork.SendAllOutgoingCommands();
+    }
+
+    [PunRPC]
+    private void TurnOnWebCamTexture_RPC(bool turnOn)
+    {
+        if(turnOn){
+            GameManager.Instance.webCamTexture.Play();
+        }
+        else{
+            GameManager.Instance.webCamTexture.Stop();
+        }
+    }
+
 }
 
     

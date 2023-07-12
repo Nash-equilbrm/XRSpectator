@@ -9,6 +9,8 @@ public partial class GameManager
     public GameObject ViewQuadCapture;
     public GameObject firstPersonStreamingSettings;
 
+    public WebCamTexture webCamTexture;
+
     public void StartStreaming()
     {
         firstPersonStreamingSettings.SetActive(true);
@@ -26,13 +28,13 @@ public partial class GameManager
         firstPersonViewStreamCamera.fieldOfView = m_ARCamera.fieldOfView;
         firstPersonViewStreamCamera.clearFlags = CameraClearFlags.SolidColor;
 
-        WebCamTexture webcamTexture = new WebCamTexture(500, 282, 60);
+        webCamTexture = new WebCamTexture(500, 282, 60);
         //WebCamTexture webcamTexture = new WebCamTexture();
 
         Renderer videoBackgroundRenderer = quadCapture.GetComponent<Renderer>();
         videoBackgroundRenderer.enabled = true;
-        videoBackgroundRenderer.material.mainTexture = webcamTexture;
-        webcamTexture.Play();
+        videoBackgroundRenderer.material.mainTexture = webCamTexture;
+        webCamTexture.Play();
         // }
 
     }
