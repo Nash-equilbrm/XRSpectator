@@ -26,7 +26,7 @@ TagManager:
   - 
   - 
   - 
-  - tagInvisibleToZED
+  - 
   - 
   - 
   - 
@@ -41,7 +41,7 @@ TagManager:
   - 
   - 
   - arlayer
-  - 
+  - tagInvisibleToZED
   m_SortingLayers:
   - name: Default
     uniqueID: 0
