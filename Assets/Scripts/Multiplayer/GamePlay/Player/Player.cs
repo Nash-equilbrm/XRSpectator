@@ -16,8 +16,6 @@ public class Player : MonoBehaviourPunCallbacks
     public int PlayerID { get => m_playerID; }
     [SerializeField] private int m_playerID = -1;
 
-
-    [SerializeField] private GameObject m_invalidSign = null;
     public ParticleSystem DeathEffect { get => m_deathEffect; }
     [SerializeField] private ParticleSystem m_deathEffect = null;
 
@@ -32,7 +30,7 @@ public class Player : MonoBehaviourPunCallbacks
     private PlayerAttackState m_attackState;
     private PlayerInitState m_initState;
 
-   
+
 
 
     public List<int> CardCollection { get => m_cardCollectionIds; }
@@ -92,8 +90,6 @@ public class Player : MonoBehaviourPunCallbacks
 
             m_currentState = m_initState;
 
-            GameObject sign = PhotonNetwork.Instantiate("Prefabs/Menus/" + GameManager.Instance.invalidSignPrefab.name, new Vector3(100, 100, 100), Quaternion.identity);
-            GetInvalidSign(sign.GetComponent<PhotonView>().ViewID);
 
             GameObject deathEffect = PhotonNetwork.Instantiate("Prefabs/Effects/" + GameManager.Instance.deathEffectPrefab.name, new Vector3(100, 100, 100), Quaternion.identity);
             GetDeathEffect(deathEffect.GetComponent<PhotonView>().ViewID);
@@ -180,7 +176,7 @@ public class Player : MonoBehaviourPunCallbacks
     }
 
 
-   
+
 
 
     public void SetReady(bool ready)
@@ -333,9 +329,9 @@ public class Player : MonoBehaviourPunCallbacks
         if (m_myMonsters.ContainsKey(monsterViewID))
         {
             m_myMonsters.Remove(monsterViewID);
-            for(int i = 0; i < DebugMonsterList.Count; ++i)
+            for (int i = 0; i < DebugMonsterList.Count; ++i)
             {
-                if(DebugMonsterList[i] == monsterViewID)
+                if (DebugMonsterList[i] == monsterViewID)
                 {
                     DebugMonsterList.RemoveAt(i);
                     return;
@@ -359,46 +355,6 @@ public class Player : MonoBehaviourPunCallbacks
     {
         m_playerID = ID;
     }
-
-    private void GetInvalidSign(int viewID)
-    {
-
-        PhotonNetwork.RemoveBufferedRPCs(m_photonView.ViewID, "GetInvalidSign_RPC");
-        m_photonView.RPC("GetInvalidSign_RPC", RpcTarget.AllBuffered, viewID);
-        PhotonNetwork.SendAllOutgoingCommands();
-    }
-
-    [PunRPC]
-    private void GetInvalidSign_RPC(int viewID)
-    {
-        m_invalidSign = PhotonView.Find(viewID).gameObject;
-    }
-
-
-    public void ShowInvalidSign(Vector3 position, Quaternion rotation, bool active = true)
-    {
-        if (m_photonView.IsMine)
-        {
-            PhotonNetwork.RemoveBufferedRPCs(m_photonView.ViewID, "ShowInvalidSign_RPC");
-            m_photonView.RPC("ShowInvalidSign_RPC", RpcTarget.AllBuffered, position, rotation, active);
-            PhotonNetwork.SendAllOutgoingCommands();
-        }
-    }
-
-    [PunRPC]
-    private void ShowInvalidSign_RPC(Vector3 position, Quaternion rotation, bool active = true)
-    {
-        if (!active)
-        {
-            m_invalidSign.SetActive(false);
-            return;
-        }
-        m_invalidSign.SetActive(true);
-        m_invalidSign.transform.position = position;
-        m_invalidSign.transform.rotation = rotation;
-    }
-
-
 
     private void GetDeathEffect(int viewID)
     {
@@ -485,15 +441,29 @@ public class Player : MonoBehaviourPunCallbacks
     private void GetCardCollection_RPC(int[] cardIDs)
     {
         m_cardCollectionIds.Clear();
-        for(int i = 0; i < cardIDs.Length; ++i)
+        for (int i = 0; i < cardIDs.Length; ++i)
         {
             m_cardCollectionIds.Add(cardIDs[i]);
         }
     }
 
+
+    public void TurnOnWebCamTexture(bool turnOn)
+    {
+        PhotonNetwork.RemoveBufferedRPCs(m_photonView.ViewID, "TurnOnWebCamTexture_RPC");
+        m_photonView.RPC("TurnOnWebCamTexture_RPC", RpcTarget.AllBuffered, turnOn);
+        PhotonNetwork.SendAllOutgoingCommands();
+    }
+
+    [PunRPC]
+    private void TurnOnWebCamTexture_RPC(bool turnOn)
+    {
+        Debug.Log("TurnOnWebCamTexture_RPC");
+    }
+
 }
 
-    
+
 
 
 

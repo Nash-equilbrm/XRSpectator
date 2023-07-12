@@ -53,6 +53,20 @@ public partial class GameManager : MonoBehaviourPunCallbacks
                 {
                     ResetSocketServer();
                 }
+                if (Input.GetKeyDown(KeyCode.P))
+                {
+                    GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+                    players[0].GetComponent<Player>().TurnOnWebCamTexture(true);
+                    //players[1].GetComponent<Player>().TurnOnWebCamTexture(true);
+
+                }
+                if (Input.GetKeyDown(KeyCode.O))
+                {
+                    GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+                    players[0].GetComponent<Player>().TurnOnWebCamTexture(false);
+                    //players[1].GetComponent<Player>().TurnOnWebCamTexture(false);
+
+                }
                 UpdateZed();
                 UpdateFirstPersonView();
             }
