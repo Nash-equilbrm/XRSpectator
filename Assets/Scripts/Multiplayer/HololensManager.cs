@@ -37,7 +37,7 @@ public partial class GameManager
                 TurnOffVuforia();
                 ARCamera.GetComponent<TrackedPoseDriver>().enabled = true;
                
-                StartStreaming();
+                // StartStreaming();
                
                 m_trackedWithVuforia = true;
             }

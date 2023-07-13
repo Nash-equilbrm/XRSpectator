@@ -6,6 +6,7 @@ public partial class GameManager
 {
     [Header("First person view Streaming")]
     public Camera m_ARCamera;
+    public Camera m_webcamTextureCaptureCamera;
     public GameObject ViewQuadCapture;
     public GameObject firstPersonStreamingSettings;
 
@@ -18,22 +19,35 @@ public partial class GameManager
 
         //Create Quad
         GameObject quadCapture = GameObject.Instantiate(ViewQuadCapture);
+        // GameObject quadCapture1 = GameObject.Instantiate(ViewQuadCapture);
+
         quadCapture.transform.parent = m_ARCamera.transform;
-        quadCapture.transform.localScale = new Vector3(4, 2.5f, -1);
+        quadCapture.transform.localScale = new Vector3(4, 3f, -1);
         quadCapture.transform.localPosition = new Vector3(0, 0, 4);
         // videoBackground.transform.localEulerAngles = videoBackgroundEuler;
-        quadCapture.transform.localEulerAngles = new Vector3(-2, 0, 0);
+        quadCapture.transform.localEulerAngles = new Vector3(0, 0, 0);
 
-        firstPersonViewStreamCamera.GetComponent<Camera>();
         firstPersonViewStreamCamera.fieldOfView = m_ARCamera.fieldOfView;
         firstPersonViewStreamCamera.clearFlags = CameraClearFlags.SolidColor;
+
+        m_webcamTextureCaptureCamera.transform.SetParent(null);
+        // quadCapture1.transform.parent = m_webcamTextureCaptureCamera.transform;
+        // quadCapture1.transform.localScale = new Vector3(4, 3f, -1);
+        // quadCapture1.transform.localPosition = new Vector3(0, 0, 4);
+        // // videoBackground.transform.localEulerAngles = videoBackgroundEuler;
+        // quadCapture1.transform.localEulerAngles = new Vector3(0, 0, 0);
+
+
 
         webCamTexture = new WebCamTexture(500, 282, 60);
         //WebCamTexture webcamTexture = new WebCamTexture();
 
         Renderer videoBackgroundRenderer = quadCapture.GetComponent<Renderer>();
-        videoBackgroundRenderer.enabled = true;
+        // Renderer videoBackgroundRenderer1 = quadCapture1.GetComponent<Renderer>();
+
         videoBackgroundRenderer.material.mainTexture = webCamTexture;
+        // videoBackgroundRenderer1.material.mainTexture = webCamTexture;
+
         webCamTexture.Play();
         // }
 
