@@ -139,7 +139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!82 &262118921
 AudioSource:
   m_ObjectHideFlags: 0
@@ -152,7 +152,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 3a50ffb22e7d6d44eaca65bedfbf8459, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.4
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -393,7 +393,7 @@ MonoBehaviour:
   m_serverIP: 10.9.8.98
   socketManager: {fileID: 1795634939}
   leftEye: {fileID: 0}
-  retrackMarkerInterval: 2
+  retrackMarkerInterval: 0.7
   m_monsterDestroySFX: {fileID: 1345233679}
 --- !u!4 &577880636
 Transform:
@@ -765,7 +765,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1195937730
 Transform:
   m_ObjectHideFlags: 0
@@ -1343,7 +1343,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1795634939
 MonoBehaviour:
   m_ObjectHideFlags: 0
