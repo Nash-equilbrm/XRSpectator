@@ -4,10 +4,6 @@ using Vuforia;
 
 public partial class GameManager
 {
-    public Transform leftEye;
-
-    public float retrackMarkerInterval = 10f;
-    private float m_retrackTimer = 0f;
     private void InitZED()
     {
         ARCamera.GetComponent<VuforiaBehaviour>().enabled = false;

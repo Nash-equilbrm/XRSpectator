@@ -5,54 +5,43 @@ using UnityEngine;
 public partial class GameManager
 {
     [Header("First person view Streaming")]
-    public Camera m_ARCamera;
-    public Camera m_webcamTextureCaptureCamera;
-    public GameObject ViewQuadCapture;
-    public GameObject firstPersonStreamingSettings;
+    public GameObject m_webcamCapture;
+    public GameObject m_firstPersonStreamingSettings;
 
-    public WebCamTexture webCamTexture;
+    [HideInInspector] public WebCamTexture webCamTexture;
 
     public void StartStreaming()
     {
-        firstPersonStreamingSettings.SetActive(true);
-        firstPersonViewStreamCamera.gameObject.SetActive(true);
+        m_firstPersonStreamingSettings.SetActive(true);
 
-        //Create Quad
-        GameObject quadCapture = GameObject.Instantiate(ViewQuadCapture);
-        // GameObject quadCapture1 = GameObject.Instantiate(ViewQuadCapture);
-
-        quadCapture.transform.parent = m_ARCamera.transform;
-        quadCapture.transform.localScale = new Vector3(4, 3f, -1);
-        quadCapture.transform.localPosition = new Vector3(0, 0, 4);
-        // videoBackground.transform.localEulerAngles = videoBackgroundEuler;
-        quadCapture.transform.localEulerAngles = new Vector3(0, 0, 0);
-
-        firstPersonViewStreamCamera.fieldOfView = m_ARCamera.fieldOfView;
-        firstPersonViewStreamCamera.clearFlags = CameraClearFlags.SolidColor;
-
-        m_webcamTextureCaptureCamera.transform.SetParent(null);
-        // quadCapture1.transform.parent = m_webcamTextureCaptureCamera.transform;
-        // quadCapture1.transform.localScale = new Vector3(4, 3f, -1);
-        // quadCapture1.transform.localPosition = new Vector3(0, 0, 4);
-        // // videoBackground.transform.localEulerAngles = videoBackgroundEuler;
-        // quadCapture1.transform.localEulerAngles = new Vector3(0, 0, 0);
+        virtualObjectsCamera.gameObject.SetActive(true);
+        virtualObjectsCamera.fieldOfView = ARCamera.GetComponent<Camera>().fieldOfView;
+        virtualObjectsCamera.clearFlags = CameraClearFlags.SolidColor;
 
 
+        realObjectsCamera.gameObject.SetActive(true);
+        realObjectsCamera.aspect = (32f / 9f);
+        //m_webcamCapture.transform.localScale = new Vector3(4f, 2.25f, 1);
+        //m_webcamCapture.transform.localPosition = new Vector3(0, 0, 4);
+        //m_webcamCapture.transform.localEulerAngles = new Vector3(0, 0, 0);
 
         webCamTexture = new WebCamTexture(500, 282, 60);
-        //WebCamTexture webcamTexture = new WebCamTexture();
-
-        Renderer videoBackgroundRenderer = quadCapture.GetComponent<Renderer>();
-        // Renderer videoBackgroundRenderer1 = quadCapture1.GetComponent<Renderer>();
-
+        Renderer videoBackgroundRenderer = m_webcamCapture.GetComponent<Renderer>();
         videoBackgroundRenderer.material.mainTexture = webCamTexture;
-        // videoBackgroundRenderer1.material.mainTexture = webCamTexture;
+
 
         webCamTexture.Play();
-        // }
 
     }
 
+    private void UpdateWebcamTexture()
+    {
+        //Color[] pixels = webCamTexture.GetPixels();
+        //Debug.Log("PIXELS: " + pixels.Length);
+        //Debug.Log("TEXTURE: " + m_webcamTexture2d.GetPixels().Length);
 
+        //m_webcamTexture2d.SetPixels(pixels);
+        //m_webcamTexture2d.Apply();
+    }
 
 }

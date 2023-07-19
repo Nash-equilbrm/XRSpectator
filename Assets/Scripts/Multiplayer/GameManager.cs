@@ -24,8 +24,9 @@ public partial class GameManager : MonoBehaviourPunCallbacks
     [Header("Hololens")]
     public GameObject ARCamera;
     public Transform imageTarget;
-    public Camera firstPersonViewStreamCamera;
-  
+    public Camera virtualObjectsCamera;
+    public Camera realObjectsCamera;
+    public bool firstPersonViewStreaming;
 
     [Header("ZedCamera")]
     public Transform zedCameraTransform;
@@ -33,6 +34,9 @@ public partial class GameManager : MonoBehaviourPunCallbacks
     public GameObject zedRigStereo;
     public GameObject zedCaptureToOpenCV;
     public GameObject ArUcoDetectManager;
+    public Transform leftEye;
+    public float retrackMarkerInterval = 10f;
+    private float m_retrackTimer = 0f;
 
     private bool m_userRoleInitialized = false;
     private void Update()

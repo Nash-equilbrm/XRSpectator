@@ -36,8 +36,11 @@ public partial class GameManager
             {
                 TurnOffVuforia();
                 ARCamera.GetComponent<TrackedPoseDriver>().enabled = true;
-               
-                // StartStreaming();
+
+                if (firstPersonViewStreaming)
+                {
+                    StartStreaming();
+                }
                
                 m_trackedWithVuforia = true;
             }
@@ -59,11 +62,12 @@ public partial class GameManager
 
             //pleaseLookAtMarkerTxt.SetActive(false);
             UpdateGameplay();
+            UpdateWebcamTexture();
         }
 
     }
 
-
+   
     private void TurnOffVuforia()
     {
         Debug.Log("Turn off vuforia");
