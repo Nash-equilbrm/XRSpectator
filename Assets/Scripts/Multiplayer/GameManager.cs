@@ -31,6 +31,10 @@ public partial class GameManager : MonoBehaviourPunCallbacks
     public GameObject zedRigStereo;
     public GameObject zedCaptureToOpenCV;
     public GameObject ArUcoDetectManager;
+    public Transform leftEye;
+    public float retrackMarkerInterval = 10f;
+    private float m_retrackTimer = 0f;
+
     private bool m_userRoleInitialized = false;
     private void Update()
     {
@@ -39,34 +43,7 @@ public partial class GameManager : MonoBehaviourPunCallbacks
             // update for zed users (audiences), keep tracking marker every frames
             if (isAudience)
             {
-                if (Input.GetKeyDown(KeyCode.A))
-                {
-                    overlayMode = !overlayMode;
-                }
-
-                // change player 1st view
-                if (Input.GetKeyDown(KeyCode.S))
-                {
-                    firstViewSwap = !firstViewSwap;
-                }
-                if (Input.GetKeyDown(KeyCode.R))
-                {
-                    ResetSocketServer();
-                }
-                if (Input.GetKeyDown(KeyCode.P))
-                {
-                    GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-                    players[0].GetComponent<Player>().TurnOnWebCamTexture(true);
-                    //players[1].GetComponent<Player>().TurnOnWebCamTexture(true);
-
-                }
-                if (Input.GetKeyDown(KeyCode.O))
-                {
-                    GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-                    players[0].GetComponent<Player>().TurnOnWebCamTexture(false);
-                    //players[1].GetComponent<Player>().TurnOnWebCamTexture(false);
-
-                }
+                UpdateAudienceInputs();
                 UpdateZed();
                 UpdateFirstPersonView();
             }

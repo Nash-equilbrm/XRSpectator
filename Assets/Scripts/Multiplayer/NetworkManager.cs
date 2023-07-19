@@ -80,8 +80,10 @@ public partial class GameManager
     }
 
 
+    [Header("Network")]
     public string m_serverIP;
     public FMSocketIOManager socketManager;
+
     public override void OnJoinedRoom()
     {
         if (isAudience)
@@ -90,10 +92,11 @@ public partial class GameManager
                 new ExitGames.Client.Photon.Hashtable
                 {
                     { "SERVERIP", m_serverIP } 
+
                 }
 
-            );
 
+            );
 
         }
         else
@@ -101,9 +104,9 @@ public partial class GameManager
             if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("SERVERIP", out var SERVERIP))
             {
                 m_serverIP = (string)SERVERIP;
+                socketManager.Action_SetIP(m_serverIP);
             }
         }
-        socketManager.Action_SetIP(m_serverIP);
 
 
 
