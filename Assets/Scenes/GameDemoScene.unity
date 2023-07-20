@@ -514,7 +514,7 @@ MonoBehaviour:
     type: 3}
   leftEye: {fileID: 0}
   retrackMarkerInterval: 0.7
-  m_serverIP: 10.9.8.100
+  m_serverIP: 192.168.0.172
   socketManager: {fileID: 1795634939}
   m_monsterDestroySFX: {fileID: 1345233679}
 --- !u!4 &577880636
@@ -1074,7 +1074,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 400, y: 225}
+  m_SizeDelta: {x: 1200, y: 675}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &1325589359
 MonoBehaviour:
@@ -1445,10 +1445,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7a096be23d5f4c46b0b0684d81c54db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  markerID: 0
-  disableWhenNotSeen: 1
-  missedFramesUntilDisabled: 3
-  smoothedFrames: 4
 --- !u!4 &1676044242
 Transform:
   m_ObjectHideFlags: 0
@@ -1751,7 +1747,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 400, y: 225}
+  m_SizeDelta: {x: 1200, y: 675}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1829848246
 MonoBehaviour:
@@ -2056,7 +2052,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2044570992
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -294,7 +294,7 @@ PrefabInstance:
     - target: {fileID: 2339238807818718198, guid: d19a4c521a4dbcc46baa485eb04b156a,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -12
+      value: -6
       objectReference: {fileID: 0}
     - target: {fileID: 2339238807818718198, guid: d19a4c521a4dbcc46baa485eb04b156a,
         type: 3}
@@ -384,7 +384,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   follow: {fileID: 8885516798237120136}
-  offset: {x: 1, y: 0, z: -2.4}
+  offset: {x: 1, y: 0, z: -1.2}
   lockX: 0
   lockXAt: 0
   lockY: 1
@@ -553,6 +553,11 @@ PrefabInstance:
       propertyPath: m_player
       value: 
       objectReference: {fileID: 7133357693053756016}
+    - target: {fileID: 4129956145093820006, guid: f43f336a03c88e04187c807064ad9e92,
+        type: 3}
+      propertyPath: m_offset.y
+      value: -0.75
+      objectReference: {fileID: 0}
     - target: {fileID: 4129956145093820006, guid: f43f336a03c88e04187c807064ad9e92,
         type: 3}
       propertyPath: m_playerTransform
