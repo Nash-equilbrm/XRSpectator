@@ -379,7 +379,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   follow: {fileID: 8885516798237120136}
-  offset: {x: 1, y: 0, z: 1.2}
+  offset: {x: 1, y: 0, z: 1.8}
   lockX: 0
   lockXAt: 0
   lockY: 1
