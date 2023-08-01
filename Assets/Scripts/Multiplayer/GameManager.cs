@@ -15,6 +15,7 @@ public partial class GameManager : MonoBehaviourPunCallbacks
 
     [Header("User")]
     public bool isAudience;
+    public bool inGameAudience;
     public Player playerManager;
     public GameObject player0AvatarPrefab;
     public GameObject player1AvatarPrefab;

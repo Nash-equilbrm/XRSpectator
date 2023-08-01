@@ -37,12 +37,19 @@ public partial class GameManager
                 TurnOffVuforia();
                 ARCamera.GetComponent<TrackedPoseDriver>().enabled = true;
 
-                if (firstPersonViewStreaming)
+
+                if (inGameAudience)
+                {
+                    CreatePlayerAvatar(-1);
+                }
+
+                else if (firstPersonViewStreaming)
                 {
                     StartStreaming();
                 }
-               
+                
                 m_trackedWithVuforia = true;
+
             }
             else
             {
@@ -59,10 +66,10 @@ public partial class GameManager
         else
         {
             // start gameplay for hololens user
-
-            //pleaseLookAtMarkerTxt.SetActive(false);
-            UpdateGameplay();
-            UpdateWebcamTexture();
+            if (!inGameAudience)
+            {
+                UpdateGameplay();
+            }
         }
 
     }
@@ -93,24 +100,39 @@ public partial class GameManager
 
     public Player CreatePlayerAvatar(int playerID)
     {
-        GameObject playerModel = null;
-        if (playerID == 0)
+        if (playerID == -1)
         {
-            playerModel = PhotonNetwork.Instantiate("Prefabs/" + player0AvatarPrefab.name, ARCamera.transform.position, ARCamera.transform.rotation);
+            GameObject playerModel = null;
+            playerModel = PhotonNetwork.Instantiate("Prefabs/Audience", ARCamera.transform.position, ARCamera.transform.rotation);
+
+
+            if (playerModel != null && playerModel.GetComponent<PhotonView>().IsMine)
+            {
+                playerModel.GetComponent<MoveARCamera>().ARCamera = ARCamera.transform;
+                return null;
+            }
         }
-        else if(playerID == 1)
+        else
         {
-            playerModel = PhotonNetwork.Instantiate("Prefabs/" + player1AvatarPrefab.name, ARCamera.transform.position, ARCamera.transform.rotation);
-        }
+            GameObject playerModel = null;
+            if (playerID == 0)
+            {
+                playerModel = PhotonNetwork.Instantiate("Prefabs/" + player0AvatarPrefab.name, ARCamera.transform.position, ARCamera.transform.rotation);
+            }
+            else if(playerID == 1)
+            {
+                playerModel = PhotonNetwork.Instantiate("Prefabs/" + player1AvatarPrefab.name, ARCamera.transform.position, ARCamera.transform.rotation);
+            }
 
 
-        if (playerModel != null && playerModel.GetComponent<PhotonView>().IsMine)
-        {
-            playerModel.GetComponent<MoveARCamera>().ARCamera = ARCamera.transform;
-            Player playerManager = playerModel.GetComponent<Player>();
-            playerManager.SetPlayerID(playerID);
+            if (playerModel != null && playerModel.GetComponent<PhotonView>().IsMine)
+            {
+                playerModel.GetComponent<MoveARCamera>().ARCamera = ARCamera.transform;
+                Player playerManager = playerModel.GetComponent<Player>();
+                playerManager.SetPlayerID(playerID);
 
-            return playerManager;
+                return playerManager;
+            }
         }
         Debug.Log("Error create player");
         return null;

@@ -33,15 +33,4 @@ public partial class GameManager
         webCamTexture.Play();
 
     }
-
-    private void UpdateWebcamTexture()
-    {
-        //Color[] pixels = webCamTexture.GetPixels();
-        //Debug.Log("PIXELS: " + pixels.Length);
-        //Debug.Log("TEXTURE: " + m_webcamTexture2d.GetPixels().Length);
-
-        //m_webcamTexture2d.SetPixels(pixels);
-        //m_webcamTexture2d.Apply();
-    }
-
 }
