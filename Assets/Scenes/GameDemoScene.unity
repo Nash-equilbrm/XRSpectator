@@ -1691,6 +1691,7 @@ MonoBehaviour:
   markerID: 0
   disableWhenNotSeen: 1
   missedFramesUntilDisabled: 3
+  hiddenFramesCount: 0
   smoothedFrames: 4
 --- !u!4 &1676044242
 Transform:
