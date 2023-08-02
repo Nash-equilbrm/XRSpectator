@@ -56,11 +56,11 @@ public partial class GameManager
         {
             if(i == players.Count - 1)
             {
-                playerFPVs[i].GetComponent<FollowTransform>().follow = players[0].transform;
+                playerFPVs[i].transform.parent.GetComponent<FollowTransform>().follow = players[0].transform;
             }
             else
             {
-                playerFPVs[i].GetComponent<FollowTransform>().follow = players[i + 1].transform;
+                playerFPVs[i].transform.parent.GetComponent<FollowTransform>().follow = players[i + 1].transform;
             }
         }
     }
@@ -75,7 +75,7 @@ public partial class GameManager
                 for(int i = 0; i < playerObjs.Length; ++i)
                 {
                     players.Add(playerObjs[i].GetComponent<Player>());
-                    FollowTransform followTransform = playerFPVs[i].gameObject.GetComponent<FollowTransform>();
+                    FollowTransform followTransform = playerFPVs[i].transform.parent.GetComponent<FollowTransform>();
                     if (followTransform)
                     {
                         followTransform.follow = playerObjs[i].transform;
@@ -100,7 +100,7 @@ public partial class GameManager
                 overlayViews.SetActive(false);
                 for (int i = 0; i < playerFPVs.Length; ++i)
                 {
-                    playerFPVs[i].transform.LookAt(leftEye);
+                    playerFPVs[i].transform.parent.LookAt(leftEye);
                     playerFPVs[i].material.mainTexture = fpvFrameHandler[i].DstTexture;
 
                 }
