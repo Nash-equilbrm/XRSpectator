@@ -320,7 +320,7 @@ MonoBehaviour:
   imageTarget: {fileID: 992106509}
   virtualObjectsCamera: {fileID: 1217391570}
   realObjectsCamera: {fileID: 604232474}
-  firstPersonViewStreaming: 1
+  firstPersonViewStreaming: 0
   zedCameraTransform: {fileID: 1905566056}
   marker: {fileID: 1676044240}
   zedRigStereo: {fileID: 480628852359411123, guid: 11a925a6505a44e489824cea9a691b51,
@@ -1688,11 +1688,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7a096be23d5f4c46b0b0684d81c54db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  markerID: 0
-  disableWhenNotSeen: 1
-  missedFramesUntilDisabled: 3
-  hiddenFramesCount: 0
-  smoothedFrames: 4
 --- !u!4 &1676044242
 Transform:
   m_ObjectHideFlags: 0
